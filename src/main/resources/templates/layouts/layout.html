@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout</title>
+    <link rel="stylesheet" th:href="@{/css/layout/layout.css}">
+
+</head>
+<body>
+<!-- 헤더를 포함하려면 layout:fragment="header"를 사용할 수 있습니다. -->
+
+<header id="header">
+    <section class="section">
+        <p>헤더입니다.</p>
+    </section>
+</header>
+<!-- 컨텐츠를 표시하는 곳입니다. -->
+<main id="main">
+    <!-- 컨텐츠의 실제 내용은 각 페이지에서 제공됩니다. -->
+    <section class="section" layout:fragment="content"></section>
+</main>
+
+<!-- 푸터를 포함하려면 layout:fragment="footer"를 사용할 수 있습니다. -->
+<footer id="footer">
+    <section class="section">
+        <p>푸터입니다.</p>
+    </section>
+</footer>
+
+<!-- 추가적으로 필요한 스크립트를 로드할 수 있습니다. -->
+<!-- 예를 들어, 여기에는 layout 전체에 적용되는 자바스크립트를 로드할 수 있습니다. -->
+</body>
+</html>

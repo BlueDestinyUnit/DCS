@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/test.css}">
+    <script th:src="@{/js/test.js}"></script>
+</head>
+<style>
+    #imageContainer {
+        position: relative;
+        width: 500px;
+        height: 500px;
+        overflow: hidden;
+    }
+    #canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+</style>
+<body>
+<main id="main">
+
+
+    <div id="imageContainer">
+        <img id="image" src="https://cdn.crowdpic.net/detail-thumb/thumb_d_2F583E5543F7E19139C6FCFFBF9607A6.jpg" alt="Image" width="500" height="500">
+        <canvas id="canvas" width="500" height="500"></canvas>
+    </div>
+
+    <button id="saveButton">Save Image</button>
+
+    <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var image = document.getElementById('image');
+        image.crossOrigin = "anonymous";
+        var isDragging = false;
+        var startX, startY;
+        const saveButton = document.getElementById('saveButton');
+
+
+
+        canvas.addEventListener('mousedown', startDragging);
+        canvas.addEventListener('mousemove', drag);
+        canvas.addEventListener('mouseup', stopDragging);
+        canvas.addEventListener('mouseleave', stopDragging);
+
+        function startDragging(event) {
+            isDragging = true;
+            startX = event.offsetX;
+            startY = event.offsetY;
+        }
+
+        // function drag(event) {
+        //     if (isDragging) {
+        //         var endX = event.offsetX;
+        //         var endY = event.offsetY;
+        //         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        //         ctx.drawImage(image, 0, 0, canvas.width, canvas.height); // 원본 이미지를 그립니다.
+        //         ctx.fillStyle = 'rgba(0, 0, 0, 0.9)'; // 반투명 검은색으로 설정
+        //         ctx.fillRect(startX, startY, endX - startX, endY - startY); // 드래그한 부분을 검은색으로 채웁니다.
+        //     }
+        // }
+
+        function drag(event) {
+            if (isDragging) {
+                var endX = event.offsetX;
+                var endY = event.offsetY;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(image, 0, 0, canvas.width, canvas.height); // 원본 이미지를 그립니다.
+
+                // 드래그한 영역에 블러 효과 적용
+                var blurRadius = 10; // 블러 효과의 반경을 조정할 수 있습니다.
+                ctx.filter = 'blur(' + blurRadius + 'px)';
+                ctx.drawImage(canvas, startX, startY, endX - startX, endY - startY, startX, startY, endX - startX, endY - startY);
+                ctx.filter = 'none'; // 필터 초기화
+            }
+        }
+
+
+        function stopDragging(event) {
+            if (isDragging) {
+                isDragging = false;
+                var endX = event.offsetX;
+                var endY = event.offsetY;
+
+
+                saveButton.onclick = function (e) {
+                    var imageDataURL = canvas.toDataURL('image/png');
+                    var downloadLink = document.createElement('a');
+                    downloadLink.href = imageDataURL;
+                    downloadLink.download = 'mosaic_image.png';
+                    downloadLink.click();
+                }
+
+                // // 모자이크된 이미지를 클릭하여 다운로드
+                // var imageDataURL = canvas.toDataURL('image/png');
+                // var downloadLink = document.createElement('a');
+                // downloadLink.href = imageDataURL;
+                // downloadLink.download = 'mosaic_image.png';
+                // downloadLink.click();
+            }
+        }
+
+
+
+
+    </script>
+</main>
+</body>
+</html>
