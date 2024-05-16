@@ -11,5 +11,9 @@
     </settings>
     <typeAliases>
         <typeAlias alias="UserEntity" type="com.scd.dcs.domains.entities.UserEntity"/>
+        <typeAlias alias="ArticleEntity" type="com.scd.dcs.domains.entities.ArticleEntity"/>
+        <typeAlias alias="BoardEntity" type="com.scd.dcs.domains.entities.BoardEntity"/>
+        <typeAlias alias="CommentEntity" type="com.scd.dcs.domains.entities.CommentEntity"/>
+        <typeAlias alias="BoardVo" type="com.scd.dcs.domains.vos.BoardVo"/>
     </typeAliases>
 </configuration>
