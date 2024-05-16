@@ -1,0 +1,118 @@
+CREATE SCHEMA `dcs`;
+
+CREATE TABLE `dcs`.`user`
+(
+    `email`    VARCHAR(50) PRIMARY KEY,
+    `password` VARCHAR(100),
+    `role`     VARCHAR(10)
+);
+
+CREATE TABLE `dcs`.`persistent_logins`
+(
+    username  VARCHAR(64) NOT NULL,
+    series    VARCHAR(64) PRIMARY KEY,
+    token     VARCHAR(64) NOT NULL,
+    last_used TIMESTAMP   NOT NULL
+);
+
+CREATE TABLE `dcs`.`user_detail`
+(
+    `index`        INT          NOT NULL AUTO_INCREMENT,
+    `user_email`   VARCHAR(100) NOT NULL,
+    `is_state`     TINYINT      NOT NULL,
+    `is_insurance` TINYINT      NULL,
+    CONSTRAINT PRIMARY KEY (`index`),
+    CONSTRAINT FOREIGN KEY (`user_email`) REFERENCES `dcs`.`user` (`email`)
+);
+
+DROP TABLE `dcs`.`user_detail`;
+
+CREATE TABLE `dcs`.`attendance`
+(
+    `index`         INT          NOT NULL AUTO_INCREMENT,
+    `user_email`    VARCHAR(100) NOT NULL,
+    `is_attendance` TINYINT      NOT NULL,
+    `attend_date`   TIME         NOT NULL,
+    CONSTRAINT PRIMARY KEY (`index`),
+    CONSTRAINT FOREIGN KEY (`user_email`) REFERENCES `dcs`.`user` (`email`)
+);
+
+CREATE TABLE `dcs`.`days`
+(
+    `index`    INT     NOT NULL AUTO_INCREMENT,
+    `is_work`  TINYINT NOT NULL,
+    `work_day` TIME    NOT NULL,
+    CONSTRAINT PRIMARY KEY (`index`)
+);
+
+CREATE TABLE `dcs`.`payment`
+(
+    `index`     INT         NOT NULL AUTO_INCREMENT,
+    `work_type` VARCHAR(10) NOT NULL,
+    `price`     DOUBLE      NOT NULL,
+    CONSTRAINT PRIMARY KEY (`index`)
+);
+
+CREATE TABLE `dcs`.`work`
+(
+    `index`      INT          NOT NULL AUTO_INCREMENT,
+    `user_email` VARCHAR(100) NOT NULL,
+    `work_date`  TIME         NOT NULL,
+    `content`    LONGBLOB     NOT NULL,
+    CONSTRAINT PRIMARY KEY (`index`),
+    CONSTRAINT FOREIGN KEY (`user_email`) REFERENCES `dcs`.`user` (`email`)
+);
+
+CREATE TABLE `dcs`.`submit_images`
+(
+    `index`        INT      NOT NULL AUTO_INCREMENT,
+    `work_index`   INT      NOT NULL,
+    `content_type` VARCHAR(50),
+    `image_data`   LONGBLOB NOT NULL,
+    `is_sign`      TINYINT  NOT NULL,
+    CONSTRAINT PRIMARY KEY (`index`),
+    CONSTRAINT FOREIGN KEY (`work_index`) REFERENCES `dcs`.`work` (`index`)
+);
+
+CREATE TABLE `dcs`.`boards`
+(
+    `code`          VARCHAR(50)  NOT NULL,
+    `text`          VARCHAR(100) NOT NULL,
+    `is_admin_only` TINYINT      NOT NULL,
+    CONSTRAINT PRIMARY KEY (`code`)
+);
+
+CREATE TABLE `dcs`.`article`
+(
+    `index`      INT            NOT NULL AUTO_INCREMENT,
+    `board_code` VARCHAR(50)    NOT NULL,
+    `user_email` VARCHAR(100)   NOT NULL,
+    `title`      VARCHAR(100)   NOT NULL,
+    `content`    VARCHAR(10000) NOT NULL,
+    `created_at` TIMESTAMP      NOT NULL,
+    `view`       INT            NOT NULL,
+    CONSTRAINT PRIMARY KEY (`index`),
+    CONSTRAINT FOREIGN KEY (`user_email`) REFERENCES `dcs`.`user` (`email`),
+    CONSTRAINT FOREIGN KEY (`board_code`) REFERENCES `DCS`.`boards` (`code`)
+);
+
+CREATE TABLE `dcs`.`comments`
+(
+    `index`         INT            NOT NULL AUTO_INCREMENT,
+    `article_index` INT            NOT NULL,
+    `user_email`    VARCHAR(100)   NOT NULL,
+    `content`       VARCHAR(10000) NOT NULL,
+    `created_at`    TIMESTAMP      NOT NULL,
+    CONSTRAINT PRIMARY KEY (`index`),
+    CONSTRAINT FOREIGN KEY (`user_email`) REFERENCES `dcs`.`user` (`email`),
+    CONSTRAINT FOREIGN KEY (`article_index`) REFERENCES `dcs`.`article` (`index`)
+);
+
+CREATE TABLE `dcs`.`image_comment`
+(
+    `index`       INT  NOT NULL AUTO_INCREMENT,
+    `image_index` INT  NOT NULL,
+    `CONTENT`     TEXT NOT NULL,
+    CONSTRAINT PRIMARY KEY (`index`),
+    CONSTRAINT FOREIGN KEY (`image_index`) REFERENCES `dcs`.`submit_images` (`index`)
+);
