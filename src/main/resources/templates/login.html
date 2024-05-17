@@ -7,24 +7,40 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Title</title>
+    <title>로그인 화면</title>
+    <script th:if="${result != null && result.equals('FAILURE')}">
+        alert('이메일 혹은 비밀번호가 올바르지 않습니다.');
+        history.back();
+    </script>
 </head>
-<body>
+<body th:if="${result == null}">
 <section layout:fragment="content">
     <h1>로그인 페이지입니다.</h1>
-    <form action="/login" method="post" id="loginForm">
+    <form action="/login" method="post" id="loginForm" th:with="userRegex=${T(com.scd.dcs.regexes.UserRegex)}">
         <label>
             <span>이메일</span>
-            <input type="text" name="username">
+            <input required autocomplete="email" class="_obj-input __field input" maxlength="50" minlength="5" name="username" placeholder="이메일 (user@sample.com)" spellcheck="false" type="email" th:attrappend="data-regex=${userRegex.email.expression}">
         </label>
         <label>
             <span>password</span>
-            <input type="password" name="password">
+            <input required autocomplete="current-password" class="_obj-input __field input" maxlength="50" minlength="5" name="password" placeholder="비밀번호 (숫자, 영어 대소문자, 특수기호 5자 이상 50자 이하)" type="password" th:attrappend="data-regex=${userRegex.password.expression}">
         </label>
         <input type="submit">
     </form>
+    <ul>
+        <li>
+            <span>아직 계정이 없으신가요?</span>
+            <a th:href="@{/register}">회원가입 하기</a>
+        </li>
+        <li>
+            <span>이메일을 잊으셨나요?</span>
+            <a th:href="@{/findEmail}">이메일 찾기</a>
+        </li>
+        <li>
+            <span>비밀번호를 잊으셨나요?</span>
+            <a th:href="@{/resetPassword}">비밀번호 찾기</a>
+        </li>
+    </ul>
 </section>
-
-
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.scd.dcs.results;
 
-public interface Result {
+
+public interface Result<T extends Result<T>> {
     String name();
 }
