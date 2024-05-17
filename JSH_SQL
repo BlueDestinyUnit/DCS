@@ -40,3 +40,27 @@ CREATE TABLE `dcs`.`comments`
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+CREATE TABLE `dcs`.`comments`
+(
+    `index`         INT UNSIGNED  NOT NULL AUTO_INCREMENT,
+    `article_index` INT UNSIGNED  NOT NULL,
+    `user_email`    VARCHAR(50)   NOT NULL,
+    `content`       VARCHAR(1000) NOT NULL,
+    `created_at`    DATETIME      NOT NULL DEFAULT NOW(),
+    CONSTRAINT PRIMARY KEY (`index`),
+    CONSTRAINT FOREIGN KEY (`article_index`) REFERENCES `dcs`.`articles` (`index`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT FOREIGN KEY (`user_email`) REFERENCES `dcs`.`user` (`email`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE `dcs`.`images`(
+    `index` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+    `article_index` INT UNSIGNED NULL DEFAULT NULL REFERENCES `dcs`.`articles` (`index`) ON DELETE CASCADE ON UPDATE CASCADE,
+    `original_name` VARCHAR(255) NOT NULL,
+    `content_type` VARCHAR(50) NOT NULL,
+    `data` LONGBLOB NOT NULL
+);
