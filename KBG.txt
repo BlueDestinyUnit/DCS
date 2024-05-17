@@ -1,0 +1,21 @@
+CREATE SCHEMA `dcs`;
+
+CREATE TABLE `dcs`.`user`(
+    `email` VARCHAR(50) PRIMARY KEY,
+    `password` VARCHAR(100),
+    `role` VARCHAR(10)
+);
+
+create table `dcs`.`persistent_logins`(
+                                  username varchar(64) not null,
+                                  series varchar(64) primary key,
+                                  token varchar(64) not null,
+                                  last_used timestamp not null
+);
+
+CREATE TABLE `dcs`.`work`(
+    `index`    INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `user_email` VARCHAR(50) NOT NULL ,
+    `work_date`  DATETIME    NOT NULL  DEFAULT NOW(),
+    `content`    VARCHAR(50) NOT NULL ,
+);
