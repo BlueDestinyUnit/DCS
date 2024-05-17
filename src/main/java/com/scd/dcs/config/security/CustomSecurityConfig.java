@@ -51,6 +51,8 @@ public class CustomSecurityConfig {
                         .requestMatchers("/favicon.ico").permitAll()
                         .requestMatchers("/test").permitAll()
                         .requestMatchers("**").permitAll()
+                        .requestMatchers("/board/*").permitAll()
+                        .requestMatchers("/article/*").permitAll()
                 )
                 .formLogin(login -> login
                         .loginPage("/login")

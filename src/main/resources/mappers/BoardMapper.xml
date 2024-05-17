@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scd.dcs.mappers.BoardMapper">
+    <select id="selectBoards" resultType="BoardEntity">
+        SELECT
+            `code` AS `code`,
+            `text` AS `text`,
+            `is_admin_only` AS `isAdminOnly`
+        FROM `dcs`.`boards`
+        ORDER BY `code`
+    </select>
+
+    <select id="selectBoardByCode" resultType="BoardEntity">
+        SELECT
+            `code` AS `code`,
+            `text` AS `text`,
+            `is_admin_only` AS `isAdminOnly`
+        FROM `dcs`.`boards`
+        WHERE BINARY `code` = #{code}
+        LIMIT 1
+    </select>
+</mapper>
