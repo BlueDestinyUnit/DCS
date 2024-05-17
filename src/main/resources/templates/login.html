@@ -19,7 +19,7 @@
     <form action="/login" method="post" id="loginForm" th:with="userRegex=${T(com.scd.dcs.regexes.UserRegex)}">
         <label>
             <span>이메일</span>
-            <input required autocomplete="email" class="_obj-input __field input" maxlength="50" minlength="5" name="email" placeholder="이메일 (user@sample.com)" spellcheck="false" type="email" th:attrappend="data-regex=${userRegex.email.expression}">
+            <input required autocomplete="email" class="_obj-input __field input" maxlength="50" minlength="5" name="username" placeholder="이메일 (user@sample.com)" spellcheck="false" type="email" th:attrappend="data-regex=${userRegex.email.expression}">
         </label>
         <label>
             <span>password</span>
@@ -27,20 +27,20 @@
         </label>
         <input type="submit">
     </form>
+    <ul>
+        <li>
+            <span>아직 계정이 없으신가요?</span>
+            <a th:href="@{/register}">회원가입 하기</a>
+        </li>
+        <li>
+            <span>이메일을 잊으셨나요?</span>
+            <a th:href="@{/findEmail}">이메일 찾기</a>
+        </li>
+        <li>
+            <span>비밀번호를 잊으셨나요?</span>
+            <a th:href="@{/resetPassword}">비밀번호 찾기</a>
+        </li>
+    </ul>
 </section>
-<ul>
-    <li>
-        <span>아직 계정이 없으신가요?</span>
-        <a th:href="@{/templates/register.html}">회원가입 하기</a>
-    </li>
-    <li>
-        <span>이메일을 잊으셨나요?</span>
-        <a th:href="@{/templates/findEmail.html}">이메일 찾기</a>
-    </li>
-    <li>
-        <span>비밀번호를 잊으셨나요?</span>
-        <a th:href="@{/templates/resetPassword.html}">비밀번호 찾기</a>
-    </li>
-</ul>
 </body>
 </html>

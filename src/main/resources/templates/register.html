@@ -24,18 +24,18 @@
     </script>
 </head>
 <body th:if="${result == null}">
-<form method="post">
+<form method="post" action="../register" th:with="userRegex=${T(com.scd.dcs.regexes.UserRegex)}">
     <label>
         <span>이메일</span>
-        <input name="email" type="email">
+        <input required autocomplete="email" maxlength="50" minlength="5" name="email" placeholder="이메일 (user@sample.com)" spellcheck="false" type="email" th:attrappend="data-regex=${userRegex.email.expression}">
     </label>
     <label>
         <span>비밀번호</span>
-        <input name="password" type="password">
+        <input required autocomplete="new-password" maxlength="50" minlength="5" name="password" placeholder="비밀번호 (숫자, 영어 대소문자, 특수기호 5자 이상 50자 이하)" type="password" th:attrappend="data-regex=${userRegex.password.expression}">
     </label>
     <label>
         <span>닉네임</span>
-        <input name="nickname" type="text">
+        <input required autocomplete="off" maxlength="10" minlength="2" name="nickname" placeholder="닉네임 (숫자, 영어 대소문자, 완성 환글 2자 이상 10자 이하)" type="text" th:attrappend="data-regex=${userRegex._nickname.expression}">
     </label>
     <input type="submit" value="회원가입">
 </form>

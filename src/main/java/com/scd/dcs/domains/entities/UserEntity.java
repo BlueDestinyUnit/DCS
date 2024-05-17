@@ -1,15 +1,16 @@
 package com.scd.dcs.domains.entities;
 
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @ToString
 @Getter
 @Setter
+@EqualsAndHashCode(of = "email")
+@AllArgsConstructor
 public class UserEntity {
     private String email;
+    private String nickname;
     private String password;
     private String role;
 }

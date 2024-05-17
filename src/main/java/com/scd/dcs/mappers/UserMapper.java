@@ -13,10 +13,12 @@ public interface UserMapper {
 
     UserEntity selectUserByEmail(@Param("email") String email);
 
+    UserEntity selectUserByNickname(@Param(value = "nickname") String nickname);
+
+
     EmailAuthEntity selectEmailAuthByEmailCodeSalt(@Param("email") String email,
                                                    @Param("code") String code,
                                                    @Param("salt") String salt);
-
     int updateEmailAuth(EmailAuthEntity emailAuth);
     int updateUser(UserEntity user);
 }

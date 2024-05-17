@@ -10,17 +10,28 @@
     </insert>
 
     <insert id="insertUser" parameterType="UserEntity">
-        INSERT INTO `dcs`.`user`(`email`, `password`, `role`)
-        VALUES (#{email}, #{password}, #{role})
+        INSERT INTO `dcs`.`user`(`email`, `nickname`, `password`, `role`)
+        VALUES (#{email}, #{nickname}, #{password}, #{role})
     </insert>
 
     <select id="selectUserByEmail" resultType="UserEntity">
         SELECT `email` AS `email`,
+               `nickname` AS `nickname`,
                `password` AS `password`,
                `role`  AS `role`
         FROM `dcs`.`user`
         WHERE BINARY `email` = #{email}
         LIMIT 1
+    </select>
+
+    <select id="selectUserByNickname" resultType="UserEntity">
+        SELECT `email`    AS `email`,
+               `password` AS `password`,
+               `nickname` AS `nickname`,
+               `role` AS `role`
+        FROM `dcs`.`user`
+        WHERE BINARY `nickname` = #{nickname}
+        LIMIT 1;
     </select>
 
     <select id="selectEmailAuthByEmailCodeSalt" resultType="EmailAuthEntity">
@@ -55,6 +66,7 @@
     <update id="updateUser" parameterType="UserEntity">
         UPDATE `dcs`.`user`
         SET `password` = #{password},
+            `nickname` = #{nickname},
             `role`     = #{role}
         WHERE BINARY `email` = #{email}
         LIMIT 1
