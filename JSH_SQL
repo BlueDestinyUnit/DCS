@@ -1,0 +1,66 @@
+CREATE TABLE `dcs`.`boards`
+(
+    `code`          VARCHAR(10) NOT NULL,
+    `text`          VARCHAR(25) NOT NULL,
+    `is_admin_only` BOOLEAN     NOT NULL DEFAULT FALSE,
+    CONSTRAINT PRIMARY KEY (`code`)
+);
+
+CREATE TABLE `dcs`.`articles`
+(
+    `index`      INT UNSIGNED  NOT NULL AUTO_INCREMENT,
+    `board_code` VARCHAR(10)   NOT NULL,
+    `user_email` VARCHAR(50)   NOT NULL,
+    `title`      VARCHAR(1000) NOT NULL,
+    `content`    LONGTEXT      NOT NULL,
+    `created_at`  DATETIME      NOT NULL DEFAULT NOW(),
+    `view`       INT UNSIGNED  NOT NULL DEFAULT 0,
+    CONSTRAINT PRIMARY KEY (`index`),
+    CONSTRAINT FOREIGN KEY (`board_code`) REFERENCES `dcs`.`boards` (`code`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT FOREIGN KEY (`user_email`) REFERENCES `dcs`.`user` (`email`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+
+CREATE TABLE `dcs`.`comments`
+(
+    `index`         INT UNSIGNED  NOT NULL AUTO_INCREMENT,
+    `article_index` INT UNSIGNED  NOT NULL,
+    `user_email`    VARCHAR(50)   NOT NULL,
+    `content`       VARCHAR(1000) NOT NULL,
+    `created_at`    DATETIME      NOT NULL DEFAULT NOW(),
+    CONSTRAINT PRIMARY KEY (`index`),
+    CONSTRAINT FOREIGN KEY (`article_index`) REFERENCES `dcs`.`articles` (`index`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT FOREIGN KEY (`user_email`) REFERENCES `dcs`.`user` (`email`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE `dcs`.`comments`
+(
+    `index`         INT UNSIGNED  NOT NULL AUTO_INCREMENT,
+    `article_index` INT UNSIGNED  NOT NULL,
+    `user_email`    VARCHAR(50)   NOT NULL,
+    `content`       VARCHAR(1000) NOT NULL,
+    `created_at`    DATETIME      NOT NULL DEFAULT NOW(),
+    CONSTRAINT PRIMARY KEY (`index`),
+    CONSTRAINT FOREIGN KEY (`article_index`) REFERENCES `dcs`.`articles` (`index`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT FOREIGN KEY (`user_email`) REFERENCES `dcs`.`user` (`email`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE `dcs`.`images`(
+    `index` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+    `article_index` INT UNSIGNED NULL DEFAULT NULL REFERENCES `dcs`.`articles` (`index`) ON DELETE CASCADE ON UPDATE CASCADE,
+    `original_name` VARCHAR(255) NOT NULL,
+    `content_type` VARCHAR(50) NOT NULL,
+    `data` LONGBLOB NOT NULL
+);

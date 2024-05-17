@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scd.dcs.mappers.ArticleMapper">
+    <insert id="insertArticle" useGeneratedKeys="true" keyColumn="index" keyProperty="index"
+            parameterType="ArticleEntity">
+        INSERT INTO `dcs`.`articles`(`board_code`, `user_email`, `title`, `content`, `created_at`, `view`)
+        VALUES (#{boardCode}, #{userEmail}, #{title}, #{content}, #{createdAt}, #{view})
+    </insert>
+
+    <select id="selectArticleByIndex" resultType="ArticleEntity">
+        SELECT `index`    AS `index`,
+               `board_code` AS `boardCode`,
+               `user_email` AS `userEmail`,
+               `title`      AS `title`,
+               `content`    AS `content`,
+               `created_at` AS `createdAt`,
+               `view`       AS `view`
+        FROM `dcs`.`articles`
+        WHERE BINARY `index` = #{index}
+        LIMIT 1
+    </select>
+
+    <select id="selectArticlesByBoardVo"
+            parameterType="BoardVo"
+            resultType="ArticleEntity">
+        SELECT `index`    AS `index`,
+               `board_code` AS `boardCode`,
+               `user_email` AS `userEmail`,
+               `title`      AS `title`,
+               `content`    AS `content`,
+               `created_at` AS `createdAt`,
+               `view`       AS `view`
+        FROM `dcs`.`articles`
+        WHERE BINARY `board_code` = #{code}
+        <if test="by != null and by.equals('all')">
+            AND (REPLACE(`title`, ' ', '') LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%')
+            OR REPLACE(`content`, ' ', '') LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%'))
+        </if>
+        <if test="by != null and by.equals('title')">
+            AND REPLACE(`title`, ' ', '') LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%')
+        </if>
+        <if test="by != null and by.equals('writer')">
+            AND BINARY `user_email` = #{keyword}
+        </if>
+        ORDER BY `index` DESC
+        LIMIT #{countPerPage} OFFSET #{offset}
+    </select>
+
+    <select id="selectArticlesCountByBoardVo"
+            parameterType="BoardVo"
+            resultType="_int">
+        SELECT COUNT(0)
+        FROM `dcs`.`articles`
+        WHERE BINARY `board_code` = #{code}
+        <if test="by != null and by.equals('all')">
+            AND (REPLACE(`title`, ' ', '') LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%')
+            OR REPLACE(`content`, ' ', '') LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%'))
+        </if>
+        <if test="by != null and by.equals('title')">
+            AND REPLACE(`title`, ' ', '') LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%')
+        </if>
+        <if test="by != null and by.equals('writer')">
+            AND BINARY `user_email` = #{keyword}
+        </if>
+    </select>
+
+
+
+    <update id="updateArticle" parameterType="ArticleEntity">
+        UPDATE `dcs`.`articles`
+        SET `board_code` = #{boardCode},
+            `title`      = #{title},
+            `content`    = #{content},
+            `view`       = #{view},
+            `created_at` = #{createdAt},
+            `user_email` = #{userEmail}
+        WHERE BINARY `index` = #{index}
+    </update>
+    <delete id="deleteArticle" parameterType="ArticleEntity">
+        DELETE FROM `dcs`.`articles`
+        WHERE `index` = #{index}
+    </delete>
+
+
+</mapper>
