@@ -1,5 +1,6 @@
 package com.scd.dcs.domains.entities;
 
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,13 +11,14 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
+
 public class ArticleEntity {
     private int index;
     private String boardCode;
     private String userEmail;
     private String title;
     private String content;
-    private Date createdAt;
+    private LocalDateTime createdAt;
     private int view;
 
     @Override

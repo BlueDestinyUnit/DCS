@@ -1,5 +1,6 @@
 package com.scd.dcs.domains.entities;
 
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,7 +16,7 @@ public class CommentEntity {
     private int articleIndex;
     private String userEmail;
     private String content;
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Override
     public boolean equals(Object o) {
