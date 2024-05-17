@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{./layouts/layout}">
+      layout:decorate="~{/layouts/layout}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -10,7 +10,6 @@
     <title>Title</title>
 </head>
 <body>
-
 <section layout:fragment="content">
     <h1>로그인 페이지입니다.</h1>
     <form action="/login" method="post" id="loginForm">
