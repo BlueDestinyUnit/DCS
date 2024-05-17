@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{./layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>게시판</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <h1>메인입니다.</h1>
+    <h1 th:text="${board.getText()}"></h1>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>순번</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>조회수</th>
+            <th>일시</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${articles.length == 0}">
+            <td colspan="5" style="padding: 25px 50px; text-align: center;" th:if="${board.getBy() == null}">게시글이 존재하지 않습니다.</td>
+            <td colspan="5" style="padding: 25px 50px; text-align: center;" th:if="${board.getBy() != null}">검색 결과 존재하지 않습니다.</td>
+        </tr>
+        <tr th:each="article : ${articles}">
+            <th scope="row" th:text="${article.getIndex()}"></th>
+            <th>
+                <a th:href="@{/article/read (index=${article.getIndex()})}" th:text="${article.getTitle()}"></a>
+            </th>
+            <th th:text="${article.getUserEmail()}"></th>
+            <th th:text="${article.getView()}"></th>
+            <th th:text="${#dates.format(article.getCreatedAt(), 'yy-MM-dd HH:mm')}"></th>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="5">
+                <a th:href="@{/article/write}">글 쓰기</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <form method="get">
+                    <input name="code" type="hidden" th:value="${board.getCode()}">
+                    <label>
+                        <select name="by">
+                            <option th:selected="${board.getBy() != null && board.getBy().equals('all')}" value="all">제목 + 내용</option>
+                            <option th:selected="${board.getBy() != null && board.getBy().equals('title')}" value="title">제목</option>
+                            <option th:selected="${board.getBy() != null && board.getBy().equals('writer')}" value="writer">작성자</option>
+                        </select>
+                    </label>
+                    <label>
+                        <input name="keyword" placeholder="검색" type="search" th:value="${board.getKeyword()}">
+                    </label>
+                    <button type="submit">검색</button>
+                    <a th:href="@{/board/list (code=${board.getCode()})}" th:if="${board.getBy() != null}">검색 초기화</a>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a th:each="page : ${#numbers.sequence(board.getMinPage(), board.getMaxPage())}"
+                   th:href="@{/board/list (code=${board.getCode()}, page=${page})}"
+                   th:text="${page}"
+                >
+                </a>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+</body>
+</html>
