@@ -6,16 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Layout</title>
     <link rel="stylesheet" th:href="@{/css/layout/layout.css}">
+    <script crossorigin src="https://kit.fontawesome.com/5b8ed3147e.js" type="text/javascript"></script>
 
 </head>
 <body>
 <!-- 헤더를 포함하려면 layout:fragment="header"를 사용할 수 있습니다. -->
 
 <header id="header">
-    <section class="section" layout:fragment="header">
-        <div class="container">헤더입니다.</div>
-    </section>
+    <div class="spring"></div>
+    <a href="#" class="login-button">로그인</a>
+
 </header>
+<aside id="aside">
+    <div class="div">
+        <i class="fa-solid fa-bars-filter icon"></i>
+    </div>
+</aside>
+
+
 <!-- 컨텐츠를 표시하는 곳입니다. -->
 <main id="main">
     <!-- 컨텐츠의 실제 내용은 각 페이지에서 제공됩니다. -->
