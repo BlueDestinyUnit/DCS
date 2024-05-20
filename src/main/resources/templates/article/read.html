@@ -40,7 +40,7 @@
             <th scope="row">작성자</th>
             <td th:text="${article.getUserEmail()}"></td>
             <th scope="row">작성일시</th>
-            <td th:text="${article.getCreatedAt()}"></td>
+            <td th:text="${#temporals.format(article.getCreatedAt(), 'yy-MM-dd HH:mm')}"></td>
             <th scope="row">조회수</th>
             <td th:text="${article.getView()}"></td>
         </tr>
