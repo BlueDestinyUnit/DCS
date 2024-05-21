@@ -44,10 +44,11 @@ body {
   position: fixed;
   align-items: stretch;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: flex-start;
   z-index: 2;
 }
-#aside > .aside-container {
+#aside > .menu-wrapper {
   background-color: #212121;
   top: 0;
   left: 0;
@@ -61,14 +62,46 @@ body {
   flex-direction: row;
   z-index: 3;
 }
-#aside > .aside-container > .spring {
+#aside > .menu-wrapper > .spring {
   flex-grow: 1;
 }
-#aside > .aside-container > .icon {
-  margin: 1.5rem 1rem;
+#aside > .menu-wrapper > .icon {
+  margin: 2rem 1.5rem;
   cursor: pointer;
   font-size: 2rem;
   color: #ffffff;
+}
+#aside > .menu {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 25rem;
+  z-index: 3;
+  gap: 2rem;
+}
+#aside > .menu > .item > .link {
+  width: 10rem;
+  height: 2rem;
+  box-sizing: border-box;
+  color: #dfdfdf;
+  font-size: 1.125rem;
+  text-decoration: none;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+  position: absolute;
+  justify-content: center;
+}
+#aside > .menu > .item > .link > .text {
+  position: absolute;
+  transition-property: all;
+  transition-delay: 250ms;
+  transition-duration: 100ms;
+}
+#aside > .menu > .item > .link:hover > .text {
+  left: 50px;
 }
 
 /*# sourceMappingURL=layout.css.map */
