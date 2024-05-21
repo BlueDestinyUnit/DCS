@@ -59,17 +59,29 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "read", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getRead(@RequestParam(value = "index") int index) {
+    public ModelAndView getRead(
+            Authentication authentication
+            ,@RequestParam(value = "index") int index) {
+        SecurityUser loginUser = (SecurityUser) authentication.getPrincipal();
+
         ModelAndView modelAndView = new ModelAndView();
         ArticleEntity dbArticle = this.articleService.getArticle(index);
         if (dbArticle == null) {
             modelAndView.addObject("result", "FAILURE");
+
+        }else{
+            modelAndView.addObject("result", "SUCCESS");
+        }
+        if(dbArticle.getUserEmail().equals(loginUser.getUserEntity().getEmail())) {
+            modelAndView.addObject("mine", true);
+        }else{
+            modelAndView.addObject("mine", false);
         }
         boolean viewResult = this.articleService.updateArticle(dbArticle);
         if (viewResult == false) {
             modelAndView.addObject("result", "FAILURE");
         }
-        modelAndView.addObject("result", "SUCCESS");
+
         modelAndView.addObject("article", dbArticle);
         modelAndView.setViewName("article/read");
         return modelAndView;

@@ -16,7 +16,9 @@
                `title`      AS `title`,
                `content`    AS `content`,
                `created_at` AS `createdAt`,
-               `view`       AS `view`
+               `view`       AS `view`,
+               `is_deleted` AS `isDeleted`,
+               `is_secret` AS `isSecret`
         FROM `dcs`.`articles`
         WHERE BINARY `index` = #{index}
         LIMIT 1

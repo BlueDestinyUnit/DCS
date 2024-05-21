@@ -1,7 +1,10 @@
 <!doctype html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{./layouts/layout}">>
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{./layouts/layout}"
+>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -55,8 +58,9 @@
         <tr>
             <td colspan="6">
                 <a th:href="@{/board/list (code=${article.getBoardCode()})}">목록</a>
-                <a th:href="@{/article/modify (index=${article.getIndex()})}" th:if="${session.user != null && session.user.getEmail().equals(article.getUserEmail())}">수정</a>
-                <a href="#" onclick="deleteArticle()" th:if="${session.user != null && session.user.getEmail().equals(article.getUserEmail())}">삭제</a>
+                <a th:href="@{/article/modify (index=${article.getIndex()})}" sec:authorize="authenticated" th:if="${mine == true}">수정</a>
+                <a href="#" sec:authorize="authenticated" th:if="${mine == true}"  onclick="deleteArticle()">삭제</a>
+
             </td>
         </tr>
         </tfoot>
@@ -67,9 +71,9 @@
         <input name="articleIndex" type="hidden" th:value="${article.getIndex()}">
         <label>
             <span>내용</span>
-            <input th:disabled="${session.user == null}" name="content" type="text">
+            <input sec:authorize="authenticated" name="content" type="text">
         </label>
-        <input th:disabled="${session.user == null}" type="submit" value="작성">
+        <input sec:authorize="authenticated" type="submit" value="작성">
     </form>
     <div id="comment-container">
         <div rel="comment">
