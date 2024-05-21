@@ -47,7 +47,7 @@ body {
   flex-direction: column;
   z-index: 2;
 }
-#aside > .div {
+#aside > .aside-container {
   background-color: #212121;
   top: 0;
   left: 0;
@@ -58,13 +58,17 @@ body {
   position: fixed;
   align-items: stretch;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   z-index: 3;
 }
-#aside > .div > .icon {
+#aside > .aside-container > .spring {
+  flex-grow: 1;
+}
+#aside > .aside-container > .icon {
+  margin: 1.5rem 1rem;
+  cursor: pointer;
+  font-size: 2rem;
   color: #ffffff;
-  height: 50px;
-  width: 50px;
 }
 
 /*# sourceMappingURL=layout.css.map */
