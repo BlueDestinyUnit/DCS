@@ -1,46 +1,52 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layouts/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>로그인 화면</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/styles/common.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/styles/login.css}">
     <script th:if="${result != null && result.equals('FAILURE')}">
         alert('이메일 혹은 비밀번호가 올바르지 않습니다.');
         history.back();
     </script>
 </head>
 <body th:if="${result == null}">
-<section layout:fragment="content">
-    <h1>로그인 페이지입니다.</h1>
-    <form action="/login" method="post" id="loginForm" th:with="userRegex=${T(com.scd.dcs.regexes.UserRegex)}">
-        <label>
-            <span>이메일</span>
+<div class="cover" style="display: none"></div>
+<section id="loginSection">
+    <h1 class="title">로그인</h1>
+    <form action="/login" method="post" novalidate class="dialog" id="loginForm" th:with="userRegex=${T(com.scd.dcs.regexes.UserRegex)}">
+
+        <label class="_obj-label label">
+            <span class="__text">이메일</span>
             <input required autocomplete="email" class="_obj-input __field input" maxlength="50" minlength="5" name="username" placeholder="이메일 (user@sample.com)" spellcheck="false" type="email" th:attrappend="data-regex=${userRegex.email.expression}">
         </label>
-        <label>
-            <span>password</span>
+        <label class="_obj-label label">
+            <span class="__text">비밀번호</span>
             <input required autocomplete="current-password" class="_obj-input __field input" maxlength="50" minlength="5" name="password" placeholder="비밀번호 (숫자, 영어 대소문자, 특수기호 5자 이상 50자 이하)" type="password" th:attrappend="data-regex=${userRegex.password.expression}">
         </label>
-        <input type="submit">
+        <button class="_obj-button" type="submit">
+            <i class="__icon"></i>
+            <span class="__text">로그인</span>
+        </button>
+        <ul class="menu">
+            <li class="item">
+                <span class="text">아직 계정이 없으신가요?</span>
+                <a class="link" th:href="@{/register}">회원가입 하기</a>
+            </li>
+            <li class="item">
+                <span class="text">이메일을 잊으셨나요?</span>
+                <a class="link" th:href="@{/findEmail}">이메일 찾기</a>
+            </li>
+            <li class="item">
+                <span class = text>비밀번호를 잊으셨나요?</span>
+                <a class="link" th:href="@{/resetPassword}">비밀번호 찾기</a>
+            </li>
+        </ul>
     </form>
-    <ul>
-        <li>
-            <span>아직 계정이 없으신가요?</span>
-            <a th:href="@{/register}">회원가입 하기</a>
-        </li>
-        <li>
-            <span>이메일을 잊으셨나요?</span>
-            <a th:href="@{/findEmail}">이메일 찾기</a>
-        </li>
-        <li>
-            <span>비밀번호를 잊으셨나요?</span>
-            <a th:href="@{/resetPassword}">비밀번호 찾기</a>
-        </li>
-    </ul>
 </section>
 </body>
 </html>

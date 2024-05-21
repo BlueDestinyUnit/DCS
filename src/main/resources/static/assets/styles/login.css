@@ -1,0 +1,50 @@
+body {
+  height: 100vh;
+  margin: initial;
+  overflow: hidden;
+}
+body #loginSection {
+  width: 500px;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  position: absolute;
+}
+body #loginSection > .title {
+  font-size: 1.75rem;
+  font-weight: 100;
+  margin-bottom: 1.5rem;
+}
+body #loginSection > .dialog {
+  background-color: #ffffff;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  box-shadow: 0 0 2rem 0.0625rem rgba(33, 33, 33, 0.1882352941);
+  opacity: 1;
+  padding: 2.5rem;
+  transition-duration: 250ms;
+  transition-property: top, opacity;
+  transition-timing-function: ease;
+  z-index: 9;
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+body #loginSection > .dialog > .label {
+  margin-bottom: 1rem;
+}
+body #loginSection > .dialog > .menu {
+  align-items: stretch;
+  display: flex;
+  gap: 0.25rem;
+  flex-direction: column;
+}
+body #loginSection > .dialog > .menu > .item {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+/*# sourceMappingURL=login.css.map */
