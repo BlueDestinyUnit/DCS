@@ -14,36 +14,50 @@
 
 <header id="header">
     <div class="spring"></div>
-    <a href="#" class="login-button">로그인</a>
+    <div class="profile-container">
+        <a href="#" class="profile-button">
+            <div class="userThumbnail"></div>
+        </a>
+        <div class="detailProfile">
+            <div class="userName"></div>
+            <img alt="" class="image" th:src="@{/assets/images/down.png}">
+        </div>
+    </div>
+    <a href="#" class="logout-button">
+        <i class="icon fa-solid fa-arrow-right-from-bracket"></i>
+        <span class="text">로그아웃</span>
+    </a>
 
 </header>
-<aside id="aside">
-    <div class="menu-wrapper">
+<aside id="asideFrame">
+    <div class="aside">
         <div class="spring"></div>
-        <i class="icon fa-solid fa-bars"></i>
+        <div class="menu-wrapper" rel="menuButton">
+            <i class="icon fa-solid fa-bars"></i>
+        </div>
     </div>
-        <ul class="menu">
-            <li class="item">
-                <a class="link" href="#">
-                    <span class="text">급여</span>
-                </a>
-            </li>
-            <li class="item">
-                <a class="link" href="#">
-                    <span class="text">출석 현황</span>
-                </a>
-            </li>
-            <li class="item">
-                <a class="link" href="#">
-                    <span class="text">내 정보</span>
-                </a>
-            </li>
-            <li class="item">
-                <a class="link" href="#">
-                    <span class="text">게시판</span>
-                </a>
-            </li>
-        </ul>
+    <ul class="menu">
+        <li class="item">
+            <a class="link" href="#">
+                <span class="text">급여</span>
+            </a>
+        </li>
+        <li class="item">
+            <a class="link" href="#">
+                <span class="text">출석 현황</span>
+            </a>
+        </li>
+        <li class="item">
+            <a class="link" href="#">
+                <span class="text">내 정보</span>
+            </a>
+        </li>
+        <li class="item">
+            <a class="link" href="#">
+                <span class="text">게시판</span>
+            </a>
+        </li>
+    </ul>
 </aside>
 
 
