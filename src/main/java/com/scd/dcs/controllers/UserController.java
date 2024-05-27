@@ -5,6 +5,7 @@ import com.scd.dcs.domains.entities.UserEntity;
 import com.scd.dcs.results.CommonResult;
 import com.scd.dcs.results.Result;
 import com.scd.dcs.services.UserService;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.security.NoSuchAlgorithmException;
 
 @Controller
 public class UserController {
@@ -28,7 +31,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.GET,produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getLogin(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
+        modelAndView.setViewName("user/login");
         return modelAndView;
     }
 
@@ -41,34 +44,34 @@ public class UserController {
         }
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("result", result.name());
-        modelAndView.setViewName("login");
+        modelAndView.setViewName("user/login");
         return modelAndView;
     }
 
     @RequestMapping(value = "register", method= RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getRegister(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("register");
+        modelAndView.setViewName("user/register");
         return modelAndView;
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView postRegister(UserEntity user){
         Result<?> result = this.userService.register(user);
-        ModelAndView modelAndView = new ModelAndView("register");
+        ModelAndView modelAndView = new ModelAndView("user/register");
         modelAndView.addObject("result", result.name());
         return modelAndView;
     }
 
     @RequestMapping(value = "resetPassword", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getResetPassword(){
-        return new ModelAndView("resetPassword");
+        return new ModelAndView("user/resetPassword");
     }
 
     @RequestMapping(value = "resetPassword", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView postResetPassword(UserEntity resetUser, @RequestParam(value = "newPassword") String newPassword){
         Result<?> result = this.userService.resetPassword(resetUser, newPassword);
-        ModelAndView modelAndView = new ModelAndView("resetPassword");
+        ModelAndView modelAndView = new ModelAndView("user/resetPassword");
         modelAndView.addObject("result", result.name());
         return modelAndView;
     }
@@ -76,7 +79,7 @@ public class UserController {
     @RequestMapping(value = "findEmail", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getFindEmail(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("findEmail");
+        modelAndView.setViewName("user/findEmail");
         return modelAndView;
     }
 
@@ -88,7 +91,28 @@ public class UserController {
         if(result == CommonResult.SUCCESS){
             modelAndView.addObject("email", findEmailUser.getEmail());
         }
-        modelAndView.setViewName("findEmail");
+        modelAndView.setViewName("user/findEmail");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/registerEmail", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ModelAndView patchRegisterEmail(EmailAuthEntity emailAuth){
+        Result<?> result = this.userService.verifyEmailAuth(emailAuth);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("result", result.name());
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/registerEmail", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ModelAndView postRegisterEmail(EmailAuthEntity emailAuth) throws NoSuchAlgorithmException, MessagingException {
+        Result<?> result = this.userService.sendRegisterEmail(emailAuth);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("result", result.name());
+        if(result == CommonResult.SUCCESS){
+            modelAndView.addObject("salt", emailAuth.getSalt());
+        }
         return modelAndView;
     }
 

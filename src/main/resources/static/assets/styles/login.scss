@@ -65,7 +65,12 @@ body {
           align-items: center;
           display: flex;
           flex-direction: row;
+          margin-bottom: 0.25rem;
           justify-content: flex-start;
+
+          > .text{
+            margin-right: 0.35rem;
+          }
         }
       }
     }
