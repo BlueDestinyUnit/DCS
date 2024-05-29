@@ -2,6 +2,9 @@ const main = document.getElementById('mainSection');
 
 main.form = main.querySelector(':scope > .form');
 
+console.log(main.form)
+
+
 ClassicEditor.create(main.form['content'], {
     simpleUpload: {
         uploadUrl: './image',
