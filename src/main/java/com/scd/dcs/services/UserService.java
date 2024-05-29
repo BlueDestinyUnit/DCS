@@ -79,58 +79,36 @@ public class UserService {
         return CommonResult.SUCCESS;
     }
 
+
     @Transactional
-    public Result<?> register(UserEntity user){
-        if (user == null || !UserRegex.email.tests(user.getEmail()) || !UserRegex.password.tests(user.getPassword()) || !UserRegex.nickname.tests(user.getNickname())){
-            System.out.println("1");
-            System.out.println(user);
+    public Result<?> register(EmailAuthEntity emailAuth,
+                              UserEntity user){
+        if (user == null || !EmailAuthRegex.email.tests(emailAuth.getEmail()) || !EmailAuthRegex.code.tests(emailAuth.getCode()) || !EmailAuthRegex.salt.tests(emailAuth.getSalt()) || !UserRegex.email.tests(user.getEmail()) || !UserRegex.password.tests(user.getPassword()) || !UserRegex.nickname.tests(user.getNickname())){
+            System.out.println(1);
+            return CommonResult.FAILURE;
+        }
+        EmailAuthEntity dbEmailAuth = this.userMapper.selectEmailAuthByEmailCodeSalt(
+                emailAuth.getEmail(),
+                emailAuth.getCode(),
+                emailAuth.getSalt());
+        if (dbEmailAuth == null || dbEmailAuth.isExpired() || !dbEmailAuth.isVerified() || dbEmailAuth.isUsed()){
+            System.out.println(dbEmailAuth);
             return CommonResult.FAILURE;
         }
         if(this.userMapper.selectUserByEmail(user.getEmail()) != null){
-            System.out.println(3);
             return RegisterResult.FAILURE_DUPLICATE_EMAIL;
         }
         if(this.userMapper.selectUserByNickname(user.getNickname()) != null){
-            System.out.println(4);
             return RegisterResult.FAILURE_DUPLICATE_NICKNAME;
         }
+        dbEmailAuth.setUsed(true);
+        this.userMapper.updateEmailAuth(dbEmailAuth);
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        System.out.println(user);
+        System.out.println(3);
         return this.userMapper.insertUser(user) > 0
                 ? CommonResult.SUCCESS
                 : CommonResult.FAILURE;
     }
-
-//    @Transactional
-//    public Result<?> register2(EmailAuthEntity emailAuth,
-//                              UserEntity user){
-//        if (user == null || !EmailAuthRegex.email.tests(emailAuth.getEmail()) || !EmailAuthRegex.code.tests(emailAuth.getCode()) || !EmailAuthRegex.salt.tests(emailAuth.getSalt()) || !UserRegex.email.tests(user.getEmail()) || !UserRegex.password.tests(user.getPassword()) || !UserRegex.nickname.tests(user.getNickname())){
-//            System.out.println("1");
-//            return CommonResult.FAILURE;
-//        }
-//        EmailAuthEntity dbEmailAuth = this.userMapper.selectEmailAuthByEmailCodeSalt(
-//                emailAuth.getEmail(),
-//                emailAuth.getCode(),
-//                emailAuth.getCode());
-//        if (dbEmailAuth == null || dbEmailAuth.isExpired() || !dbEmailAuth.isVerified() || dbEmailAuth.isUsed()){
-//            System.out.println(2);
-//            return CommonResult.FAILURE;
-//        }
-//        if(this.userMapper.selectUserByEmail(user.getEmail()) != null){
-//            System.out.println(3);
-//            return RegisterResult.FAILURE_DUPLICATE_EMAIL;
-//        }
-//        if(this.userMapper.selectUserByNickname(user.getNickname()) != null){
-//            System.out.println(4);
-//            return RegisterResult.FAILURE_DUPLICATE_NICKNAME;
-//        }
-//        dbEmailAuth.setUsed(true);
-//        this.userMapper.updateEmailAuth(dbEmailAuth);
-//        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-//        return this.userMapper.insertUser(user) > 0
-//                ? CommonResult.SUCCESS
-//                : CommonResult.FAILURE;
-//    }
 
     public Result<?> resetPassword(UserEntity resetUser, String newPassword){
         UserEntity dbUser = this.userMapper.selectUserByEmail(resetUser.getEmail());
@@ -174,7 +152,7 @@ public class UserService {
                 .setSubject("[맛집] 회원가입 인증번호")
                 .setText(this.templateEngine.process("user/registerEmail", context), true)
                 .setTo(emailAuth.getEmail())
-                .send();;
+                .send();
         return CommonResult.SUCCESS;
     }
 
