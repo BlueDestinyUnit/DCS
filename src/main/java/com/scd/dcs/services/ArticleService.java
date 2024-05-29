@@ -11,6 +11,7 @@ import com.scd.dcs.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Service
@@ -29,7 +30,7 @@ public class ArticleService {
         if(article== null){
             return CommonResult.FAILURE;
         }
-        article.setCreatedAt(new Date());
+        article.setCreatedAt(LocalDateTime.now());
         article.setView(0);
         return this.articleMapper.insertArticle(article) > 0 ? CommonResult.SUCCESS : CommonResult.FAILURE;
     }

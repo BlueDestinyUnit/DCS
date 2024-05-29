@@ -76,6 +76,7 @@
             startY = event.offsetY;
         }
 
+
         function drag(event) {
             if (isDragging) {
                 var endX = event.offsetX;
@@ -104,6 +105,7 @@
                 isDragging = false;
                 var endX = event.offsetX;
                 var endY = event.offsetY;
+
 
                 // 현재 드래그 영역을 저장
                 mosaicAreas.push({ startX, startY, endX, endY, size: 10 });
@@ -177,6 +179,16 @@
             mosaicAreas = [];
             ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
         };
+
+                saveButton.onclick = function (e) {
+                    var imageDataURL = canvas.toDataURL('image/png');
+                    var downloadLink = document.createElement('a');
+                    downloadLink.href = imageDataURL;
+                    downloadLink.download = 'mosaic_image.png';
+                    downloadLink.click();
+                }
+            }
+        }
     </script>
 </main>
 </body>

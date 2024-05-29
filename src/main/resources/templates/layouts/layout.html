@@ -6,16 +6,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Layout</title>
     <link rel="stylesheet" th:href="@{/css/layout/layout.css}">
+    <script crossorigin src="https://kit.fontawesome.com/5b8ed3147e.js" type="text/javascript"></script>
 
 </head>
 <body>
 <!-- 헤더를 포함하려면 layout:fragment="header"를 사용할 수 있습니다. -->
 
 <header id="header">
-    <section class="section" layout:fragment="header">
-        <div class="container">헤더입니다.</div>
-    </section>
+    <div class="spring"></div>
+    <div class="profile-container">
+        <a href="#" class="profile-button">
+            <div class="userThumbnail"></div>
+        </a>
+        <div class="detailProfile">
+            <div class="userName"></div>
+            <img alt="" class="image" th:src="@{/assets/images/down.png}">
+        </div>
+    </div>
+    <a href="#" class="logout-button">
+        <i class="icon fa-solid fa-arrow-right-from-bracket"></i>
+        <span class="text">로그아웃</span>
+    </a>
+
 </header>
+<aside id="asideFrame">
+    <div class="aside">
+        <div class="spring"></div>
+        <div class="menu-wrapper" rel="menuButton">
+            <i class="icon fa-solid fa-bars"></i>
+        </div>
+    </div>
+    <ul class="menu">
+        <li class="item">
+            <a class="link" href="#">
+                <img alt="" class="image" th:src="@{/assets/images/tool.png}">
+                <span class="text">작업</span>
+            </a>
+        </li>
+        <li class="item">
+            <a class="link" href="#">
+                <img alt="" class="image" th:src="@{/assets/images/payment.png}">
+                <span class="text">급여</span>
+            </a>
+        </li>
+        <li class="item">
+            <a class="link" href="#">
+                <img alt="" class="image" th:src="@{/assets/images/attendance.png}">
+                <span class="text">출석 현황</span>
+            </a>
+        </li>
+        <li class="item">
+            <a class="link" href="#">
+                <img alt="" class="image" th:src="@{/assets/images/user.png}">
+                <span class="text">내 정보</span>
+            </a>
+        </li>
+        <li class="item">
+            <a class="link" href="#">
+                <img alt="" class="image" th:src="@{/assets/images/board.png}">
+                <span class="text">게시판</span>
+            </a>
+        </li>
+    </ul>
+</aside>
+
+
 <!-- 컨텐츠를 표시하는 곳입니다. -->
 <main id="main">
     <!-- 컨텐츠의 실제 내용은 각 페이지에서 제공됩니다. -->
