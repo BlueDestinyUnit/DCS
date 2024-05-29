@@ -2,7 +2,8 @@ body {
   background-color: #ffffff;
   color: #212121;
   font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-  margin: unset;
+  margin-top: 5.25rem;
+  margin-left: 20rem;
   height: 100vh;
 }
 
@@ -142,20 +143,29 @@ body {
 }
 #asideFrame > .menu > .item > .link {
   border-radius: 200px;
-  width: 10rem;
+  width: 11.75rem;
   height: 2rem;
   box-sizing: border-box;
   color: #dbdbdb;
-  font-size: 1.125rem;
+  font-size: 1.175rem;
   text-decoration: none;
   user-select: none;
+  padding: 1.5rem 0.5rem;
+  margin-left: 0.475rem;
+  align-items: center;
   display: flex;
-  flex-direction: column;
-  padding: 1.5rem 1rem;
-  margin-left: 1rem;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: start;
+  gap: 0.625rem;
+}
+#asideFrame > .menu > .item > .link > .image {
+  margin-top: 0.125rem;
+  margin-left: 0.5rem;
+  width: 1.75rem;
+  height: 1.75rem;
 }
 #asideFrame > .menu > .item > .link:hover {
+  font-size: 1.175rem;
   background-color: #d1d1d1;
   color: #212121;
 }
