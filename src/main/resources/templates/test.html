@@ -56,16 +56,6 @@
             startY = event.offsetY;
         }
 
-        // function drag(event) {
-        //     if (isDragging) {
-        //         var endX = event.offsetX;
-        //         var endY = event.offsetY;
-        //         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        //         ctx.drawImage(image, 0, 0, canvas.width, canvas.height); // 원본 이미지를 그립니다.
-        //         ctx.fillStyle = 'rgba(0, 0, 0, 0.9)'; // 반투명 검은색으로 설정
-        //         ctx.fillRect(startX, startY, endX - startX, endY - startY); // 드래그한 부분을 검은색으로 채웁니다.
-        //     }
-        // }
 
         function drag(event) {
             if (isDragging) {
@@ -82,13 +72,11 @@
             }
         }
 
-
         function stopDragging(event) {
             if (isDragging) {
                 isDragging = false;
                 var endX = event.offsetX;
                 var endY = event.offsetY;
-
 
                 saveButton.onclick = function (e) {
                     var imageDataURL = canvas.toDataURL('image/png');
@@ -97,19 +85,8 @@
                     downloadLink.download = 'mosaic_image.png';
                     downloadLink.click();
                 }
-
-                // // 모자이크된 이미지를 클릭하여 다운로드
-                // var imageDataURL = canvas.toDataURL('image/png');
-                // var downloadLink = document.createElement('a');
-                // downloadLink.href = imageDataURL;
-                // downloadLink.download = 'mosaic_image.png';
-                // downloadLink.click();
             }
         }
-
-
-
-
     </script>
 </main>
 </body>

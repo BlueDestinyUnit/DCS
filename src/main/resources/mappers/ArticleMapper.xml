@@ -36,6 +36,7 @@
                `view`       AS `view`
         FROM `dcs`.`articles`
         WHERE BINARY `board_code` = #{code}
+        AND
         <if test="by != null and by.equals('all')">
             AND (REPLACE(`title`, ' ', '') LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%')
             OR REPLACE(`content`, ' ', '') LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%'))

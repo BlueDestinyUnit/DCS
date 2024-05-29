@@ -60,7 +60,6 @@
                 <a th:href="@{/board/list (code=${article.getBoardCode()})}">목록</a>
                 <a th:href="@{/article/modify (index=${article.getIndex()})}" sec:authorize="authenticated" th:if="${mine == true}">수정</a>
                 <a href="#" sec:authorize="authenticated" th:if="${mine == true}"  onclick="deleteArticle()">삭제</a>
-
             </td>
         </tr>
         </tfoot>
