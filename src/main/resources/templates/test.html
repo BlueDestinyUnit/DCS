@@ -6,8 +6,10 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Title</title>
-    <link rel="stylesheet" th:href="@{/css/test.css}">
-    <script th:src="@{/js/test.js}"></script>
+<!--    <link rel="stylesheet" th:href="@{/css/test.css}">-->
+    <script src="https://kit.fontawesome.com/c1106c0e90.js" crossorigin="anonymous"></script>
+<!--    <script th:src="@{/js/test.js}"></script>-->
+
 </head>
 <style>
     #imageContainer {
@@ -24,15 +26,29 @@
     }
 </style>
 <body>
-<main id="main">
-
-
-    <div id="imageContainer">
-        <img id="image" src="https://cdn.crowdpic.net/detail-thumb/thumb_d_2F583E5543F7E19139C6FCFFBF9607A6.jpg" alt="Image" width="500" height="500">
-        <canvas id="canvas" width="500" height="500"></canvas>
+<aside class="aside place-list -visible" id="placeListAside">
+    <div class="title">
+        <h2 class="text">사진 수정</h2>
     </div>
+    <ul class="menu">
+        <li class="item">
+            <button class="button" rel="placeAddButton" type="button">
+                <i class="icon fa-solid fa-plus"></i>
+                <span class="text">사진</span>
+            </button>
+        </li>
+    </ul>
+</aside>
+<main id="main">
+        <div id="imageContainer">
+            <div class="imgBox">
+                <img id="image" src="https://cdn.crowdpic.net/detail-thumb/thumb_d_2F583E5543F7E19139C6FCFFBF9607A6.jpg" alt="Image" width="500" height="500">
+                <canvas id="canvas" width="500" height="500"></canvas>
+            </div>
+        </div>
 
     <button id="saveButton">Save Image</button>
+    <button id="resetButton">reset</button>
 
     <script>
         var canvas = document.getElementById('canvas');
@@ -42,8 +58,12 @@
         var isDragging = false;
         var startX, startY;
         const saveButton = document.getElementById('saveButton');
+        const resetButton = document.getElementById('resetButton');
+        var mosaicAreas = [];
 
-
+        image.onload = function() {
+            ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        };
 
         canvas.addEventListener('mousedown', startDragging);
         canvas.addEventListener('mousemove', drag);
@@ -56,32 +76,28 @@
             startY = event.offsetY;
         }
 
-        // function drag(event) {
-        //     if (isDragging) {
-        //         var endX = event.offsetX;
-        //         var endY = event.offsetY;
-        //         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        //         ctx.drawImage(image, 0, 0, canvas.width, canvas.height); // 원본 이미지를 그립니다.
-        //         ctx.fillStyle = 'rgba(0, 0, 0, 0.9)'; // 반투명 검은색으로 설정
-        //         ctx.fillRect(startX, startY, endX - startX, endY - startY); // 드래그한 부분을 검은색으로 채웁니다.
-        //     }
-        // }
-
         function drag(event) {
             if (isDragging) {
                 var endX = event.offsetX;
                 var endY = event.offsetY;
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(image, 0, 0, canvas.width, canvas.height); // 원본 이미지를 그립니다.
+                var width = endX - startX;
+                var height = endY - startY;
 
-                // 드래그한 영역에 블러 효과 적용
-                var blurRadius = 10; // 블러 효과의 반경을 조정할 수 있습니다.
-                ctx.filter = 'blur(' + blurRadius + 'px)';
-                ctx.drawImage(canvas, startX, startY, endX - startX, endY - startY, startX, startY, endX - startX, endY - startY);
-                ctx.filter = 'none'; // 필터 초기화
+                ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+                // 이전 모자이크 영역을 다시 그립니다.
+                mosaicAreas.forEach(area => {
+                    applyMosaic(area.x, area.y, area.width, area.height, area.size);
+                });
+
+                // 현재 드래그 영역에 모자이크 효과 적용
+                applyMosaicRect(startX, startY, endX, endY, 10);
+
+                // 드래그 영역을 시각적으로 표시
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+                ctx.fillRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(width), Math.abs(height));
             }
         }
-
 
         function stopDragging(event) {
             if (isDragging) {
@@ -89,27 +105,78 @@
                 var endX = event.offsetX;
                 var endY = event.offsetY;
 
+                // 현재 드래그 영역을 저장
+                mosaicAreas.push({ startX, startY, endX, endY, size: 10 });
 
-                saveButton.onclick = function (e) {
-                    var imageDataURL = canvas.toDataURL('image/png');
-                    var downloadLink = document.createElement('a');
-                    downloadLink.href = imageDataURL;
-                    downloadLink.download = 'mosaic_image.png';
-                    downloadLink.click();
-                }
-
-                // // 모자이크된 이미지를 클릭하여 다운로드
-                // var imageDataURL = canvas.toDataURL('image/png');
-                // var downloadLink = document.createElement('a');
-                // downloadLink.href = imageDataURL;
-                // downloadLink.download = 'mosaic_image.png';
-                // downloadLink.click();
+                // 최종 이미지에 모자이크 적용
+                ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+                mosaicAreas.forEach(area => {
+                    applyMosaicRect(area.startX, area.startY, area.endX, area.endY, area.size);
+                });
             }
         }
 
+        function applyMosaicRect(startX, startY, endX, endY, size) {
+            var x = Math.min(startX, endX);
+            var y = Math.min(startY, endY);
+            var width = Math.abs(endX - startX);
+            var height = Math.abs(endY - startY);
+            applyMosaic(x, y, width, height, size);
+        }
 
+        function applyMosaic(x, y, width, height, size) {
+            var imageData = ctx.getImageData(x, y, width, height);
+            var data = imageData.data;
 
+            for (var yOffset = 0; yOffset < height; yOffset += size) {
+                for (var xOffset = 0; xOffset < width; xOffset += size) {
+                    var red = 0, green = 0, blue = 0;
+                    var pixelCount = 0;
 
+                    for (var dy = 0; dy < size; dy++) {
+                        for (var dx = 0; dx < size; dx++) {
+                            var pixelIndex = ((yOffset + dy) * width + (xOffset + dx)) * 4;
+                            if (pixelIndex < data.length) {
+                                red += data[pixelIndex];
+                                green += data[pixelIndex + 1];
+                                blue += data[pixelIndex + 2];
+                                pixelCount++;
+                            }
+                        }
+                    }
+
+                    red = Math.floor(red / pixelCount);
+                    green = Math.floor(green / pixelCount);
+                    blue = Math.floor(blue / pixelCount);
+
+                    for (var dy = 0; dy < size; dy++) {
+                        for (var dx = 0; dx < size; dx++) {
+                            var pixelIndex = ((yOffset + dy) * width + (xOffset + dx)) * 4;
+                            if (pixelIndex < data.length) {
+                                data[pixelIndex] = red;
+                                data[pixelIndex + 1] = green;
+                                data[pixelIndex + 2] = blue;
+                            }
+                        }
+                    }
+                }
+            }
+
+            ctx.putImageData(imageData, x, y);
+        }
+
+        saveButton.onclick = function (e) {
+            var imageDataURL = canvas.toDataURL('image/png');
+            var downloadLink = document.createElement('a');
+            downloadLink.href = imageDataURL;
+            downloadLink.download = 'mosaic_image.png';
+            downloadLink.click();
+        };
+
+        resetButton.onclick = function (e) {
+            mosaicAreas = [];
+            ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        };
     </script>
 </main>
 </body>
