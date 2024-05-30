@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Datepicker Example</title>
+    <link rel="stylesheet" th:href="@{/css/admin2.css}">
+    <!-- 부트스트랩 CSS 파일 포함 -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 부트스트랩 Datepicker CSS 파일 포함 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
+          rel="stylesheet">
+    <!-- FontAwesome CSS 파일 포함 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 부트스트랩 및 jQuery JS 파일 포함 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- 부트스트랩 Datepicker JS 파일 포함 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ko.min.js"></script>
+    <style>
+        /* 화면 가운데 정렬을 위한 CSS */
+        .centered {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+<div class="container centered">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="py-4 text-center"><i class="fa fa-calendar fa-5x"></i></div>
+
+            <!-- Date Picker Input -->
+            <div class="form-group mb-4">
+                <div class="datepicker date input-group p-0 custom-shadow">
+                    <input type="text" placeholder="날짜를 선택해주세요." class="form-control py-4 px-4" id="reservationDate">
+                    <div class="input-group-append"><span class="input-group-text px-4"><i class="fa fa-calendar"></i></span></div>
+                </div>
+            </div><!-- DEnd ate Picker Input -->
+
+            <!-- 저장 버튼 -->
+            <div class="text-center">
+                <button id="saveBtn" class="btn btn-primary btn-sm px-4 rounded-pill text-uppercase font-weight-bold shadow-sm">
+                    <i class="fa fa-save"></i> 저장
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script>
+    $(function () {
+
+        // INITIALIZE DATEPICKER PLUGIN
+        $('.datepicker').datepicker({
+            clearBtn: true,
+            format: 'yyyy-mm-dd',
+            todayHighlight: true,
+            autoclose: true,
+            language: 'ko',
+            orientation: 'bottom'
+        });
+
+
+        // FOR DEMO PURPOSE
+        $('#saveBtn').click(function () {
+            // 수정된 부분: 선택된 날짜를 표시하는 코드
+            var selectedDate = $('#reservationDate').val();
+            if (selectedDate) {
+                $('#pickedDate').html(selectedDate);
+            } else {
+                $('#pickedDate').html('날짜를 선택해주세요.');
+            }
+        });
+    });
+
+</script>
+</html>
