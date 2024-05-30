@@ -65,18 +65,6 @@ public class UserController {
         return responseObject.toString();
     }
 
-    @RequestMapping(value = "/resetPassword", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getResetPassword(){
-        return new ModelAndView("user/resetPassword");
-    }
-
-    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView postResetPassword(UserEntity resetUser, @RequestParam(value = "newPassword") String newPassword){
-        Result<?> result = this.userService.resetPassword(resetUser, newPassword);
-        ModelAndView modelAndView = new ModelAndView("user/resetPassword");
-        modelAndView.addObject("result", result.name());
-        return modelAndView;
-    }
 
     @RequestMapping(value = "/findEmail", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getFindEmail(){
@@ -114,6 +102,55 @@ public class UserController {
         responseObject.put("result", result.name().toLowerCase());
         if(result == CommonResult.SUCCESS){
             responseObject.put("salt", emailAuth.getSalt());
+        }
+        return responseObject.toString();
+    }
+
+    @RequestMapping(value = "/resetPassword", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getResetPassword(){
+        return new ModelAndView("user/resetPassword");
+    }
+
+    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String postResetPassword(EmailAuthEntity emailAuth,
+                                      UserEntity user){
+        System.out.println(user);
+        Result<?> result = this.userService.resetPassword(emailAuth, user);
+        JSONObject responseObject = new JSONObject();
+        responseObject.put("result", result.name().toLowerCase());
+        return responseObject.toString();
+    }
+
+    @RequestMapping(value = "/resetPasswordEmail", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String patchResetPasswordEmail(EmailAuthEntity emailAuth){
+        Result<?> result = this.userService.verifyEmailAuth(emailAuth);
+        JSONObject responseObject = new JSONObject();
+        responseObject.put("result", result.name().toLowerCase());
+        return responseObject.toString();
+    }
+
+    @RequestMapping(value = "/resetPasswordEmail", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String postResetPasswordEmail(EmailAuthEntity emailAuth) throws NoSuchAlgorithmException, MessagingException {
+        Result<?> result = this.userService.sendResetPasswordEmail(emailAuth);
+        JSONObject responseObject = new JSONObject();
+        responseObject.put("result", result.name().toLowerCase());
+        if(result == CommonResult.SUCCESS){
+            responseObject.put("salt", emailAuth.getSalt());
+        }
+        return responseObject.toString();
+    }
+
+    @RequestMapping(value = "/email", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String getEmail(UserEntity user){
+        Result<?> result = this.userService.recoverEmail(user);
+        JSONObject responseObject = new JSONObject();
+        responseObject.put("result", result.name().toLowerCase());
+        if(result == CommonResult.SUCCESS){
+            responseObject.put("email", user.getEmail());
         }
         return responseObject.toString();
     }

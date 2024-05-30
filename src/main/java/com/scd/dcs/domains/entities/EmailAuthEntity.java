@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 @EqualsAndHashCode(of = {"email", "code", "salt"})
 @AllArgsConstructor
+@ToString
 public class EmailAuthEntity {
     private String email;
     private String code;

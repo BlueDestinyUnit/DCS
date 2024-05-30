@@ -62,16 +62,13 @@ public class UserService {
         if (user == null ||
                 !UserRegex.email.tests(user.getEmail()) ||
                 !UserRegex.password.tests(user.getPassword())) {
-            System.out.println("1");
             return CommonResult.FAILURE;
         }
         UserEntity dbUser = this.userMapper.selectUserByEmail(user.getEmail());
         if (dbUser == null) {
-            System.out.println("2");
             return CommonResult.FAILURE;
         }
         if (!BCrypt.checkpw(user.getPassword(), dbUser.getPassword())) {
-            System.out.println("3");
             return CommonResult.FAILURE;
         }
         user.setPassword(dbUser.getPassword());
@@ -84,7 +81,6 @@ public class UserService {
     public Result<?> register(EmailAuthEntity emailAuth,
                               UserEntity user){
         if (user == null || !EmailAuthRegex.email.tests(emailAuth.getEmail()) || !EmailAuthRegex.code.tests(emailAuth.getCode()) || !EmailAuthRegex.salt.tests(emailAuth.getSalt()) || !UserRegex.email.tests(user.getEmail()) || !UserRegex.password.tests(user.getPassword()) || !UserRegex.nickname.tests(user.getNickname())){
-            System.out.println(1);
             return CommonResult.FAILURE;
         }
         EmailAuthEntity dbEmailAuth = this.userMapper.selectEmailAuthByEmailCodeSalt(
@@ -104,22 +100,11 @@ public class UserService {
         dbEmailAuth.setUsed(true);
         this.userMapper.updateEmailAuth(dbEmailAuth);
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        System.out.println(3);
         return this.userMapper.insertUser(user) > 0
                 ? CommonResult.SUCCESS
                 : CommonResult.FAILURE;
     }
 
-    public Result<?> resetPassword(UserEntity resetUser, String newPassword){
-        UserEntity dbUser = this.userMapper.selectUserByEmail(resetUser.getEmail());
-        if(dbUser == null){
-            return CommonResult.FAILURE;
-        }
-        dbUser.setPassword(newPassword);
-        return this.userMapper.updateUser(dbUser) == 1
-                ? CommonResult.SUCCESS
-                : CommonResult.FAILURE;
-    }
 
     public Result<?> findEmail(UserEntity findEmailUser){
         UserEntity dbUser = this.userMapper.selectUserByNickname(findEmailUser.getNickname());
@@ -176,5 +161,73 @@ public class UserService {
                 : CommonResult.FAILURE;
     }
 
+    @Transactional
+    public Result<?> sendResetPasswordEmail(EmailAuthEntity emailAuth) throws NoSuchAlgorithmException, MessagingException{
+        if(emailAuth == null || !EmailAuthRegex.email.tests(emailAuth.getEmail())){
+            return CommonResult.FAILURE;
+        }
+        if(this.userMapper.selectUserByEmail(emailAuth.getEmail()) == null){
+            return CommonResult.FAILURE;
+        }
+        prepareEmailAuth(emailAuth);
+        if(this.userMapper.insertEmailAuth(emailAuth) != 1){
+            return CommonResult.FAILURE;
+        }
+        Context context = new Context();
+        context.setVariable("code", emailAuth.getCode());
+        new MailSender(this.mailSender)
+                .setFrom("gyust941326@gmail.com")
+                .setSubject("[맛집] 비밀번호 재설정 인증번호")
+                .setText(this.templateEngine.process("user/resetPasswordEmail", context), true)
+                .setTo(emailAuth.getEmail())
+                .send();
+        return CommonResult.SUCCESS;
+    }
 
+    @Transactional
+    public Result<?> resetPassword(EmailAuthEntity emailAuth,
+                                UserEntity user){
+        System.out.println(emailAuth);
+        System.out.println(user);
+        if(emailAuth == null || user == null ||
+                !EmailAuthRegex.email.tests(emailAuth.getEmail()) ||
+                !EmailAuthRegex.code.tests(emailAuth.getCode()) ||
+                !EmailAuthRegex.salt.tests(emailAuth.getSalt()) ||
+                !UserRegex.password.tests(user.getPassword())){
+            System.out.println(1);
+            return CommonResult.FAILURE;
+        }
+        EmailAuthEntity dbEmailAuth = this.userMapper.selectEmailAuthByEmailCodeSalt(
+                emailAuth.getEmail(),
+                emailAuth.getCode(),
+                emailAuth.getSalt());
+        if(dbEmailAuth == null || !dbEmailAuth.isVerified() || dbEmailAuth.isUsed()){
+            System.out.println(2);
+            return CommonResult.FAILURE;
+        }
+        UserEntity dbUser = this.userMapper.selectUserByEmail(emailAuth.getEmail());
+        if(dbUser == null){ // 필요 시 isDeleted 구문에 해당하는 엔티티 + 항목 만들기
+            System.out.println(3);
+            return CommonResult.FAILURE;
+        }
+        dbEmailAuth.setUsed(true);
+        this.userMapper.updateEmailAuth(dbEmailAuth);
+        dbUser.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        this.userMapper.updateUser(dbUser);
+
+        return CommonResult.SUCCESS;
+    }
+
+    public Result<?> recoverEmail(UserEntity user){
+        if(user == null ||
+                !UserRegex.nickname.tests(user.getNickname())) {
+            return CommonResult.FAILURE;
+        }
+        UserEntity dbUser = this.userMapper.selectUserByNickname(user.getNickname());
+        if(dbUser == null){ // 필요 시 isDeleted 구문에 해당하는 엔티티 + 항목 만들기
+            return CommonResult.FAILURE;
+        }
+        user.setEmail(dbUser.getEmail());
+        return CommonResult.SUCCESS;
+    }
 }

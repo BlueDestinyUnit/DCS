@@ -116,7 +116,7 @@ registerForm.onsubmit = (e) => {
             failure: ['경고', '알 수 없는 이유로 회원가입에 실패하였습니다. 잠시 후 다시 시도해 주세요.'],
             failure_duplicate_email: ['경고', `입력하신 이메일 <b>${registerForm['email'].value}</b>은 이미 사용 중입니다.`, () => registerForm['email'].focus()],
             failure_duplicate_nickname: ['경고', `입력하신 닉네임 <b>${registerForm['nickname'].value}</b>은 이미 사용 중입니다.`, () => registerForm['nickname'].focus()],
-            success: ['알림', '회원가입해 주셔서 감사합니다. 확인 버튼을 클릭하면 로그인 화면으로 이동합니다.', location.href = "./login"]
+            success: ['알림', '회원가입해 주셔서 감사합니다. 확인 버튼을 클릭하면 로그인 화면으로 이동합니다.', () => moveLogin()]
         }[responseObject.result] || ['경고', '서버가 예상치 못한 응답을 반환하였습니다. 잠시 후 다시 시도해 주세요.'];
         DialogObj.createSimpleOk(dTitle, dContent, dOnclick).show();
     }

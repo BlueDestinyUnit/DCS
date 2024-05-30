@@ -22,6 +22,10 @@ class DialogObj {
         });
     }
 
+
+
+
+
     element;
 
     constructor(params) {
@@ -33,7 +37,7 @@ class DialogObj {
         }
         params.buttons ??= [];
         const element = new DOMParser().parseFromString(`
-            <div class="_obj-dialog">
+            <di v class="_obj-dialog">
                 <div class="__title">${params.title}</div>
                 <div class="__content">${params.content}</div>
             </div>`, 'text/html').querySelector('._obj-dialog');
@@ -153,4 +157,8 @@ HTMLTextAreaElement.prototype.tests = function () {
         this._regExp = new RegExp(expression);
     }
     return this._regExp.test(this.value);
+}
+
+const moveLogin = () => {
+    location.href = "./login";
 }

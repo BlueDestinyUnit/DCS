@@ -19,7 +19,7 @@ findEmailForm.onsubmit = (e) => {
         const responseObject = JSON.parse(xhr.responseText);
         const [dTitle, dContent, dOnclick] = {
             failure: ['경고', '알 수 없는 이유로 회원가입에 실패하였습니다. 잠시 후 다시 시도해 주세요.'],
-            success: ['알림', `해당 닉네임으로 찾은 회원의 이메일은 <b>${responseObject['email']}</b>입니다. 확인을 클릭하면 로그인 페이지로 돌아갑니다.`]
+            success: ['알림', `해당 닉네임으로 찾은 회원의 이메일은 <b>${responseObject['email']}</b>입니다. 확인을 클릭하면 로그인 페이지로 돌아갑니다.`, () => moveLogin()]
         }[responseObject.result] || ['경고', '서버가 예상치 못한 응답을 반환하였습니다. 잠시 후 다시 시도해 주세요.'];
         DialogObj.createSimpleOk(dTitle, dContent, dOnclick).show();
     }
