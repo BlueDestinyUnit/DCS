@@ -2,6 +2,7 @@ package com.scd.dcs.domains.entities;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -9,9 +10,10 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of = "index")
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class WorkEntity {
     private int index;
     private String userEmail;
-    private LocalDateTime workDate;
-    private long content;
+    private LocalDate workDate;
+
 }

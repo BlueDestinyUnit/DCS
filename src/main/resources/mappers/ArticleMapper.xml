@@ -16,9 +16,7 @@
                `title`      AS `title`,
                `content`    AS `content`,
                `created_at` AS `createdAt`,
-               `view`       AS `view`,
-               `is_deleted` AS `isDeleted`,
-               `is_secret` AS `isSecret`
+               `view`       AS `view`
         FROM `dcs`.`articles`
         WHERE BINARY `index` = #{index}
         LIMIT 1
@@ -36,7 +34,6 @@
                `view`       AS `view`
         FROM `dcs`.`articles`
         WHERE BINARY `board_code` = #{code}
-        AND
         <if test="by != null and by.equals('all')">
             AND (REPLACE(`title`, ' ', '') LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%')
             OR REPLACE(`content`, ' ', '') LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%'))
