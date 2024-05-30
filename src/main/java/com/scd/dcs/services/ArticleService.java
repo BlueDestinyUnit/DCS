@@ -26,7 +26,7 @@ public class ArticleService {
         this.boardMapper = boardMapper;
     }
 
-    public Result write(ArticleEntity article){
+    public Result<?> write(ArticleEntity article){
         if(article== null){
             return CommonResult.FAILURE;
         }

@@ -20,5 +20,6 @@ public interface UserMapper {
                                                    @Param("code") String code,
                                                    @Param("salt") String salt);
     int updateEmailAuth(EmailAuthEntity emailAuth);
+
     int updateUser(UserEntity user);
 }
