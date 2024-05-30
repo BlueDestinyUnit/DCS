@@ -39,6 +39,8 @@ function loadWorkList() {
             itemEl.querySelector('img').onclick = (e) => {
                 const mainImage = document.getElementById('image');
                 mainImage.src = e.target.src;
+                mosaicAreas= [];
+                dragCount = 0;
             };
             listEl.append(itemEl);
         }

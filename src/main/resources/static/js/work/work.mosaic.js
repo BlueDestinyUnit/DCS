@@ -1,13 +1,16 @@
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 let image = document.getElementById('image');
+
+console.log(image);
+
 image.crossOrigin = "anonymous";
 let isDragging = false;
 let startX, startY;
 const saveButton = document.getElementById('saveButton');
 const resetButton = document.getElementById('resetButton');
 let mosaicAreas = [];
-
+let dragCount = 0;
 image.onload = function() {
     ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 };
@@ -25,6 +28,7 @@ function startDragging(event) {
 }
 
 function drag(event) {
+
     if (isDragging) {
         let endX = event.offsetX;
         let endY = event.offsetY;
@@ -47,6 +51,8 @@ function drag(event) {
 function stopDragging(event) {
     if (isDragging) {
         isDragging = false;
+        dragCount++;
+        console.log(dragCount)
         let endX = event.offsetX;
         let endY = event.offsetY;
 
