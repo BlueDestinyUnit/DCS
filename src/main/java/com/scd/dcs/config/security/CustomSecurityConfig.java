@@ -58,6 +58,7 @@ public class CustomSecurityConfig {
                         .requestMatchers("/work").permitAll()
                         .requestMatchers("/work/").permitAll()
                         .requestMatchers("/subImage").permitAll()
+                        .requestMatchers("/updateImage").permitAll()
                 )
                 .formLogin(login -> login
                         .loginPage("/login")

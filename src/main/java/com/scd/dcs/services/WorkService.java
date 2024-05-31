@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Service
 public class WorkService {
@@ -62,9 +61,14 @@ public class WorkService {
         return this.workMapper.selectSubmitImages(email,date);
     }
 
-    public SubmitImageEntity getReviewImage(int index) {
+    public SubmitImageEntity getImage(int index) {
 //        if (index < 1) return null;
         return this.workMapper.selectSubmitImage(index);
+    }
+
+    @Transactional
+    public Result<?> updateImage(SubmitImageEntity submitImageEntity) {
+        return workMapper.updateImage(submitImageEntity) > 0 ? CommonResult.SUCCESS : CommonResult.FAILURE;
     }
 
 
