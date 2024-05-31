@@ -81,17 +81,43 @@ public class WorkController {
     }
     // 24-05-29 재 수정
 
-
-
-
     @RequestMapping(value = "/subImage", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<byte[]> getImage(@RequestParam("index") int index) {
-        SubmitImageEntity image = this.workService.getReviewImage(index);
+        SubmitImageEntity image = this.workService.getImage(index);
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(image.getContentType()))
                 .contentLength(image.getImageData().length)
                 .body(image.getImageData());
+    }
+
+    @RequestMapping(value = "/updateImage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String patchIndex(@RequestParam(value = "images",required = false) MultipartFile[] images,
+                             @RequestParam(value = "index",required = false) int index,
+                             @RequestParam(value = "dragCount",required = false) int dragCount) throws IOException {
+
+        SubmitImageEntity submitImageEntity = this.workService.getImage(index);
+        JSONObject responseObject = new JSONObject();
+        try{
+            if (images != null && images.length > 0) {
+                MultipartFile image = images[0];
+                submitImageEntity.setImageData(image.getBytes());
+                submitImageEntity.setOriginalName(image.getOriginalFilename());
+                submitImageEntity.setContentType(image.getContentType());
+
+            }
+        }catch (Exception e) {
+            responseObject.put("result",CommonResult.FAILURE.name().toLowerCase());
+        }
+
+        if(dragCount > 0 && submitImageEntity.isMosaic() == false) {
+            submitImageEntity.setMosaic(true);
+        }
+        Result<?> result = workService.updateImage(submitImageEntity);
+
+        responseObject.put("result", result.name().toLowerCase());
+        return responseObject.toString();
     }
 
 }

@@ -82,6 +82,20 @@
                `comment`      AS `comment`
         FROM `dcs`.`submit_images`
     </select>
+    
+    <update id="updateImage" parameterType="com.scd.dcs.domains.entities.SubmitImageEntity">
+        UPDATE `dcs`.`submit_images`
+        SET `index`         = #{index},
+            `work_index`    = #{workIndex},
+            `content_type`  = #{contentType},
+            `original_name` = #{originalName},
+            `image_data`    = #{imageData},
+            `is_mosaic`     = #{isMosaic},
+            `is_sign`       = #{isSign},
+            `comment`       = #{comment}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
 
 
 </mapper>

@@ -35,8 +35,6 @@
     <h2 class="text">사진 수정</h2>
 </div>
 
-
-
 <aside class="photoAddButton" id="photoAddButton">
 
     <form id="photoAddButtonForm" method="post">
@@ -50,7 +48,6 @@
     </form>
 </aside>
 
-
 <aside class="aside work-list -visible" id="workListAside">
     <!--    <span class="time">2024-05-20</span>-->
     <div>
@@ -62,42 +59,24 @@
     </div>
 </aside>
 
-<!--<aside class="aside work-list -visible" id="workListAside">-->
-<!--    <div>-->
-<!--        <ul class="menuList">-->
-<!--        </ul>-->
-<!--    </div>-->
-<!--</aside>-->
-
-
 <main id="main">
     <div id="imageContainer">
+
+
         <div class="imgBox">
             <img id="image" src="https://cdn.crowdpic.net/detail-thumb/thumb_d_2F583E5543F7E19139C6FCFFBF9607A6.jpg" alt="Image" width="500" height="500">
             <canvas id="canvas" width="500" height="500"></canvas>
         </div>
     </div>
-
-    <!--    <div id="imageContainer">-->
-    <!--        <div class="imgBox">-->
-    <!--            <img id="image" src="" alt="Image" width="500" height="500">-->
-    <!--            <canvas id="canvas" width="500" height="500"></canvas>-->
-    <!--        </div>-->
-    <!--    </div>-->
-
-    <button  id="saveButton">Save Image</button>
+<!--  method="post"  enctype="multipart/form-data" th:action="@{/saveImage}" -->
+    <form id="saveForm" >
+        <input type="hidden" id="selectImageId" name="index">
+        <span hidden id="selectImageName" style="display: none" ></span>
+        <button type="submit" id="saveButton">Save Image</button>
+    </form>
     <button id="resetButton">reset</button>
-
-    <script>
-        document.getElementById('file').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('image').src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
-    </script>
+    <button id="CompleteButton">완료</button>
 </main>
+
 </body>
 </html>
