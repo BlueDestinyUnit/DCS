@@ -33,9 +33,21 @@
         <input required autocomplete="new-password" class="_obj-input __field input" maxlength="50" minlength="5" name="passwordCheck" placeholder="비밀번호를 한 번 더 입력해 주세요." type="password">
         <span class="__warning">올바른 비밀번호를 입력해 주세요.</span>
     </label>
+    <label class="_obj-label label" rel="nameLabel">
+        <span class="__text">이름</span>
+        <input required autocomplete="off" maxlength="10" minlength="2" name="name" class="_obj-input __field input" placeholder="이름 (숫자, 영어 대소문자, 완성 환글 2자 이상 10자 이하)" type="text" th:attrappend="data-regex=${userRegex._name.expression}">
+    </label>
     <label class="_obj-label label" rel="nicknameLabel">
         <span class="__text">닉네임</span>
         <input required autocomplete="off" maxlength="10" minlength="2" name="nickname" class="_obj-input __field input" placeholder="닉네임 (숫자, 영어 대소문자, 완성 환글 2자 이상 10자 이하)" type="text" th:attrappend="data-regex=${userRegex._nickname.expression}">
+    </label>
+    <label class="_obj-label label" rel="telLabel">
+        <span class="__text">전화번호</span>
+        <input required autocomplete="off" maxlength="11" minlength="1" name="tel" class="_obj-input __field input" placeholder="전화번호(-없이 입력해주세요.)" type="text">
+    </label>
+    <label class="_obj-label label" rel="addressLabel">
+        <span class="__text">주소</span>
+        <input required autocomplete="off" maxlength="200" minlength="20" name="address" class="_obj-input __field input" placeholder="주소를 입력해주세요(도로명주소로 입력해주세요.)" type="text">
     </label>
     <button class="_obj-button" type="submit">
         <i class="__icon"></i>
