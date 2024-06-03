@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scd.dcs.mappers.WorkMapper">
+
+    <insert id="insertImageComment" parameterType="com.scd.dcs.domains.entities.ImageCommentEntity">
+        INSERT INTO `dcs`.`image_comment` (`index`, `image_index`, `comment`)
+        VALUES (#{index}, #{image_index}, #{comment})
+    </insert>
+
+    <insert id="insertSubmitImage" parameterType="com.scd.dcs.domains.entities.SubmitImageEntity">
+        INSERT INTO `dcs`.`submit_images` (`index`, `work_index`, `content_type`, `original_name`, `image_data`, `is_mosaic`, `is_sign`, `comment`)
+        VALUES (#{index}, #{workIndex}, #{contentType}, #{originalName}, #{imageData}, #{isMosaic}, #{isSign}, #{comment})
+    </insert>
+
+    <insert id="insertWork"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="com.scd.dcs.domains.entities.WorkEntity">
+        INSERT INTO `dcs`.`work` (`user_email`, `date`)
+        VALUES (#{userEmail}, #{workDate})
+    </insert>
+
+    <select id="selectWork" resultType="com.scd.dcs.domains.entities.WorkEntity">
+        SELECT
+            `index`              AS   `index`,
+            `user_email`         AS   `userEmail`,
+            `date`          AS   `workDate`
+        FROM `dcs`.`work`
+        WHERE BINARY `index` = #{index}
+        LIMIT 1
+    </select>
+
+    <select id="selectSubmitImage" resultType="com.scd.dcs.domains.entities.SubmitImageEntity">
+        SELECT `index`        AS `index`,
+               `work_index`   AS `workIndex`,
+               `content_type` AS `contentType`,
+               `image_data`   AS `imageData`,
+               `is_mosaic`    AS `isMosaic`,
+               `is_sign`      AS `isSign`,
+               `comment`      AS `comment`
+        FROM `dcs`.`submit_images`
+        WHERE BINARY `index` = #{index}
+        LIMIT 1
+    </select>
+
+
+    <select id="selectSubmitImages" resultType="com.scd.dcs.domains.entities.SubmitImageEntity">
+        SELECT `images`.`index`        AS `index`,
+               `images`.`work_index`   AS `workIndex`,
+               `images`.`content_type` AS `contentType`,
+               `images`.`original_name` AS `originalName`,
+               `images`.`image_data`   AS `imageData`,
+               `images`.`is_mosaic`    AS `isMosaic`,
+               `images`.`is_sign`      AS `isSign`,
+               `images`.`comment`      AS `comment`
+        FROM `dcs`.`submit_images` AS `images`
+                 LEFT JOIN `dcs`.`work` AS `work` on `work`.`index` = `images`.`work_index`
+        WHERE `user_email` = #{email}
+          AND `work`.`date` = #{workDate}
+    </select>
+
+    <select id="findWorkByDateAndUser" resultType="com.scd.dcs.domains.entities.WorkEntity">
+        SELECT `index`      AS `index`,
+               `user_email` AS `userEmail`,
+               `date`  AS `workDate`
+        FROM `dcs`.`work`
+        WHERE `user_email` = #{userEmail}
+          AND `date` = #{workDate}
+        LIMIT 1
+    </select>
+
+    <select id="selectAllImages" resultType="com.scd.dcs.domains.entities.SubmitImageEntity">
+        SELECT `index`        AS `index`,
+               `work_index`   AS `workIndex`,
+               `content_type` AS `contentType`,
+               `image_data`   AS `imageData`,
+               `is_mosaic`    AS `isMosaic`,
+               `is_sign`      AS `isSign`,
+               `comment`      AS `comment`
+        FROM `dcs`.`submit_images`
+    </select>
+    
+    <update id="updateImage" parameterType="com.scd.dcs.domains.entities.SubmitImageEntity">
+        UPDATE `dcs`.`submit_images`
+        SET `index`         = #{index},
+            `work_index`    = #{workIndex},
+            `content_type`  = #{contentType},
+            `original_name` = #{originalName},
+            `image_data`    = #{imageData},
+            `is_mosaic`     = #{isMosaic},
+            `is_sign`       = #{isSign},
+            `comment`       = #{comment}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+
+
+</mapper>

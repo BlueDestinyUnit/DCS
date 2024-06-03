@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!--    <meta name="_email" th:content="${email}">-->
+    <title>회원가입</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/styles/common.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/styles/findEmail.css}">
+    <script th:src="@{/js/user/button.js}" defer type="text/javascript"></script>
+    <script defer type="text/javascript" th:src="@{/js/user/common.js}"></script>
+    <script th:src="@{/js/user/findEmail.js}" defer type="text/javascript"></script>
+</head>
+<body th:if="${result == null}">
+<form novalidate class="dialog" id="findEmailForm" th:with="userRegex=${T(com.scd.dcs.regexes.UserRegex)}">
+    <label class="_obj-label label" rel="nicknameLabel">
+        <span class="__text">닉네임</span>
+        <input required autocomplete="off" class="_obj-input __field input" maxlength="10" minlength="2" name="nickname" placeholder="닉네임 (숫자, 영어 대소문자, 완성 환글 2자 이상 10자 이하)" type="text" th:attrappend="data-regex=${userRegex._nickname.expression}">
+    </label>
+    <button class="_obj-button" type="submit">
+        <i class="__icon"></i>
+        <span class="__text">이메일 찾기</span>
+    </button>
+    <button class="_obj-button" rel="backButton" type="button">
+        <i class="__icon"></i>
+        <span class="__text">뒤로가기</span>
+    </button>
+</form>
+</body>
+</html>

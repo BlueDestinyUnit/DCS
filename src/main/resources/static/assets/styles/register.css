@@ -1,0 +1,50 @@
+body {
+  height: 100vh;
+  margin: initial;
+  overflow: hidden;
+}
+body #registerForm {
+  width: 500px;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  position: absolute;
+}
+body > .dialog {
+  background-color: #ffffff;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  box-shadow: 0 0 2rem 0.0625rem rgba(33, 33, 33, 0.1882352941);
+  opacity: 1;
+  padding: 2.5rem;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  transition-duration: 250ms;
+  transition-property: top, opacity;
+  transition-timing-function: ease;
+  z-index: 9;
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+body > .dialog > .title {
+  font-size: 1.75rem;
+  font-weight: 100;
+  margin-bottom: 1.5rem;
+}
+body > .dialog > .label {
+  margin-bottom: 1rem;
+}
+body > .dialog > .label > .horizontal {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  gap: 0.375rem;
+  justify-content: flex-start;
+}
+body > .dialog > .label > .horizontal > .spring {
+  flex: 1;
+}
+
+/*# sourceMappingURL=register.css.map */

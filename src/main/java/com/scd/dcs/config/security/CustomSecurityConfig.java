@@ -50,14 +50,18 @@ public class CustomSecurityConfig {
                         .requestMatchers("/logout").permitAll()
                         .requestMatchers("/favicon.ico").permitAll()
                         .requestMatchers("/test").permitAll()
-                        .requestMatchers("/board/*").authenticated()
-                        .requestMatchers("/article/*").authenticated()
-                        .requestMatchers("/article/write").authenticated()
-                        .anyRequest().authenticated()
+                        .requestMatchers("**").permitAll()
+                        .requestMatchers("/board/*").permitAll()
+                        .requestMatchers("/article/*").permitAll()
+                        .requestMatchers("/user/*").permitAll()
+                        .requestMatchers("/addWork").permitAll()
+                        .requestMatchers("/work").permitAll()
+                        .requestMatchers("/work/").permitAll()
+                        .requestMatchers("/subImage").permitAll()
+                        .requestMatchers("/updateImage").permitAll()
                 )
                 .formLogin(login -> login
                         .loginPage("/login")
-                        .permitAll()
                         .defaultSuccessUrl("/main",true))
                 .logout(logout -> logout.logoutUrl("/user/logout/")
                         .invalidateHttpSession(true)
@@ -96,7 +100,7 @@ public class CustomSecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("X-Requested-With", "Content-Type", "Authorization", "X-XSRF-token", "Access-Control-Allow-Origin"));
         configuration.setAllowCredentials(false);
         configuration.setMaxAge(3600L);
