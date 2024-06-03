@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AdminService {
+
     private final AdminMapper adminMapper;
     private final UserMapper userMapper;
 
@@ -17,8 +18,8 @@ public class AdminService {
         this.userMapper = userMapper;
     }
 
-    public boolean isAdmin(UserEntity user) {
-        UserEntity dbUser = this.userMapper.selectUserByEmail(user.getEmail());
-        return dbUser.getRole().equals("ADMIN");
+    public UserEntity[] getName(String date) {
+
+        return null;
     }
 }
