@@ -35,7 +35,7 @@
             </th>
             <th th:text="${article.getUserEmail()}"></th>
             <th th:text="${article.getView()}"></th>
-            <th th:text="${#dates.format(article.getCreatedAt(), 'yy-MM-dd HH:mm')}"></th>
+            <th th:text="${#temporals.format(article.getCreatedAt(), 'yy-MM-dd HH:mm:ss')}"></th>
         </tr>
         </tbody>
         <tfoot>
