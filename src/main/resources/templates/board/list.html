@@ -11,7 +11,7 @@
 </head>
 <body>
 <section layout:fragment="content">
-    <h1>게시판입니다.</h1>
+    <h1>메인입니다.</h1>
     <h1 th:text="${board.getText()}"></h1>
     <table border="1">
         <thead>
@@ -35,7 +35,7 @@
             </th>
             <th th:text="${article.getUserEmail()}"></th>
             <th th:text="${article.getView()}"></th>
-            <th th:text="${#temporals.format(article.getCreatedAt(), 'yy-MM-dd HH:mm')}"></th>
+            <th th:text="${#dates.format(article.getCreatedAt(), 'yy-MM-dd HH:mm')}"></th>
         </tr>
         </tbody>
         <tfoot>

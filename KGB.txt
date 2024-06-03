@@ -1,0 +1,43 @@
+CREATE SCHEMA `dcs`;
+
+CREATE TABLE `dcs`.`user`(
+                             `email` VARCHAR(50) PRIMARY KEY,
+                             `password` VARCHAR(100),
+                             `role` VARCHAR(10)
+);
+
+create table `dcs`.`persistent_logins`(
+                                          username varchar(64) not null,
+                                          series varchar(64) primary key,
+                                          token varchar(64) not null,
+                                          last_used timestamp not null
+);
+
+CREATE TABLE `dcs`.`work`(
+                             `index` int unsigned not null auto_increment,
+                             `user_email` VARCHAR(50) NOT NULL ,
+                             `date`  DATE  NOT NULL  DEFAULT NOW(),
+                             CONSTRAINT PRIMARY KEY (`index`,`user_email`,`date`)
+);
+
+CREATE TABLE `dcs`.`submit_images` (
+                                       `index` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                       `work_index` INT unsigned not null ,
+                                       `content_type` VARCHAR(50) NOT NULL,
+                                       `original_name` VARCHAR(200) NOT NULL,
+                                       `image_data` LONGBLOB NOT NULL,
+                                       `is_sign` TINYINT NOT NULL,
+                                       `is_mosaic` TINYINT NOT NULL,
+                                       `comment` VARCHAR(50) NULL,
+                                       CONSTRAINT PRIMARY KEY (`index`),
+                                       CONSTRAINT FOREIGN KEY (`work_index`) REFERENCES `dcs`.`work`(`index`)
+                                           ON DELETE CASCADE
+                                           ON UPDATE CASCADE
+);
+
+CREATE TABLE `dcs`.`image_comment` (
+                                       `index` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                       `image_index` INT UNSIGNED NOT NULL ,
+                                       `comment`  TEXT NOT NULL,
+                                       CONSTRAINT PRIMARY KEY (`index`)
+);

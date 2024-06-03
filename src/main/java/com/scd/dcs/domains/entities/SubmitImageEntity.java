@@ -11,6 +11,9 @@ public class SubmitImageEntity {
     private int index;
     private int workIndex;
     private String contentType;
-    private long imageData;
+    private String originalName;
+    private byte[] imageData;
     private boolean isSign;
+    private boolean isMosaic;
+    private String comment;
 }

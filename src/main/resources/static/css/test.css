@@ -12,4 +12,55 @@
   height: 100%;
 }
 
+#workListAside {
+  float: right;
+}
+#workListAside > .title {
+  display: flex;
+}
+#workListAside > .menuList {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  list-style-type: none;
+  border-bottom: 0.0625rem solid #e0e0e0;
+  padding-bottom: 11px;
+}
+#workListAside > .menu {
+  border-bottom: 0.0625rem solid #e0e0e0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  list-style-type: none;
+}
+#workListAside > .menu > .item {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+#workListAside > .menu > .item > .photoAddButton {
+  background-color: #ffffff;
+  border: none;
+  color: #424242;
+  cursor: pointer;
+  padding: 0.375rem 1rem;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.375rem;
+  justify-content: center;
+}
+#workListAside > .menu > .item > .photoAddButton:hover {
+  background-color: #f9f9f9;
+  color: #353535;
+}
+#workListAside > .menu > .item > .photoAddButton:active {
+  background-color: #f2f2f2;
+  color: #292929;
+}
+#workListAside > .menu > .item > .photoAddButton + .button {
+  border-left: 0.0625rem solid #e0e0e0;
+}
+
 /*# sourceMappingURL=test.css.map */
