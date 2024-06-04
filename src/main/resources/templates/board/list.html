@@ -8,10 +8,10 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>게시판</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/board/list.css}">
 </head>
 <body>
-<section layout:fragment="content">
-    <h1>메인입니다.</h1>
+<section id="mainSection" layout:fragment="content">
     <h1 th:text="${board.getText()}"></h1>
     <table border="1">
         <thead>
