@@ -6,5 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface AdminMapper {
-     UserProperty selectUserProperty(@Param("email")String email, @Param("workDate") String workDate);
+    UserProperty selectUserProperty(@Param("email") String email,
+                                        @Param("date") String date);
+
 }

@@ -4,10 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.scd.dcs.mappers.WorkMapper">
 
-    <insert id="insertImageComment" parameterType="com.scd.dcs.domains.entities.ImageCommentEntity">
-        INSERT INTO `dcs`.`image_comment` (`index`, `image_index`, `comment`)
-        VALUES (#{index}, #{image_index}, #{comment})
-    </insert>
+
 
     <insert id="insertSubmitImage" parameterType="com.scd.dcs.domains.entities.SubmitImageEntity">
         INSERT INTO `dcs`.`submit_images` (`index`, `work_index`, `content_type`, `original_name`, `image_data`, `is_mosaic`, `is_sign`, `comment`)

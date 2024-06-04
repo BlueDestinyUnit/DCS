@@ -64,7 +64,7 @@ public class WorkController {
 //        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
 //        UserEntity user = securityUser.getUserEntity();
         UserEntity user = new UserEntity();
-        user.setEmail("test@test.com");
+        user.setEmail("lsg9134@gmail.com");
         user.setPassword("1234");
         workService.saveImage(user,images,date);
 

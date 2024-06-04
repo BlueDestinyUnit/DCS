@@ -1,10 +1,13 @@
 package com.scd.dcs.services;
 
 import com.scd.dcs.domains.entities.UserEntity;
+import com.scd.dcs.domains.vos.UserProperty;
 import com.scd.dcs.mappers.AdminMapper;
 import com.scd.dcs.mappers.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 
 @Service
 public class AdminService {
@@ -18,8 +21,20 @@ public class AdminService {
         this.userMapper = userMapper;
     }
 
-    public UserEntity[] getName(String date) {
+    public UserProperty[] getUserProperty(String date) {
+        UserEntity[] users = this.userMapper.selectUsers();
 
-        return null;
+
+        UserProperty[] userProperty = new UserProperty[users.length];
+        int cnt = 0;
+
+        for (UserEntity user : users) {
+            userProperty[cnt] = this.adminMapper.selectUserProperty(user.getEmail(), date);
+            if (this.adminMapper.selectUserProperty(user.getEmail(), date) != null) {
+                cnt++;
+            }
+        }
+        return userProperty;
     }
+
 }

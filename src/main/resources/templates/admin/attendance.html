@@ -8,8 +8,12 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script th:if="${userProperty == null}">
+        alert('게시글이 존재하지 않습니다.');
+        history.back();
+    </script>
 </head>
-<body>
+<body th:if="${userProperty != null}">
 <section layout:fragment="content">
 <table border="1">
     <thead>
@@ -20,10 +24,10 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <th></th>
-        <th></th>
-        <th></th>
+    <tr th:each="userProperty : ${userProperties}">
+        <th th:text="${userProperty.getEmail()}"></th>
+        <td></td>
+        <td></td>
     </tr>
     </tbody>
 </table>
