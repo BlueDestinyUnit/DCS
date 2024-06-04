@@ -22,4 +22,6 @@ public interface UserMapper {
     int updateEmailAuth(EmailAuthEntity emailAuth);
 
     int updateUser(UserEntity user);
+
+    UserEntity[] selectUsers();
 }

@@ -4,10 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.scd.dcs.mappers.WorkMapper">
 
-    <insert id="insertImageComment" parameterType="com.scd.dcs.domains.entities.ImageCommentEntity">
-        INSERT INTO `dcs`.`image_comment` (`index`, `image_index`, `comment`)
-        VALUES (#{index}, #{image_index}, #{comment})
-    </insert>
+
 
     <insert id="insertSubmitImage" parameterType="com.scd.dcs.domains.entities.SubmitImageEntity">
         INSERT INTO `dcs`.`submit_images` (`index`, `work_index`, `content_type`, `original_name`, `image_data`, `is_mosaic`, `is_sign`, `comment`)
@@ -19,7 +16,7 @@
             keyColumn="index"
             keyProperty="index"
             parameterType="com.scd.dcs.domains.entities.WorkEntity">
-        INSERT INTO `dcs`.`work` (`user_email`, `date`)
+        INSERT INTO `dcs`.`work` (`user_email`, `work_date`)
         VALUES (#{userEmail}, #{workDate})
     </insert>
 
@@ -27,7 +24,7 @@
         SELECT
             `index`              AS   `index`,
             `user_email`         AS   `userEmail`,
-            `date`          AS   `workDate`
+            `work_date`          AS   `workDate`
         FROM `dcs`.`work`
         WHERE BINARY `index` = #{index}
         LIMIT 1
@@ -56,10 +53,11 @@
                `images`.`is_mosaic`    AS `isMosaic`,
                `images`.`is_sign`      AS `isSign`,
                `images`.`comment`      AS `comment`
+
         FROM `dcs`.`submit_images` AS `images`
                  LEFT JOIN `dcs`.`work` AS `work` on `work`.`index` = `images`.`work_index`
         WHERE `user_email` = #{email}
-          AND `work`.`date` = #{workDate}
+          AND `work`.`work_date` = #{workDate}
     </select>
 
     <select id="selectSubmitImageVos" resultType="com.scd.dcs.domains.entities.SubmitImageEntity">
@@ -80,13 +78,14 @@
 
 
 
+
     <select id="findWorkByDateAndUser" resultType="com.scd.dcs.domains.entities.WorkEntity">
         SELECT `index`      AS `index`,
                `user_email` AS `userEmail`,
-               `date`  AS `workDate`
+               `work_date`  AS `workDate`
         FROM `dcs`.`work`
         WHERE `user_email` = #{userEmail}
-          AND `date` = #{workDate}
+          AND `work_date` = #{workDate}
         LIMIT 1
     </select>
 

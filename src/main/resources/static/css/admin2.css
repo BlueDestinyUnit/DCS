@@ -1,0 +1,93 @@
+@charset "UTF-8";
+/* Datepicker Input 스타일 */
+body {
+  background-color: #f0f0f0 !important;
+  color: #212121;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  height: 100vh;
+}
+
+   /* 화면 가운데 정렬을 위한 CSS */
+ .centered {
+   position: fixed;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+ }
+
+#reservationDate {
+  border-radius: 10px;
+  border: 1px solid #ced4da;
+  background-color: #f8f9fa;
+  color: #495057;
+}
+
+/* Datepicker 달력 스타일 */
+.datepicker table {
+  width: 100%;
+}
+
+/* Datepicker 이전/다음 버튼 스타일 */
+.datepicker-prev, .datepicker-next {
+  width: 40px;
+  height: 40px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.datepicker-prev:hover, .datepicker-next:hover {
+  background-color: #0056b3;
+}
+
+/* Datepicker 달력 요일 스타일 */
+.datepicker thead th {
+  text-align: center;
+  font-weight: 700;
+  color: #007bff;
+}
+
+/* Datepicker 달력 날짜 스타일 */
+.datepicker tbody td {
+  text-align: center;
+  cursor: pointer;
+}
+
+.datepicker tbody td.today {
+  font-weight: 700;
+}
+
+/* Datepicker 선택된 날짜 스타일 */
+.datepicker tbody td.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* 저장 버튼 스타일 */
+#saveBtn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#saveBtn:hover {
+  background-color: #0056b3;
+}
+
+.custom-shadow {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/*# sourceMappingURL=admin2.css.map */

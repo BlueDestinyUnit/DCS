@@ -12,7 +12,5 @@ import java.time.LocalDateTime;
 public class AttendanceEntity {
     private int index;
     private String userEmail;
-    @Builder.Default
-    private boolean isAttendance = false;
-    private LocalDateTime attendDate;
+    private LocalDateTime checkIn;
 }
