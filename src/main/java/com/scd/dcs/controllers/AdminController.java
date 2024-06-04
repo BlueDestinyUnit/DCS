@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -42,8 +44,11 @@ public class AdminController {
     @RequestMapping(value = "/attendance", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getAttendance(@RequestParam("date") String date) {
         ModelAndView modelAndView = new ModelAndView();
-        UserProperty[] userProperty = this.adminService.getUserProperty(date);
-        modelAndView.addObject("userProperties", userProperty);
+        List<UserProperty> userProperties = this.adminService.getUserProperty(date);
+        userProperties.stream().forEach(e -> System.out.println(e.isAttendance()));
+
+        System.out.println(userProperties);
+        modelAndView.addObject("Users", userProperties);
         // 1, user 서비스로 모든 유저를 들고온다.
         // 2. admin 서비스로 해당 date에 적합한 유저들을 검색한다.
         modelAndView.setViewName("admin/attendance");

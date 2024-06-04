@@ -2,8 +2,6 @@ body {
   background-color: #ffffff;
   color: #212121;
   font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-  margin-top: 5.25rem;
-  margin-left: 20rem;
   height: 100vh;
 }
 
@@ -168,6 +166,11 @@ body {
   font-size: 1.175rem;
   background-color: #d1d1d1;
   color: #212121;
+}
+
+#main {
+  margin-top: 5.25rem;
+  margin-left: 20rem;
 }
 
 /*# sourceMappingURL=layout.css.map */
