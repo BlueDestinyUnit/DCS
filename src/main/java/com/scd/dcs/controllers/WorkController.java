@@ -34,14 +34,15 @@ public class WorkController {
     @RequestMapping(value = "/work", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getWork(
             Authentication authentication,
-            @RequestParam(value = "date",required = false) String date
+            @RequestParam(value = "date",required = false) String date,
+            SubmitImageEntity submitImageEntity
     ){
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("mosaic");
         modelAndView.addObject("date", date);
         return modelAndView;
     }
+    
 
     @RequestMapping(value = "/work/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -52,6 +53,9 @@ public class WorkController {
 //         서비스에서 전체 목록 들고오기
         return workService.imageList(user.getEmail(),date);
     }
+
+
+
 
 
     @RequestMapping(value = "/addWork", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -119,5 +123,17 @@ public class WorkController {
         responseObject.put("result", result.name().toLowerCase());
         return responseObject.toString();
     }
+
+    @RequestMapping(value = "/complete", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ModelAndView postComplete(@RequestParam(value = "dragCount",required = false) int dragCount,
+                                     SubmitImageEntity submitImageEntity) {
+        Result<?> result = this.workService.postComplete(submitImageEntity);
+        ModelAndView modelAndView = new ModelAndView();
+        if(submitImageEntity.isMosaic() == true) {
+            modelAndView.addObject("result",result.name());
+        }
+        return modelAndView;
+    }
+
 
 }
