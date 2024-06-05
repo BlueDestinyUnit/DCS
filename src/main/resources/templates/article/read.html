@@ -8,6 +8,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script defer type="text/javascript" th:src="@{/js/article/comment.js}"></script>
     <style>
         body{
             margin: 0 auto;
@@ -67,23 +68,23 @@
         <input name="articleIndex" type="hidden" th:value="${article.getIndex()}">
         <label>
             <span>내용</span>
-            <input th:disabled="${session.user == null}" name="content" type="text">
+            <input name="content" type="text">
         </label>
-        <input th:disabled="${session.user == null}" type="submit" value="작성">
+        <input type="submit" value="작성">
     </form>
     <div id="comment-container">
-        <div rel="comment">
-            <div>
-                <span>[1]</span>
-                <span>작성자 자리</span>
-                <span>2024-01-01 00:00:00</span>
-            </div>
-            <div>내용자리</div>
-            <div>
-                <button rel="modify">수정</button>
-                <button rel="delete">삭제</button>
-            </div>
-        </div>
+<!--        <div class="comments" rel="comment">-->
+<!--            <div>-->
+<!--                <span>[1]</span>-->
+<!--                <span>작성자 자리</span>-->
+<!--                <span>2024-01-01 00:00:00</span>-->
+<!--            </div>-->
+<!--            <div>내용자리</div>-->
+<!--            <div>-->
+<!--                <button rel="modify">수정</button>-->
+<!--                <button rel="delete">삭제</button>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 
 
