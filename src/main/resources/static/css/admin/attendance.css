@@ -1,0 +1,108 @@
+@charset "UTF-8";
+/**
+ * --------------------------------
+ * 스크롤바 디자인 (웹킷)
+ * ----------------------------- */
+/**
+ * --------------------------------
+ * 데모
+ * ----------------------------- */
+.demo {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+.container {
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/**
+ * --------------------------------
+ * 표 디자인
+ * ----------------------------- */
+.table.is-fixed-header > thead > tr > th {
+  padding: 0 4.25rem 0.3rem 3.85rem;
+  font-size: 1.25rem;
+  color: #f0f0f0;
+  background-color: skyblue;
+  text-align: center;
+  border: none;
+}
+
+.table.is-fixed-header > thead > tr > th:last-child {
+  background-color: inherit;
+}
+
+.table.is-fixed-header thead tr {
+  height: 2.5rem;
+}
+
+table.is-fixed-header > tbody > tr > td {
+  border-bottom: 0.075rem solid #515151;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.table.is-fixed-header > tbody > tr > td:last-child {
+  border: none;
+}
+
+.table.is-fixed-header {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+table.is-fixed-header > tbody > tr > td > .button {
+  border: none;
+}
+
+table.is-fixed-header > tbody > tr > td > .button:hover {
+  background-color: #e1e1e1;
+  border: none;
+}
+
+table.is-fixed-header > tbody > tr > td > .button:active {
+  background-color: #919191;
+  border: none;
+}
+
+table.is-fixed-header > tbody > tr > td > .button:focus {
+  outline: none;
+}
+
+/**
+ * --------------------------------
+ * 접근성 감춤
+ * ----------------------------- */
+.a11y-hidden {
+  overflow: hidden;
+  position: absolute;
+  clip: rect(0 0 0 0); /* IE 6,7 */
+  clip: rect(0, 0, 0, 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+}
+
+.a11y-hidden.focusable:focus {
+  overflow: visible;
+  position: static;
+  clip: auto;
+  width: auto;
+  height: auto;
+  margin: 0;
+}
+
+caption.a11y-hidden {
+  position: static;
+}
+
+/*# sourceMappingURL=attendance.css.map */
