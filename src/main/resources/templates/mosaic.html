@@ -75,8 +75,23 @@
         <button type="submit" id="saveButton">Save Image</button>
     </form>
     <button id="resetButton">reset</button>
-    <button id="CompleteButton">완료</button>
+    <br>
+<!--    th:text="${allList.getWorkIndex()}"-->
+    <a id="imageCount"></a>
+    <a id="modifiedCount"></a>
+    <br>
+    <div id="result"></div>
+    <button type="submit" id="completeButton">완료</button>
 </main>
-
+<!--<script th:if="${result == 'failure'}">-->
+<!--        const result = document.getElementById('result');-->
+<!--        result.innerText = `메로를 작성하지 못하였습니다.`;-->
+<!--        result.style.color = "#fd040c";-->
+<!--</script>-->
+<!--<script th:if="${result == 'success'}">-->
+<!--    const result = document.getElementById('result');-->
+<!--    result.innerText = `메로를 성공적으로 작성하였습니다.`;-->
+<!--    result.style.color = "#2df600";-->
+<!--</script>-->
 </body>
 </html>

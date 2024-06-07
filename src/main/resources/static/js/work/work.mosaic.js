@@ -28,6 +28,23 @@ function startDragging(event) {
     startY = event.offsetY;
 }
 
+// window.addEventListener('DOMContentLoaded', function() {
+//     let imageCount = document.querySelectorAll('.imageList').length;
+//     let imageCountDisplay = document.getElementById('imageCount');
+//     imageCountDisplay.textContent = "저장된 파일의 총 개수: " + imageCount
+//     console.log('rr')
+// });
+
+// document.getElementById('file').addEventListener('change', function() {
+//     let imageCount = document.querySelectorAll('.imageList').length;
+//     let imageCountDisplay = document.getElementById('imageCount');
+//     imageCountDisplay.textContent = "저장된 파일의 총 개수: " + imageCount
+//
+// });
+
+
+
+
 function drag(event) {
 
     if (isDragging) {
@@ -140,6 +157,8 @@ saveForm.onclick = function (e) {
             formData.append('index', saveForm['index'].value);
             formData.append('dragCount', dragCount);
             formData.append('images', blob,selectImageName.innerText);
+
+
             // 서버로 FormData 전송
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
@@ -150,6 +169,7 @@ saveForm.onclick = function (e) {
                     return;
                 }
                 const responseObject = JSON.parse(xhr.responseText);
+
                 loadWorkList();
             }
             xhr.open('POST', './updateImage');
@@ -158,6 +178,8 @@ saveForm.onclick = function (e) {
     }, 'image/png', 1);
 
 };
+
+
 
 resetButton.onclick = function (e) {
     mosaicAreas = [];
@@ -173,9 +195,9 @@ document.querySelector('.photoAddButton').addEventListener('click', function() {
 // addimage 부분
 
 const workListAside = document.getElementById('workListAside');
-
 const photoAddButton = document.getElementById('photoAddButton');
 const photoAddButtonForm = document.getElementById('photoAddButtonForm')
+const completeButton = document.getElementById('completeButton');
 const workDate = document.getElementById('workDate').innerText;
 
 
@@ -220,10 +242,14 @@ function loadWorkList() {
             };
             listEl.append(itemEl);
         }
+        loadImageListCount(responseArray.length);
+
     }
     xhr.open('GET', `../work/?date=${workDate}`) /*?date=${workDate}*/
     xhr.send();
 }
+
+
 
 document.addEventListener('DOMContentLoaded', loadWorkList);
 
@@ -258,6 +284,32 @@ input.onchange = function (e) {
     xhr.send(formData);
 }
 
+completeButton.onclick = function (e) {
+    e.preventDefault();
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState !== XMLHttpRequest.DONE) {
+            return;
+        }
+        if (xhr.status < 200 || xhr.status >= 300) {
+
+            return;
+       }
+        if (loadImageListCount(responseArray.length)) {
+
+        }
+
+    }
+xhr.open('POST', './complete')
+xhr.send(formData);
+}
+
+function loadImageListCount(length) {
+    let imageCountDisplay = document.getElementById('imageCount');
+    // let modifiedCountDisplay = document.getElementById('imageCount');
+    imageCountDisplay.textContent = "저장된 파일의 총 개수: " + length
+}
 
 
 

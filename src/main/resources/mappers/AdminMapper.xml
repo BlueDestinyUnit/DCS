@@ -3,4 +3,26 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.scd.dcs.mappers.AdminMapper">
+
+    <select id="selectUserProperty" resultType="UserProperty">
+
+        SELECT `user`.`email`                           AS `email`,
+               `user`.`name`                            AS `name`,
+               `user`.`nickname`                        AS `nickname`,
+               `user`.`tel`                             AS `tel`,
+               `user`.`address`                         AS `address`,
+               `user`.`role`                            AS `role`,
+               `user`.`is_state`                        AS `isState`,
+               `user`.`is_insurance`                    AS `isInsurance`,
+               `a`.`check_in`                           AS `checkIn`,
+               (SELECT COUNT(*)
+                FROM `dcs`.`submit_images` AS `images`
+                         LEFT JOIN `dcs`.`work` AS `work` on `work`.`index` = `images`.`work_index`
+                WHERE `user_email` = #{email}
+                  AND `work`.`work_date` = #{date}) AS `count`
+        FROM `dcs`.`user`
+                 LEFT JOIN `dcs`.`attendance` AS `a` ON `user`.`email` = `a`.`user_email`
+        LIMIT 1
+
+    </select>
 </mapper>
