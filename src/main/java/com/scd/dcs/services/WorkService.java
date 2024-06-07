@@ -71,12 +71,12 @@ public class WorkService {
         return workMapper.updateImage(submitImageEntity) > 0 ? CommonResult.SUCCESS : CommonResult.FAILURE;
     }
 
-    public Result<?> postComplete(SubmitImageEntity submitImageEntity) {
-        return workMapper.insertSubmitImage(submitImageEntity) > 0
-                ? CommonResult.SUCCESS
-                : CommonResult.FAILURE;
-//        return null;
-    }
+
+//    public int countNonMosaicImages(String date) {
+//
+//        return workMapper.mosaicImages(date);
+//    }
+
 
 
 }

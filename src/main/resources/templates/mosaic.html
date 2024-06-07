@@ -1,5 +1,7 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -28,70 +30,66 @@
     }
 </style>
 <body>
-<div id="workDate" th:text="${date}">
-</div>
-
-<div class="title">
-    <h2 class="text">사진 수정</h2>
-</div>
-
-<aside class="photoAddButton" id="photoAddButton">
-
-    <form id="photoAddButtonForm" method="post">
-        <div class="item">
-            <button class="button" type="button">
-                <input name="images" class="file" id="file" type="file">
-                <i class="icon fa-solid fa-plus"></i>
-                <span class="text">사진</span>
-            </button>
-        </div>
-    </form>
-</aside>
-
-<aside class="aside work-list -visible" id="workListAside">
-    <!--    <span class="time">2024-05-20</span>-->
-    <div>
-        <ul class="menu-list">
-            <li class="item">
-                <img class="imageList"  src="https://www.hyundai.com/contents/repn-car/side-45/main-palisade-24my-45side.png" alt="" width="100" height="100">
-            </li>
-        </ul>
+<section layout:fragment="content">
+    <div id="workDate" th:text="${date}">
     </div>
-</aside>
 
-<main id="main">
-    <div id="imageContainer">
-
-
-        <div class="imgBox">
-            <img id="image" src="https://cdn.crowdpic.net/detail-thumb/thumb_d_2F583E5543F7E19139C6FCFFBF9607A6.jpg" alt="Image" width="500" height="500">
-            <canvas id="canvas" width="500" height="500"></canvas>
-        </div>
+    <div class="title">
+        <h2 class="text">사진 수정</h2>
     </div>
-<!--  method="post"  enctype="multipart/form-data" th:action="@{/saveImage}" -->
-    <form id="saveForm" >
-        <input type="hidden" id="selectImageId" name="index">
-        <span hidden id="selectImageName" style="display: none" ></span>
-        <button type="submit" id="saveButton">Save Image</button>
-    </form>
-    <button id="resetButton">reset</button>
-    <br>
-<!--    th:text="${allList.getWorkIndex()}"-->
-    <a id="imageCount"></a>
-    <a id="modifiedCount"></a>
-    <br>
-    <div id="result"></div>
-    <button type="submit" id="completeButton">완료</button>
-</main>
-<!--<script th:if="${result == 'failure'}">-->
-<!--        const result = document.getElementById('result');-->
-<!--        result.innerText = `메로를 작성하지 못하였습니다.`;-->
-<!--        result.style.color = "#fd040c";-->
-<!--</script>-->
-<!--<script th:if="${result == 'success'}">-->
-<!--    const result = document.getElementById('result');-->
-<!--    result.innerText = `메로를 성공적으로 작성하였습니다.`;-->
-<!--    result.style.color = "#2df600";-->
-<!--</script>-->
+
+    <aside class="photoAddButton" id="photoAddButton">
+
+        <form id="photoAddButtonForm" method="post">
+            <div class="item">
+                <button class="button" type="button">
+                    <input name="images" class="file" id="file" type="file">
+                    <i class="icon fa-solid fa-plus"></i>
+                    <span class="text">사진</span>
+                </button>
+            </div>
+        </form>
+    </aside>
+
+    <aside class="aside work-list -visible" id="workListAside">
+        <!--    <span class="time">2024-05-20</span>-->
+        <div>
+            <ul class="menu-list">
+                <li class="item">
+                    <img class="imageList"  src="https://www.hyundai.com/contents/repn-car/side-45/main-palisade-24my-45side.png" alt="" width="100" height="100">
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <aside id="main-mosaic">
+        <div id="imageContainer">
+
+
+            <div class="imgBox">
+                <img id="image" src="https://cdn.crowdpic.net/detail-thumb/thumb_d_2F583E5543F7E19139C6FCFFBF9607A6.jpg" alt="Image" width="500" height="500">
+                <canvas id="canvas" width="500" height="500"></canvas>
+            </div>
+        </div>
+
+        <form id="saveForm" >
+            <input type="hidden" id="selectImageId" name="index">
+            <span hidden id="selectImageName" style="display: none" ></span>
+            <button type="submit" id="saveButton">Save Image</button>
+        </form>
+        <button id="resetButton">reset</button>
+        <br>
+
+        <a id="imageCount"></a>
+        <a id="modifiedCount"></a>
+        <br>
+        <div id="result"></div>
+        <button type="submit" id="completeButton">완료</button>
+    </aside>
+</section>
+
+
+
+
 </body>
 </html>
