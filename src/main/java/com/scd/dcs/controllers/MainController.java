@@ -13,10 +13,7 @@ public class MainController {
 
 
     @RequestMapping(value = "/main", method = RequestMethod.GET,produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getMain(Authentication authentication){
-        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
-        securityUser.getUserEntity();
-
+    public ModelAndView getMain(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("main");
         return modelAndView;
