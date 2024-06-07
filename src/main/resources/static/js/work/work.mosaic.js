@@ -13,6 +13,8 @@ const saveForm = document.getElementById('saveForm');
 const resetButton = document.getElementById('resetButton');
 let mosaicAreas = [];
 let dragCount = 0;
+
+
 image.onload = function() {
     ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 };
@@ -140,13 +142,6 @@ function applyMosaic(x, y, width, height, size) {
     ctx.putImageData(imageData, x, y);
 }
 
-// saveButton.onclick = function (e) {
-//     let imageDataURL = canvas.toDataURL('image/png');
-//     let downloadLink = document.createElement('a');
-//     downloadLink.href = imageDataURL;
-//     downloadLink.download = 'mosaic_image.png';
-//     downloadLink.click();
-// };
 
 saveForm.onclick = function (e) {
     e.preventDefault()
@@ -159,6 +154,7 @@ saveForm.onclick = function (e) {
             formData.append('images', blob,selectImageName.innerText);
 
 
+
             // 서버로 FormData 전송
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
@@ -169,8 +165,15 @@ saveForm.onclick = function (e) {
                     return;
                 }
                 const responseObject = JSON.parse(xhr.responseText);
-
                 loadWorkList();
+
+
+                const workList = document.querySelector('.work-list').querySelectorAll('.item');
+                for (let i = 0; i < workList.length; i++) {
+                    if (falseList.includes(workList[i].children[0].innerText)) {
+                        workList[i].children[1].style.color = "#fd040c"; // Keep it red
+                    }
+                }
             }
             xhr.open('POST', './updateImage');
             xhr.send(formData);
@@ -178,6 +181,9 @@ saveForm.onclick = function (e) {
     }, 'image/png', 1);
 
 };
+
+
+
 
 
 
@@ -215,7 +221,6 @@ function loadWorkList() {
             return;
         }
         const responseArray = JSON.parse(xhr.responseText);
-        console.log(responseArray)
         const listEl = workListAside.querySelector('.menu-list');
         listEl.innerHTML = '';
         if (responseArray.length === 0) {
@@ -225,12 +230,14 @@ function loadWorkList() {
             return;
         }
         for (const workObject of responseArray) {
+
             // const
             const itemEl = new DOMParser().parseFromString(`
             <li class="item">
                 <span class="imageIndex" style="display: none">${workObject['index']}</span>
                 <span>${workObject['originalName']}</span>
                 <img class="imageList"  src="./subImage?index=${workObject['index']}" alt="" width="100" height="100">
+                <div style="display: none">${workObject['mosaic']}</div>
             </li>`,'text/html').querySelector('li');
             itemEl.querySelector('img').onclick = (e) => {
                 const mainImage = document.getElementById('image');
@@ -271,7 +278,7 @@ input.onchange = function (e) {
         const responseObject = JSON.parse(xhr.responseText);
         switch (responseObject['result']) {
             case 'failure':
-                alert('알 수 없는 이유로 파일을 가져오지 못했습니다. 잠시 후 다시 시도해 주세요.')
+                alert(`파일을 넣을수 없습니다. 잠시 후 다시 시도해 주세요.`)
                 break;
             case 'success':
                 loadWorkList()
@@ -284,30 +291,75 @@ input.onchange = function (e) {
     xhr.send(formData);
 }
 
+
 completeButton.onclick = function (e) {
     e.preventDefault();
-    const xhr = new XMLHttpRequest();
-    const formData = new FormData();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState !== XMLHttpRequest.DONE) {
-            return;
+    const workList = document.querySelector('.work-list').querySelectorAll('.item');
+    console.log(workList[3])
+    let falseList = [];
+    for (let i = 0; i < workList.length; i++) {
+        if (workList[i].children[3].innerText === 'false'){
+            falseList.push(workList[i].children[0].innerText);
+            alert(`수정파일 ${falseList}가 수정되지 않음`)
         }
-        if (xhr.status < 200 || xhr.status >= 300) {
-
-            return;
-       }
-        if (loadImageListCount(responseArray.length)) {
-
-        }
-
     }
-xhr.open('POST', './complete')
-xhr.send(formData);
-}
+
+
+
+    // 수정 안한거 파일 이름 색상 변경
+    for (let i = 0; i < workList.length; i++) {
+        if (falseList.includes(workList[i].children[0].innerText)) {
+            workList[i].children[1].style.color = "#fd040c";
+        }
+    }
+
+    // .style.color = "#fd040c";
+
+    location.href
+    // e.preventDefault();
+    // const xhr = new XMLHttpRequest();
+    // const formData = new FormData();
+    // formData.append('date', workDate);
+    // // formData.append('nonModifiedCount',nonModifiedCount);
+    //
+    //
+    // xhr.onreadystatechange = function () {
+    //     if (xhr.readyState !== XMLHttpRequest.DONE) {
+    //         return;
+    //     }
+    //     if (xhr.status < 200 || xhr.status >= 300) {
+    //         alert('200~300임');
+    //         return;
+    //     }
+    //
+    //     const responseObject = JSON.parse(xhr.responseText);
+    //     console.log(responseObject)
+    //     const imageCount = loadImageListCount(length);
+    //
+    //     if (modifiedCount === imageCount) {
+    //         const result = responseObject['result'];
+    //         switch (result) {
+    //             case 'failure':
+    //                 alert(`수정파일 ${modifiedCount}개 남았습니다.`);
+    //                 break;
+    //             case 'success':
+    //                 alert('수고하셨습니다.');
+    //                 loadWorkList();
+    //                 break;
+    //             default:
+    //                 alert('서버가 알 수 없는 응답을 반환하였습니다. 잠시 후 다시 시도해 주세요.');
+    //         }
+    //     }
+    //
+    // };
+    //
+    // xhr.open('GET', `./complete?date=${workDate}`);
+    // xhr.send(formData);
+};
 
 function loadImageListCount(length) {
     let imageCountDisplay = document.getElementById('imageCount');
-    // let modifiedCountDisplay = document.getElementById('imageCount');
+    let modifiedCountDisplay = document.getElementById('modifiedCount');
     imageCountDisplay.textContent = "저장된 파일의 총 개수: " + length
 }
 

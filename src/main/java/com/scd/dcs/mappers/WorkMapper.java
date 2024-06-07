@@ -3,7 +3,6 @@ package com.scd.dcs.mappers;
 
 import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.WorkEntity;
-import com.scd.dcs.domains.vos.UserProperty;
 import com.scd.dcs.results.Result;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,7 +16,10 @@ public interface WorkMapper{
 
     int insertWork(WorkEntity workEntity);
 
-    int selectComplete(SubmitImageEntity submitImageEntity);
+    int countNonMosaicImages(@Param("email") String email, @Param("date") String date);
+
+    int mosaicImages(@Param("date") String date);
+
 
     SubmitImageEntity selectSubmitImage(@Param("index")int index);
 

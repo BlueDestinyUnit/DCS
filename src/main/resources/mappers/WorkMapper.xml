@@ -16,15 +16,23 @@
             keyColumn="index"
             keyProperty="index"
             parameterType="com.scd.dcs.domains.entities.WorkEntity">
-        INSERT INTO `dcs`.`work` (`user_email`, `work_date`)
+        INSERT INTO `dcs`.`work` (`user_email`, `date`)
         VALUES (#{userEmail}, #{workDate})
     </insert>
+
+
+<!--w.`user_email` = #{email} AND-->
+    <select id="mosaicImages" resultType="int">
+        SELECT COUNT(*)
+        FROM `dcs`.`submit_images` AS s LEFT JOIN `dcs`.`work` AS w ON s.`work_index` = w.index
+        WHERE  w.`date` = #{date} AND s.is_mosaic = true
+    </select>
 
     <select id="selectWork" resultType="com.scd.dcs.domains.entities.WorkEntity">
         SELECT
             `index`              AS   `index`,
             `user_email`         AS   `userEmail`,
-            `work_date`          AS   `workDate`
+            `date`          AS   `workDate`
         FROM `dcs`.`work`
         WHERE BINARY `index` = #{index}
         LIMIT 1
@@ -57,7 +65,7 @@
         FROM `dcs`.`submit_images` AS `images`
                  LEFT JOIN `dcs`.`work` AS `work` on `work`.`index` = `images`.`work_index`
         WHERE `user_email` = #{email}
-          AND `work`.`work_date` = #{workDate}
+          AND `work`.`date` = #{workDate}
     </select>
 
     <select id="selectSubmitImageVos" resultType="com.scd.dcs.domains.entities.SubmitImageEntity">
@@ -82,10 +90,10 @@
     <select id="findWorkByDateAndUser" resultType="com.scd.dcs.domains.entities.WorkEntity">
         SELECT `index`      AS `index`,
                `user_email` AS `userEmail`,
-               `work_date`  AS `workDate`
+               `date`  AS `workDate`
         FROM `dcs`.`work`
         WHERE `user_email` = #{userEmail}
-          AND `work_date` = #{workDate}
+          AND `date` = #{workDate}
         LIMIT 1
     </select>
 
