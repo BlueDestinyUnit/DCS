@@ -9,6 +9,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class UserProperty extends UserEntity {
-    private Boolean attendance;
+    private boolean attendance;
     private int count;
 }

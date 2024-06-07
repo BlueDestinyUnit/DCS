@@ -1,10 +1,17 @@
+@charset "UTF-8";
 /* Datepicker Input 스타일 */
-
 body {
   background-color: #f0f0f0 !important;
   color: #212121;
   font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
   height: 100vh;
+}
+
+.col-md-6 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 #reservationDate {
@@ -81,3 +88,5 @@ body {
 .custom-shadow {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+/*# sourceMappingURL=admin2.css.map */

@@ -7,7 +7,9 @@ import com.scd.dcs.mappers.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class AdminService {
@@ -21,20 +23,35 @@ public class AdminService {
         this.userMapper = userMapper;
     }
 
-    public UserProperty[] getUserProperty(String date) {
+    public List<UserProperty> getUserProperty(String date) {
         UserEntity[] users = this.userMapper.selectUsers();
+        System.out.println(Arrays.toString(users));
 
+        List<UserProperty> userPropertyList = new ArrayList<>();
 
-        UserProperty[] userProperty = new UserProperty[users.length];
-        int cnt = 0;
-
+        String firstDate = date + " 00:00:00";
+        String secondDate = date + " 23:59:59";
+        System.out.println(firstDate);
+        System.out.println(secondDate);
         for (UserEntity user : users) {
-            userProperty[cnt] = this.adminMapper.selectUserProperty(user.getEmail(), date);
-            if (this.adminMapper.selectUserProperty(user.getEmail(), date) != null) {
-                cnt++;
+            System.out.println(user.getEmail());
+            UserProperty dbUser = this.adminMapper.selectUserProperty(user.getEmail(), date, firstDate, secondDate);
+            if(dbUser == null){
+                UserProperty newUser = new UserProperty();
+                newUser.setName(user.getName());
+                newUser.setEmail(user.getEmail());
+                newUser.setCount(0);
+                userPropertyList.add(newUser);
+            }else {
+                userPropertyList.add(dbUser);
             }
+
+
+
         }
-        return userProperty;
+        return userPropertyList;
     }
+
+
 
 }

@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface AdminMapper {
     UserProperty selectUserProperty(@Param("email") String email,
-                                        @Param("date") String date);
+                                    @Param("date") String date,
+                                    @Param("firstDate") String firstDate,
+                                    @Param("secondDate") String secondDate);
 
 }
