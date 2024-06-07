@@ -38,7 +38,8 @@ public class AdminService {
             UserProperty dbUser = this.adminMapper.selectUserProperty(user.getEmail(), date, firstDate, secondDate);
             if(dbUser == null){
                 UserProperty newUser = new UserProperty();
-                newUser.setName(user.getName()); // 여기
+                newUser.setName(user.getName());
+                newUser.setEmail(user.getEmail());
                 newUser.setCount(0);
                 userPropertyList.add(newUser);
             }else {
@@ -50,5 +51,7 @@ public class AdminService {
         }
         return userPropertyList;
     }
+
+
 
 }

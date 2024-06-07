@@ -9,15 +9,41 @@
  * ----------------------------- */
 .demo {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: -10rem;
+  min-height: 100vh;
+  gap: 3rem;
+}
+
+#reservationDate {
+  padding: 0 10rem !important;
+  border-radius: 10px;
+  border: 1px solid #ced4da;
+  background-color: #f8f9fa;
+  color: #495057;
+}
+
+.form-group {
+  display: flex;
   justify-content: start;
   align-items: center;
-  min-height: 100vh;
-  flex-direction: column;
-  gap: 5rem;
+  flex-direction: row;
+  margin-right: 8rem;
+  gap: 1rem;
+}
+.form-group > .text-center {
+  width: 6rem;
+  height: 2rem;
+}
+.form-group > .text-center > .btn {
+  width: 100%;
+  height: 100%;
 }
 
 .container {
-  width: 800px;
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -27,7 +53,7 @@
  * 표 디자인
  * ----------------------------- */
 .table.is-fixed-header > thead > tr > th {
-  padding: 0 4.25rem 0.3rem 3.85rem;
+  padding: 0.75rem 4.25rem 1.05rem 3.85rem;
   font-size: 1.25rem;
   color: #f0f0f0;
   background-color: skyblue;
@@ -45,7 +71,7 @@
 
 table.is-fixed-header > tbody > tr > td {
   border-bottom: 0.075rem solid #515151;
-  padding: 1rem 0;
+  padding: 2.35rem 0;
   text-align: center;
 }
 
