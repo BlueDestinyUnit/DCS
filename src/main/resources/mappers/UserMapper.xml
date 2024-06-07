@@ -13,6 +13,19 @@
         VALUES (#{email},  #{password}, #{name}, #{nickname}, #{tel}, #{address}, #{role}, #{isState}, #{isInsurance})
     </insert>
 
+    <select id="selectUsers" resultType="UserEntity">
+        SELECT `email`        AS `email`,
+               `password`     AS `password`,
+               `name`         AS `name`,
+               `nickname`     AS `nickname`,
+               `tel`          AS `tel`,
+               `address`      AS `address`,
+               `role`         AS `role`,
+               `is_state`     AS `isState`,
+               `is_insurance` AS `isInsurance`
+        FROM `dcs`.`user`
+    </select>
+
     <select id="selectUserByEmail" resultType="UserEntity">
         SELECT `email`        AS `email`,
                `name`         AS `name`,

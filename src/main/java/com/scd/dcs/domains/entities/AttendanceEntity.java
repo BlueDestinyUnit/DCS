@@ -11,8 +11,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AttendanceEntity {
     private int index;
-
     private String userEmail;
-
     private LocalDateTime checkIn;
 }

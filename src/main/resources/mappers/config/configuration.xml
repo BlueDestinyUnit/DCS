@@ -17,5 +17,6 @@
         <typeAlias alias="CommentEntity" type="com.scd.dcs.domains.entities.CommentEntity"/>
         <typeAlias alias="BoardVo" type="com.scd.dcs.domains.vos.BoardVo"/>
         <typeAlias alias="AttendanceEntity" type="com.scd.dcs.domains.entities.AttendanceEntity"/>
+        <typeAlias alias="UserProperty" type="com.scd.dcs.domains.vos.UserProperty"/>
     </typeAliases>
 </configuration>
