@@ -14,8 +14,9 @@ public class MainController {
 
     @RequestMapping(value = "/main", method = RequestMethod.GET,produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getMain(Authentication authentication){
-        SecurityUser user = (SecurityUser) authentication.getPrincipal();
-        System.out.println(user);
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        securityUser.getUserEntity();
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("main");
         return modelAndView;

@@ -94,8 +94,14 @@ public class UserService {
         if(this.userMapper.selectUserByEmail(user.getEmail()) != null){
             return RegisterResult.FAILURE_DUPLICATE_EMAIL;
         }
-        if(this.userMapper.selectUserByNickname(user.getNickname()) != null){
+        if(this.userMapper.selectUserByName(user.getName()) != null){
+            return RegisterResult.FAILURE_DUPLICATE_NAME;
+        }
+        if(this.userMapper.selectUserByNickname(user.getNickname()) != null) {
             return RegisterResult.FAILURE_DUPLICATE_NICKNAME;
+        }
+        if(this.userMapper.selectUserByTel(user.getTel()) != null){
+            return RegisterResult.FAILURE_DUPLICATE_TEL;
         }
         dbEmailAuth.setUsed(true);
         this.userMapper.updateEmailAuth(dbEmailAuth);
