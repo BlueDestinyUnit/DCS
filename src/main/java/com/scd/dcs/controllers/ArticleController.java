@@ -66,8 +66,11 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "read", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getRead(@RequestParam(value = "index") int index) {
+    public ModelAndView getRead(@RequestParam(value = "index") int index, Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView();
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
+        modelAndView.addObject("user", user);
         ArticleEntity dbArticle = this.articleService.getArticle(index);
         if (dbArticle == null) {
             modelAndView.addObject("result", "FAILURE");
@@ -85,17 +88,18 @@ public class ArticleController {
     @RequestMapping(value = "modify", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getModify(Authentication authentication,
                                   @RequestParam("index") int index) {
-        SecurityUser user=(SecurityUser) authentication.getPrincipal();
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
         ModelAndView modelAndView = new ModelAndView();
 
         modelAndView.setViewName("article/modify");
         ArticleEntity dbArticle;
-        if (authentication == null) {
+        if (user == null) {
             modelAndView.addObject("article", null);
             return modelAndView;
         } else {
             dbArticle = this.articleService.getArticle(index);
-            if (dbArticle != null && !dbArticle.getUserEmail().equals(user.getUserEntity().getEmail())) {
+            if (dbArticle != null && !dbArticle.getUserEmail().equals(user.getEmail())) {
                 dbArticle = null;
             }
             modelAndView.addObject("article", dbArticle);
@@ -105,7 +109,7 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "modify", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getModify(Authentication authentication,
+    public ModelAndView postModify(Authentication authentication,
                                   ArticleEntity article) {
         SecurityUser user=(SecurityUser) authentication.getPrincipal();
         ModelAndView modelAndView = new ModelAndView();
