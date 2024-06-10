@@ -1,9 +1,11 @@
 package com.scd.dcs.services;
 
+import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.UserEntity;
 import com.scd.dcs.domains.vos.UserProperty;
 import com.scd.dcs.mappers.AdminMapper;
 import com.scd.dcs.mappers.UserMapper;
+import com.scd.dcs.results.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +52,10 @@ public class AdminService {
 
         }
         return userPropertyList;
+    }
+
+    public CommonResult insertComment(String date, String email, String comment) {
+        return null;
     }
 
 

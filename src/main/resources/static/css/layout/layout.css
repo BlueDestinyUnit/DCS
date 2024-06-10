@@ -173,7 +173,6 @@ body {
 #main {
   margin-top: 5.25rem;
   margin-left: 20rem;
-  min-height: 95%;
   position: relative;
 }
 
@@ -184,7 +183,6 @@ body {
   width: 100%;
   margin: 0 auto;
   align-items: center;
-
 }
 
 /*# sourceMappingURL=layout.css.map */

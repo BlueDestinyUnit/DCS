@@ -51,6 +51,7 @@ public class AdminController {
     public ModelAndView getAttendance(@RequestParam("date") String date) {
         ModelAndView modelAndView = new ModelAndView();
         List<UserProperty> userProperties = this.adminService.getUserProperty(date);
+        System.out.println(userProperties);
         modelAndView.addObject("Users", userProperties);
         modelAndView.addObject("date", date);
 
@@ -70,5 +71,12 @@ public class AdminController {
         return modelAndView;
     }
 
-
+    @RequestMapping(value = "/workList", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String postWorkList(@RequestParam("date") String date,
+                               @RequestParam("email") String email,
+                               @ModelAttribute("comment") String comment) {
+        System.out.println(comment);
+        return null;
+    }
 }

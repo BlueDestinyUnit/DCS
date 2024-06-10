@@ -26,13 +26,22 @@
                 FROM `dcs`.`submit_images` AS `images`
                          LEFT JOIN `dcs`.`work` AS `work` on `work`.`index` = `images`.`work_index`
                 WHERE `user_email` = #{email}
-                  AND `work`.`work_date` = #{date}) AS `count`
+                  AND `work`.`date` = #{date}) AS `count`
         FROM `dcs`.`user`
                  LEFT JOIN `dcs`.`attendance` AS `a` ON `user`.`email` = `a`.`user_email`
                  LEFT JOIN `dcs`.`work` AS `work` ON `user`.`email` = `work`.`user_email`
         WHERE `work`.`user_email` = #{email}
-          AND `work`.`work_date` = #{date}
+          AND `work`.`date` = #{date}
         LIMIT 1;
 
     </select>
+
+    <insert id="insertComment"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index" parameterType="SubmitImageEntity">
+        INSERT INTO `dcs`.`submit_images` (work_index, content_type, original_name, image_data, is_sign, is_mosaic,
+                                           comment)
+        VALUES (#{workIndex}, #{contentType}, #{originalName},#{imageData},#{isSign},#{isMosaic}, #{comment})
+    </insert>
 </mapper>

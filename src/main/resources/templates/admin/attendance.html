@@ -26,27 +26,29 @@
 
 <body th:if="${Users.size() > 0}">
 <section layout:fragment="content">
-    <section class="demo">
-        <div class="dateBoard">
-            <h2 id="dateValue" th:text="${date}"></h2>
-        </div>
-        <div class="form-group mb-4">
-            <div class="datepicker date input-group p-0 custom-shadow">
-                <input type="text" name="date" placeholder="날짜를 선택해주세요." class="form-control py-4 px-4"
-                       id="reservationDate">
-                <div class="input-group-append"><span class="input-group-text px-4"><i
-                        class="fa fa-calendar"></i></span></div>
+    <section id="demo">
+        <div class="board-container">
+            <div class="dateBoard">
+                <h2 id="dateValue" th:text="${date}"></h2>
             </div>
-            <div class="text-center">
-                <button id="saveBtn"
-                        class="btn btn-primary btn-sm px-4 rounded-pill text-uppercase font-weight-bold shadow-sm">
-                    저장
-                </button>
+            <div class="form-group mb-4">
+                <div class="datepicker date input-group p-0 custom-shadow">
+                    <input type="text" name="date" placeholder="날짜를 선택해주세요." class="form-control py-4 px-4"
+                           id="reservationDate">
+                    <div class="input-group-append"><span class="input-group-text px-4"><i
+                            class="fa fa-calendar"></i></span></div>
+                </div>
+                <div class="text-center">
+                    <button id="saveBtn"
+                            class="btn btn-primary btn-sm px-4 rounded-pill text-uppercase font-weight-bold shadow-sm">
+                        저장
+                    </button>
+                </div>
             </div>
         </div>
 
         <div class="container">
-            <table class="table is-fixed-header">
+            <table class="table">
                 <caption class="a11y-hidden">Table Caption</caption>
                 <thead>
                 <tr>
