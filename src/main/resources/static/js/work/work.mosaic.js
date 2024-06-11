@@ -168,12 +168,7 @@ saveForm.onclick = function (e) {
                 loadWorkList();
 
 
-                const workList = document.querySelector('.work-list').querySelectorAll('.item');
-                for (let i = 0; i < workList.length; i++) {
-                    if (falseList.includes(workList[i].children[0].innerText)) {
-                        workList[i].children[1].style.color = "#fd040c"; // Keep it red
-                    }
-                }
+
             }
             xhr.open('POST', './updateImage');
             xhr.send(formData);
@@ -193,8 +188,8 @@ resetButton.onclick = function (e) {
 };
 
 // 사진 파일 - > 버튼
-document.querySelector('.photoAddButton').addEventListener('click', function() {
-    this.querySelector('input[type="file"]').click();
+document.getElementById('photoButton').addEventListener('click', function() {
+    document.getElementById('file').click();
 });
 
 
@@ -235,9 +230,10 @@ function loadWorkList() {
             const itemEl = new DOMParser().parseFromString(`
             <li class="item">
                 <span class="imageIndex" style="display: none">${workObject['index']}</span>
-                <span>${workObject['originalName']}</span>
                 <img class="imageList"  src="./subImage?index=${workObject['index']}" alt="" width="100" height="100">
+                <span class="image-name">${workObject['originalName']}</span>
                 <div style="display: none">${workObject['mosaic']}</div>
+           
             </li>`,'text/html').querySelector('li');
             itemEl.querySelector('img').onclick = (e) => {
                 const mainImage = document.getElementById('image');
@@ -291,19 +287,20 @@ input.onchange = function (e) {
     xhr.send(formData);
 }
 
-
+    // .querySelectorAll('.item');
 completeButton.onclick = function (e) {
     e.preventDefault();
-    const workList = document.querySelector('.work-list').querySelectorAll('.item');
+    const workList = document.querySelector('.menu-list').querySelectorAll('.item');
     console.log(workList[3])
     let falseList = [];
     for (let i = 0; i < workList.length; i++) {
         if (workList[i].children[3].innerText === 'false'){
             falseList.push(workList[i].children[0].innerText);
-            alert(`수정파일 ${falseList}가 수정되지 않음`)
+
         }
     }
 
+    alert(`수정파일 ${falseList}가 수정되지 않음`)
 
 
     // 수정 안한거 파일 이름 색상 변경

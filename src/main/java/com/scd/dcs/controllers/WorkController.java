@@ -125,23 +125,6 @@ public class WorkController {
     }
 
 
-//    @RequestMapping(value = "/complete", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseBody
-//    public String completeWork(@RequestParam(value = "date", required = false) String date,
-////                               @RequestParam(value = "nonModifiedCount",required = false) String  nonModifiedCount,
-//                               SubmitImageEntity submitImageEntity) {
-//        int modifiedCount = workService.countNonMosaicImages(date);
-//        JSONObject responseObject = new JSONObject();
-////        if (!submitImageEntity.isMosaic()) {
-////            nonModifiedCount += 1;
-////            responseObject.put("nonModifiedCount",nonModifiedCount);
-////        }
-//
-//
-//        responseObject.put("result", "success");
-//        responseObject.put("modifiedCount", modifiedCount);
-//        return responseObject.toString();
-//    }
 
 
 }
