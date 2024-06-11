@@ -10,11 +10,13 @@ import com.scd.dcs.mappers.WorkMapper;
 import com.scd.dcs.results.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AdminService {
@@ -43,27 +45,40 @@ public class AdminService {
         for (UserEntity user : users) {
             System.out.println(user.getEmail());
             UserProperty dbUser = this.adminMapper.selectUserProperty(user.getEmail(), date, firstDate, secondDate);
-            if(dbUser == null){
+            if (dbUser == null) {
                 UserProperty newUser = new UserProperty();
                 newUser.setName(user.getName());
                 newUser.setEmail(user.getEmail());
                 newUser.setCount(0);
                 userPropertyList.add(newUser);
-            }else {
+            } else {
                 userPropertyList.add(dbUser);
             }
-
 
 
         }
         return userPropertyList;
     }
 
-    public CommonResult insertComment(String date, String email, String comment) {
-        WorkEntity dbWork = this.workMapper.findWorkByDateAndUser(LocalDate.parse(date), email);
-        return null;
+
+    @Transactional
+    public CommonResult updateComment(List<Object> sendList) {
+        // 선택 바로 , 검수 x
+        try{
+            for (Object item : sendList) {
+                Map<String, Object> listItem = (Map<String, Object>) item;
+                Object comment = listItem.get("comment");
+                Object index = listItem.get("index");
+
+                SubmitImageEntity dbSubmitImage = this.workMapper.selectSubmitImage((int)index);
+                dbSubmitImage.setComment((String)comment);
+                dbSubmitImage.setSign(true);
+
+                this.workMapper.updateImage(dbSubmitImage);
+            }
+        }catch (Exception e) {
+            return CommonResult.FAILURE;
+        }
+        return CommonResult.SUCCESS;
     }
-
-
-
 }

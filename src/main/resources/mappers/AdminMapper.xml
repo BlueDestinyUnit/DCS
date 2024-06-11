@@ -36,12 +36,4 @@
 
     </select>
 
-    <insert id="insertComment"
-            useGeneratedKeys="true"
-            keyColumn="index"
-            keyProperty="index" parameterType="SubmitImageEntity">
-        INSERT INTO `dcs`.`submit_images` (work_index, content_type, original_name, image_data, is_sign, is_mosaic,
-                                           comment)
-        VALUES (#{workIndex}, #{contentType}, #{originalName},#{imageData},#{isSign},#{isMosaic}, #{comment})
-    </insert>
 </mapper>

@@ -33,8 +33,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="image : ${imageList}">
+                <tr class="main-list" th:each="image : ${imageList}">
+
                     <td>
+                        <input th:value="${image.index}" type="hidden" rel="index">
                         <img class="image" th:src="@{/subImage(index=${image.index})}" alt="Image">
                     </td>
                     <td>

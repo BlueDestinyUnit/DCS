@@ -1,24 +1,31 @@
 package com.scd.dcs.controllers;
 
+import com.scd.dcs.config.security.domains.SecurityUser;
 import com.scd.dcs.domains.entities.AttendanceEntity;
 import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.UserEntity;
 import com.scd.dcs.domains.entities.WorkEntity;
 import com.scd.dcs.domains.vos.UserProperty;
+import com.scd.dcs.domains.vos.WorkListRequest;
+import com.scd.dcs.results.Result;
 import com.scd.dcs.services.AdminService;
 import com.scd.dcs.services.SalaryService;
 import com.scd.dcs.services.UserService;
 import com.scd.dcs.services.WorkService;
+import org.json.JSONObject;
 import org.springframework.aop.config.AdvisorEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -51,7 +58,6 @@ public class AdminController {
     public ModelAndView getAttendance(@RequestParam("date") String date) {
         ModelAndView modelAndView = new ModelAndView();
         List<UserProperty> userProperties = this.adminService.getUserProperty(date);
-        System.out.println(userProperties);
         modelAndView.addObject("Users", userProperties);
         modelAndView.addObject("date", date);
 
@@ -71,12 +77,44 @@ public class AdminController {
         return modelAndView;
     }
 
+//    @RequestMapping(value = "/workList", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseBody
+//    public String postWorkList(@RequestBody Map<String,Object> request) {
+//        JSONObject jsonObject = new JSONObject();
+//        UserEntity user = new UserEntity();
+//        user.setEmail("lsg9134@gmail.com");
+//        System.out.println(request);
+//        // 1. 파라미터로 체크된 리스트, 해당 유저 이메일, 날짜
+//        // 2. 서비스 단에서 해당 유저, 이메일로 이미지들을 전체 조회
+//        // 3. 순회하면서 해당 리스트의 인덱스와 일치하는 경우 update set
+//
+//        List<Object> sendList = (List<Object>) request.get("sendList");
+//
+//
+//        for (Object obj : sendList) {
+//            if (obj instanceof Map) {
+//                Map<String, Object> item = (Map<String, Object>) obj;
+//                Object index = item.get("index");
+//                System.out.println(index);
+//                // index 값 사용
+//            }
+//        }
+//        String email = (String) request.get("userEmail");
+//        String date  = (String) request.get("date");
+//
+////        adminService.insertComment(date,email,sendList);
+//
+//
+//        return null;
+//    }
+
     @RequestMapping(value = "/workList", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String postWorkList(@RequestParam("date") String date,
-                               @RequestParam("email") String email,
-                               @ModelAttribute("comment") String comment) {
-        System.out.println(comment);
-        return null;
+    public String postWorkList(@RequestBody WorkListRequest request) {
+        List<Object> sendList = request.getSendList();
+        Result<?> result = this.adminService.updateComment(sendList);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("result", result.name().toLowerCase());
+        return jsonObject.toString();
     }
 }

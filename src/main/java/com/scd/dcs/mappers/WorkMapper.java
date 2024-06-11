@@ -27,7 +27,7 @@ public interface WorkMapper{
 
     WorkEntity findWorkByDateAndUser(@Param("workDate") LocalDate workDate, @Param("userEmail") String userEmail);
 
+    SubmitImageEntity[] findSubmitImageByWorkIndex(@Param("index") int index);
     int updateImage(SubmitImageEntity submitImageEntity);
-
 
 }

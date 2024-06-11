@@ -90,12 +90,26 @@
     <select id="findWorkByDateAndUser" resultType="com.scd.dcs.domains.entities.WorkEntity">
         SELECT `index`      AS `index`,
                `user_email` AS `userEmail`,
-               `date`  AS `workDate`
+               `date`       AS `workDate`
         FROM `dcs`.`work`
         WHERE `user_email` = #{userEmail}
           AND `date` = #{workDate}
         LIMIT 1
     </select>
+
+    <select id="findSubmitImageByWorkIndex" resultType="SubmitImageEntity">
+        SELECT `index`         AS `index`,
+               `work_index`    AS `workIndex`,
+               `content_type`  AS `contentType`,
+               `original_name` AS `originalName`,
+               `image_data`    AS `imageData`,
+               `is_sign`       AS `isSign`,
+               `is_mosaic`     AS `isMosaic`,
+               comment
+        FROM `dcs`.`submit_images`
+        WHERE `work_index` = #{workIndex}
+    </select>
+
 
     <select id="selectAllImages" resultType="com.scd.dcs.domains.entities.SubmitImageEntity">
         SELECT `index`        AS `index`,
@@ -121,6 +135,5 @@
         WHERE `index` = #{index}
         LIMIT 1
     </update>
-
 
 </mapper>
