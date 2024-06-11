@@ -9,23 +9,27 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" th:href="@{/css/admin/workList.css}">
+    <script defer type="text/javascript" th:src="@{/js/admin/workList.js}"></script>
 </head>
 <body>
 <section layout:fragment="content">
-    <section id="demo">
-        <div class="dateBoard">
-            <h2 id="dateValue"></h2>
-        </div>
-        <div class="userBoard">
-            <h2 id="userValue"></h2>
+    <form method="post" id="demo">
+        <div class="board-container">
+            <div class="dateBoard">
+                <h2 id="dateValue">날짜</h2>
+            </div>
+            <div class="userBoard">
+                <h2 id="userValue">유저</h2>
+            </div>
         </div>
         <div class="container">
-            <table border="1" class="table">
+            <table class="table">
+                <caption class="a11y-hidden">Table Caption</caption>
                 <thead>
                 <tr>
                     <th scope="col" data-th="Name">이미지</th>
-                    <th scope="col" data-th="Email">확인</th>
-                    <th scope="col" data-th="Status">피드백</th>
+                    <th scope="col" data-th="Email">피드백</th>
+                    <th scope="col" data-th="Status">확인</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,13 +37,20 @@
                     <td>
                         <img class="image" th:src="@{/subImage(index=${image.index})}" alt="Image">
                     </td>
-                    <td></td>
-                    <td></td>
+                    <td>
+                        <label class="label">
+                            <textarea class="comment" rel="comment" placeholder="선택 후 작성 가능합니다." readonly></textarea>
+                        </label>
+                    </td>
+                    <td>
+                        <input type="checkbox" rel="checkbox">
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-    </section>
+        <button type="button" rel="button">제출</button>
+    </form>
 </section>
 </body>
 </html>
