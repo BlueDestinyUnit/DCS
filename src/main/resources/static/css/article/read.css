@@ -1,0 +1,48 @@
+#mainSection {
+  margin: 0 auto;
+  padding-top: 2rem;
+  max-width: 80%;
+  width: 70%;
+}
+#mainSection > .table > tbody > tr > .table-content > div {
+  min-height: 400px;
+}
+#mainSection > .table > tfoot > tr > td > div {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4rem;
+}
+#mainSection > .table > tfoot > tr > td > div > .auth > div > a {
+  display: inline-block;
+}
+
+#commentForm > label > .form-control {
+  width: 25rem;
+}
+
+#commentContainer {
+  padding-top: 2rem;
+}
+#commentContainer > div > .comment-head {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0.625rem;
+}
+#commentContainer > div > .comment-head > .spring {
+  flex: 1;
+}
+#commentContainer > div > .comment-head > span:first-of-type {
+  margin-right: 1.5rem;
+}
+#commentContainer > div > .comment-main {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0.625rem;
+}
+#commentContainer > div > .comment-main > .comment-content {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  flex: 1;
+}
+
+/*# sourceMappingURL=read.css.map */
