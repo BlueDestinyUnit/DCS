@@ -6,23 +6,42 @@
 
     <select id="selectUserProperty" resultType="UserProperty">
 
-        SELECT `user`.`email`                           AS `email`,
-               `user`.`name`                            AS `name`,
-               `user`.`nickname`                        AS `nickname`,
-               `user`.`tel`                             AS `tel`,
-               `user`.`address`                         AS `address`,
-               `user`.`role`                            AS `role`,
-               `user`.`is_state`                        AS `isState`,
-               `user`.`is_insurance`                    AS `isInsurance`,
-               `a`.`check_in`                           AS `checkIn`,
+        SELECT `user`.`email`                       AS `email`,
+               `user`.`name`                        AS `name`,
+               `user`.`nickname`                    AS `nickname`,
+               `user`.`tel`                         AS `tel`,
+               `user`.`address`                     AS `address`,
+               `user`.`role`                        AS `role`,
+               `user`.`is_state`                    AS `isState`,
+               `user`.`is_insurance`                AS `isInsurance`,
+               IF(
+                       (SELECT COUNT(*)
+                        FROM `dcs`.`attendance`
+                        WHERE `attendance`.`user_email` = #{email}
+                          AND `attendance`.`check_in` BETWEEN #{firstDate} AND #{secondDate}) > 0,
+                       true,
+                       false
+               )                                    AS `attendance`,
                (SELECT COUNT(*)
                 FROM `dcs`.`submit_images` AS `images`
                          LEFT JOIN `dcs`.`work` AS `work` on `work`.`index` = `images`.`work_index`
                 WHERE `user_email` = #{email}
-                  AND `work`.`work_date` = #{date}) AS `count`
+                  AND `work`.`date` = #{date}) AS `count`
         FROM `dcs`.`user`
                  LEFT JOIN `dcs`.`attendance` AS `a` ON `user`.`email` = `a`.`user_email`
-        LIMIT 1
+                 LEFT JOIN `dcs`.`work` AS `work` ON `user`.`email` = `work`.`user_email`
+        WHERE `work`.`user_email` = #{email}
+          AND `work`.`date` = #{date}
+        LIMIT 1;
 
     </select>
+
+    <insert id="insertComment"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index" parameterType="SubmitImageEntity">
+        INSERT INTO `dcs`.`submit_images` (work_index, content_type, original_name, image_data, is_sign, is_mosaic,
+                                           comment)
+        VALUES (#{workIndex}, #{contentType}, #{originalName},#{imageData},#{isSign},#{isMosaic}, #{comment})
+    </insert>
 </mapper>

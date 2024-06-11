@@ -48,7 +48,7 @@ public class WorkController {
     @ResponseBody
     public SubmitImageEntity[] getWorkList(@RequestParam(value = "date",required = false) String date) throws IOException {
         UserEntity user = new UserEntity();
-        user.setEmail("test@test.com");
+        user.setEmail("lsg9134@gmail.com");
 
 //         서비스에서 전체 목록 들고오기
         return workService.imageList(user.getEmail(),date);
@@ -116,7 +116,7 @@ public class WorkController {
         }
 
         if(dragCount > 0 && submitImageEntity.isMosaic() == false) {
-            submitImageEntity.setMosaic(true);
+             submitImageEntity.setMosaic(true);
         }
         Result<?> result = workService.updateImage(submitImageEntity);
 
@@ -124,16 +124,7 @@ public class WorkController {
         return responseObject.toString();
     }
 
-    @RequestMapping(value = "/complete", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ModelAndView postComplete(@RequestParam(value = "dragCount",required = false) int dragCount,
-                                     SubmitImageEntity submitImageEntity) {
-        Result<?> result = this.workService.postComplete(submitImageEntity);
-        ModelAndView modelAndView = new ModelAndView();
-        if(submitImageEntity.isMosaic() == true) {
-            modelAndView.addObject("result",result.name());
-        }
-        return modelAndView;
-    }
+
 
 
 }

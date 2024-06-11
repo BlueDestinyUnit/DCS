@@ -1,39 +1,44 @@
-#main {
-  background: lightblue;
-  width: 500px;
-  height: 500px;
-  top: 50%;
-  left: 50%;
-  position: absolute;
-  transform: translate(-50%,-50%);
-  > img{
-    width: 100%;
-    height: 100%;
-  }
-}
+@charset "UTF-8";
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
 body {
-  > .title {
-    //display: flex;
-    text-align: center;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+
+
+
+}
+
+
+.workDate {
+
+}
+//text-align: center;
+.title {
+  position: absolute;
+  align-items: center;
+  left: 47.5%;
+
+
+
+  > .text {
 
   }
 }
 
 #photoAddButton {
+  //left: 50px;
   float: right;
   border-bottom: 0.0625rem solid #e0e0e0;
   display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-  list-style-type: none;
-  margin-bottom: 20px;
 
-  > form {
+  > .photoAddButtonForm {
+
     > .item {
       align-items: stretch;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
+
       > .button {
         background-color: #ffffff;
         border: none;
@@ -57,11 +62,14 @@ body {
           color: darken(#424242, 10%);
         }
 
-        & + .button {
-          border-left: 0.0625rem solid #e0e0e0;
-        }
         > .file {
           display: none;
+        }
+        > .icon {
+
+        }
+        > .text {
+
         }
       }
     }
@@ -69,78 +77,85 @@ body {
 }
 
 #workListAside {
+  right: 300px;
+
+  position: relative;
+  background-color: #f9f9f9;
   float: right;
   clear: both;
 
+  > .menuBox {
+    height: 100%;
 
+    > .menu-list {
+      list-style-type: none;
 
-  //> .title {
-  //  display: flex;
-  //
-  //}
+      > .item {
 
-  > .menuList {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    list-style-type: none;
+        > .image-name {
 
-    border-bottom: 0.0625rem solid #e0e0e0;
-    padding-bottom: 11px;
-    //position: static;
-    text-align: center;
+        }
 
+        > .image {
 
+        }
+      }
+    }
+  }
+}
+
+#main-mosaic {
+  background: lightblue;
+  width: 500px;
+  height: 500px;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%,-50%);
+
+  > .image-box {
+    background: #ececec;
+    width: 600px;
+    height: 600px;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
   }
 
+  > .imageContainer {
 
-  //> .menu {
-  //  border-bottom: 0.0625rem solid #e0e0e0;
-  //
-  //  display: grid;
-  //  grid-auto-flow: column;
-  //  grid-template-columns: repeat(1, minmax(0, 1fr));
-  //  list-style-type: none;
-  //
-  //  > .item {
-  //    align-items: stretch;
-  //    display: flex;
-  //    flex-direction: column;
-  //    justify-content: flex-start;
-  //
-  //
-  //
-  //
-  //    > .photoAddButton {
-  //      background-color: #ffffff;
-  //      border: none;
-  //      color: #424242;
-  //      cursor: pointer;
-  //      padding: 0.375rem 1rem;
-  //
-  //      align-items: center;
-  //      display: flex;
-  //      flex-direction: row;
-  //      gap: 0.375rem;
-  //      justify-content: center;
-  //
-  //      &:hover {
-  //        background-color: darken(#ffffff, 2.5%);
-  //        color: darken(#424242, 5%);
-  //      }
-  //
-  //      &:active {
-  //        background-color: darken(#ffffff, 5%);
-  //        color: darken(#424242, 10%);
-  //      }
-  //
-  //      & + .button {
-  //        border-left: 0.0625rem solid #e0e0e0;
-  //      }
-  //      > .file {
-  //        display: none;
-  //      }
-  //    }
-  //  }
-  //}
+    width: 500px;
+    height: 500px;
+    overflow: hidden;
+    > .image {
+      width: 100%;
+      height: 100%;
+    }
+
+    > .canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+  }
+  form {
+    position: absolute;
+  }
+  > .resetButton {
+    position: absolute;
+    left: 100px;
+  }
 }
+#imageCount {
+
+}
+
+#completeButton {
+
+}
+
+
+
+

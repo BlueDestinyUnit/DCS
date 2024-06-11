@@ -15,5 +15,6 @@
         FROM `dcs`.`attendance`
         WHERE `user_email` = #{userEmail}
         LIMIT 1
+
     </select>
 </mapper>
