@@ -155,4 +155,9 @@ public class UserController {
         return responseObject.toString();
     }
 
+    @RequestMapping(value = "/attendance", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getAttendance(){
+        return new ModelAndView("user/attendance");
+    }
+
 }
