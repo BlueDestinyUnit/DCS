@@ -72,41 +72,14 @@ public class AdminController {
                                     @RequestParam("email") String email) {
         ModelAndView modelAndView = new ModelAndView();
         SubmitImageEntity[] imageList = this.workService.imageList(email, date);
+        UserEntity user = this.adminService.selectUser(email);
         modelAndView.addObject("imageList", imageList);
+        modelAndView.addObject("user", user.getName());
+        modelAndView.addObject("date", date);
         modelAndView.setViewName("admin/workList");
         return modelAndView;
     }
 
-//    @RequestMapping(value = "/workList", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseBody
-//    public String postWorkList(@RequestBody Map<String,Object> request) {
-//        JSONObject jsonObject = new JSONObject();
-//        UserEntity user = new UserEntity();
-//        user.setEmail("lsg9134@gmail.com");
-//        System.out.println(request);
-//        // 1. 파라미터로 체크된 리스트, 해당 유저 이메일, 날짜
-//        // 2. 서비스 단에서 해당 유저, 이메일로 이미지들을 전체 조회
-//        // 3. 순회하면서 해당 리스트의 인덱스와 일치하는 경우 update set
-//
-//        List<Object> sendList = (List<Object>) request.get("sendList");
-//
-//
-//        for (Object obj : sendList) {
-//            if (obj instanceof Map) {
-//                Map<String, Object> item = (Map<String, Object>) obj;
-//                Object index = item.get("index");
-//                System.out.println(index);
-//                // index 값 사용
-//            }
-//        }
-//        String email = (String) request.get("userEmail");
-//        String date  = (String) request.get("date");
-//
-////        adminService.insertComment(date,email,sendList);
-//
-//
-//        return null;
-//    }
 
     @RequestMapping(value = "/workList", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody

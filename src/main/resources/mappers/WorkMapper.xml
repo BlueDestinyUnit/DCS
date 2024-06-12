@@ -42,6 +42,7 @@
         SELECT `index`        AS `index`,
                `work_index`   AS `workIndex`,
                `content_type` AS `contentType`,
+               `original_name` AS `originalName`,
                `image_data`   AS `imageData`,
                `is_mosaic`    AS `isMosaic`,
                `is_sign`      AS `isSign`,

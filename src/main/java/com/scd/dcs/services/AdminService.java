@@ -69,9 +69,10 @@ public class AdminService {
                 Map<String, Object> listItem = (Map<String, Object>) item;
                 Object comment = listItem.get("comment");
                 Object index = listItem.get("index");
-
-                SubmitImageEntity dbSubmitImage = this.workMapper.selectSubmitImage((int)index);
+                SubmitImageEntity dbSubmitImage = this.workMapper.selectSubmitImage(Integer.parseInt((String) index));
+                System.out.println(dbSubmitImage);
                 dbSubmitImage.setComment((String)comment);
+                System.out.println(3);
                 dbSubmitImage.setSign(true);
 
                 this.workMapper.updateImage(dbSubmitImage);
@@ -80,5 +81,9 @@ public class AdminService {
             return CommonResult.FAILURE;
         }
         return CommonResult.SUCCESS;
+    }
+
+    public UserEntity selectUser(String email) {
+        return this.userMapper.selectUserByEmail(email);
     }
 }

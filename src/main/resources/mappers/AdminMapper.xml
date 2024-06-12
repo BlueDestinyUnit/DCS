@@ -5,7 +5,6 @@
 <mapper namespace="com.scd.dcs.mappers.AdminMapper">
 
     <select id="selectUserProperty" resultType="UserProperty">
-
         SELECT `user`.`email`                       AS `email`,
                `user`.`name`                        AS `name`,
                `user`.`nickname`                    AS `nickname`,
