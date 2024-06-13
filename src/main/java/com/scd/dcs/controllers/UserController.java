@@ -36,9 +36,12 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST,produces = MediaType.TEXT_HTML_VALUE)
+    @RequestMapping(value = "/login", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public String postLogin(HttpSession session,
                                   UserEntity user){
+
+        System.out.println("로그인");
         Result<?> result = this.userService.login(user);
         if(result == CommonResult.SUCCESS){
             session.setAttribute("user", user);

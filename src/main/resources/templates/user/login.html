@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/assets/styles/common.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/assets/styles/login.css}">
     <script defer type="text/javascript" th:src="@{/js/user/common.js}"></script>
-<!--    <script defer type="text/javascript" th:src="@{js/user/login.js}"></script>-->
+    <script defer type="text/javascript" th:src="@{/js/user/login.js}"></script>
     <script th:if="${result != null && result.equals('FAILURE')}">
         alert('이메일 혹은 비밀번호가 올바르지 않습니다.');
         history.back();
@@ -20,7 +20,7 @@
 <div class="cover" style="display: none"></div>
 <section id="loginSection">
     <h1 class="title">로그인</h1>
-    <form action="/login" method="post" novalidate class="dialog" id="loginForm" th:with="userRegex=${T(com.scd.dcs.regexes.UserRegex)}">
+    <form novalidate class="dialog" id="loginForm" th:with="userRegex=${T(com.scd.dcs.regexes.UserRegex)}">
         <label class="_obj-label label" rel="emailLabel">
             <span class="__text">이메일</span>
             <input required autocomplete="email" class="_obj-input __field input" maxlength="50" minlength="5" name="username" placeholder="이메일 (user@sample.com)" spellcheck="false" type="email" th:attrappend="data-regex=${userRegex.email.expression}">
