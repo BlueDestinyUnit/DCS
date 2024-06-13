@@ -90,4 +90,14 @@ public class AdminController {
         jsonObject.put("result", result.name().toLowerCase());
         return jsonObject.toString();
     }
+
+    @RequestMapping(value = "/salary", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getSalary() {
+        return new ModelAndView("admin/salary");
+    }
+    @RequestMapping(value = "/salary2", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getSalary2() {
+        return new ModelAndView("admin/salary2");
+    }
+
 }

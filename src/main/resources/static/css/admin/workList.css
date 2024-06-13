@@ -60,9 +60,8 @@ html, body {
   text-align: center;
 }
 .table > tbody > tr > td .image {
-  width: 85%;
+  width: 80%;
   height: 100%;
-  margin: 1rem;
   cursor: pointer;
 }
 .table > tbody > tr > td .comment {

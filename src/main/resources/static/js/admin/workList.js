@@ -125,12 +125,8 @@ submitButton.onclick = function (e) {
         }
     }
 
-    let date = '2024-06-11'
-    let userEmail = 'lsg9134@gmail.com'
     const formData = {
         sendList: sendList,
-        date: date,
-        userEmail: userEmail
     }
 
     fetch('./workList', {
@@ -145,9 +141,9 @@ submitButton.onclick = function (e) {
     }).then(data => {
         console.log(data)
         if (data['result'] === 'success') {
-            alert('정상');
+            alert('작성이 완료되었습니다.');
         } else {
-            alert('비정상');
+            alert('작성에 실패하였습니다.');
         }
     }).catch(error => {
         console.log(error)

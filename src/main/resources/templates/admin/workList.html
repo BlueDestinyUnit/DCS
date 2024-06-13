@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" th:href="@{/css/admin/workList.css}">
+    <script src="https://kit.fontawesome.com/c1106c0e90.js" crossorigin="anonymous"></script>
     <script defer type="text/javascript" th:src="@{/js/admin/workList.js}"></script>
 </head>
 <body>
@@ -42,11 +43,11 @@
                     </td>
                     <td>
 <!--                        <label class="label">-->
-                            <textarea class="comment" rel="comment" placeholder="선택 후 작성 가능합니다." readonly></textarea>
+                            <textarea th:text="${image.getComment()}" class="comment" rel="comment" placeholder="선택 후 작성 가능합니다." readonly></textarea>
 <!--                        </label>-->
                     </td>
                     <td>
-                        <input class="checkbox" type="checkbox" rel="checkbox">
+                        <input th:checked="${image.isSign()}" class="checkbox" type="checkbox" rel="checkbox">
                     </td>
                 </tr>
                 </tbody>
