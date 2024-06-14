@@ -1,10 +1,7 @@
 package com.scd.dcs.controllers;
 
-import com.scd.dcs.config.security.domains.SecurityUser;
-import com.scd.dcs.domains.entities.AttendanceEntity;
 import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.UserEntity;
-import com.scd.dcs.domains.entities.WorkEntity;
 import com.scd.dcs.domains.vos.UserProperty;
 import com.scd.dcs.domains.vos.WorkListRequest;
 import com.scd.dcs.results.Result;
@@ -13,19 +10,13 @@ import com.scd.dcs.services.SalaryService;
 import com.scd.dcs.services.UserService;
 import com.scd.dcs.services.WorkService;
 import org.json.JSONObject;
-import org.springframework.aop.config.AdvisorEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -92,12 +83,9 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/salary", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getSalary() {
+    public ModelAndView getSalary(@RequestParam("date") String date) {
+
         return new ModelAndView("admin/salary");
-    }
-    @RequestMapping(value = "/salary2", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getSalary2() {
-        return new ModelAndView("admin/salary2");
     }
 
 }
