@@ -19,5 +19,8 @@
         <typeAlias alias="AttendanceEntity" type="com.scd.dcs.domains.entities.AttendanceEntity"/>
         <typeAlias alias="UserProperty" type="com.scd.dcs.domains.vos.UserProperty"/>
         <typeAlias alias="SubmitImageEntity" type="com.scd.dcs.domains.entities.SubmitImageEntity"/>
+        <typeAlias alias="PaymentEntity" type="com.scd.dcs.domains.entities.PaymentEntity"/>
+        <typeAlias alias="WorkEntity" type="com.scd.dcs.domains.entities.WorkEntity"/>
+        <typeAlias alias="WorkVo" type="com.scd.dcs.domains.vos.WorkVo"/>
     </typeAliases>
 </configuration>

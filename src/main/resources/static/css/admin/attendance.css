@@ -85,8 +85,11 @@ html, body {
   background-color: inherit;
 }
 .table > tbody > tr > td {
-  border-bottom: 0.075rem solid #515151;
-  padding: 2.35rem 0;
+  border-bottom: 0.075rem solid #919191;
+  font-size: 1.125rem;
+  padding-top: 3.25rem;
+  padding-bottom: 2.35rem;
+  font-weight: 20;
   text-align: center;
 }
 .table > tbody > tr > td:last-child {

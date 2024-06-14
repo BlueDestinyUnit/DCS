@@ -42,6 +42,7 @@
         SELECT `index`        AS `index`,
                `work_index`   AS `workIndex`,
                `content_type` AS `contentType`,
+               `original_name` AS `originalName`,
                `image_data`   AS `imageData`,
                `is_mosaic`    AS `isMosaic`,
                `is_sign`      AS `isSign`,
@@ -97,6 +98,20 @@
         LIMIT 1
     </select>
 
+    <select id="findSubmitImageByWorkIndex" resultType="SubmitImageEntity">
+        SELECT `index`         AS `index`,
+               `work_index`    AS `workIndex`,
+               `content_type`  AS `contentType`,
+               `original_name` AS `originalName`,
+               `image_data`    AS `imageData`,
+               `is_sign`       AS `isSign`,
+               `is_mosaic`     AS `isMosaic`,
+               comment
+        FROM `dcs`.`submit_images`
+        WHERE `work_index` = #{workIndex}
+    </select>
+
+
     <select id="selectAllImages" resultType="com.scd.dcs.domains.entities.SubmitImageEntity">
         SELECT `index`        AS `index`,
                `work_index`   AS `workIndex`,
@@ -106,6 +121,15 @@
                `is_sign`      AS `isSign`,
                `comment`      AS `comment`
         FROM `dcs`.`submit_images`
+    </select>
+
+    <select id="selectUserAndWorkDaysByDate" resultType="WorkVo">
+        SELECT `index`      AS `index`,
+               `user_email` AS `userEmail`,
+               `date`       AS `date`,
+               COUNT(1)     AS `workDays`
+        FROM `dcs`.`work`
+        WHERE DATE_FORMAT(`date`, '%Y-%m') = #{date}
     </select>
     
     <update id="updateImage" parameterType="com.scd.dcs.domains.entities.SubmitImageEntity">
@@ -121,6 +145,5 @@
         WHERE `index` = #{index}
         LIMIT 1
     </update>
-
 
 </mapper>

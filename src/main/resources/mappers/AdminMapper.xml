@@ -5,7 +5,6 @@
 <mapper namespace="com.scd.dcs.mappers.AdminMapper">
 
     <select id="selectUserProperty" resultType="UserProperty">
-
         SELECT `user`.`email`                       AS `email`,
                `user`.`name`                        AS `name`,
                `user`.`nickname`                    AS `nickname`,
@@ -36,12 +35,4 @@
 
     </select>
 
-    <insert id="insertComment"
-            useGeneratedKeys="true"
-            keyColumn="index"
-            keyProperty="index" parameterType="SubmitImageEntity">
-        INSERT INTO `dcs`.`submit_images` (work_index, content_type, original_name, image_data, is_sign, is_mosaic,
-                                           comment)
-        VALUES (#{workIndex}, #{contentType}, #{originalName},#{imageData},#{isSign},#{isMosaic}, #{comment})
-    </insert>
 </mapper>

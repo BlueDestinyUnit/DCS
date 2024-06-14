@@ -12,7 +12,4 @@ public interface AdminMapper {
                                     @Param("firstDate") String firstDate,
                                     @Param("secondDate") String secondDate);
 
-    int insertComment(@RequestParam("date") String date,
-                      @RequestParam("email") String email,
-                      @RequestParam("comment") String comment);
 }

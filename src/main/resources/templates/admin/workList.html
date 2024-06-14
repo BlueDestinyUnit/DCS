@@ -9,17 +9,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" th:href="@{/css/admin/workList.css}">
+    <script src="https://kit.fontawesome.com/c1106c0e90.js" crossorigin="anonymous"></script>
     <script defer type="text/javascript" th:src="@{/js/admin/workList.js}"></script>
 </head>
 <body>
 <section layout:fragment="content">
+
     <form method="post" id="demo">
         <div class="board-container">
             <div class="dateBoard">
-                <h2 id="dateValue">날짜</h2>
+                <h2 id="dateValue" th:text="${date}"></h2>
             </div>
             <div class="userBoard">
-                <h2 id="userValue">유저</h2>
+                <h2 id="userValue" th:text="${user}"></h2>
             </div>
         </div>
         <div class="container">
@@ -29,28 +31,38 @@
                 <tr>
                     <th scope="col" data-th="Name">이미지</th>
                     <th scope="col" data-th="Email">피드백</th>
-                    <th scope="col" data-th="Status">확인</th>
+                    <th scope="col" data-th="Status">선택</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="image : ${imageList}">
+                <tr class="main-list" th:each="image : ${imageList}">
+
                     <td>
-                        <img class="image" th:src="@{/subImage(index=${image.index})}" alt="Image">
+                        <input th:value="${image.index}" type="hidden" rel="index">
+                        <img class="image" th:src="@{/subImage(index=${image.index})}" alt="Image" onclick="openModal(this.src)">
                     </td>
                     <td>
-                        <label class="label">
-                            <textarea class="comment" rel="comment" placeholder="선택 후 작성 가능합니다." readonly></textarea>
-                        </label>
+<!--                        <label class="label">-->
+                            <textarea th:text="${image.getComment()}" class="comment" rel="comment" placeholder="선택 후 작성 가능합니다." readonly></textarea>
+<!--                        </label>-->
                     </td>
                     <td>
-                        <input type="checkbox" rel="checkbox">
+                        <input th:checked="${image.isSign()}" class="checkbox" type="checkbox" rel="checkbox">
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <button type="button" rel="button">제출</button>
+        <label>
+            <button type="button" rel="backButton">돌아가기</button>
+            <button type="button" rel="submitButton">제출</button>
+        </label>
+
     </form>
+    <div id="myModal" class="modal">
+        <span class="close" th:onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
 </section>
 </body>
 </html>
