@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,17 +37,6 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST,produces = MediaType.TEXT_HTML_VALUE)
-    public String postLogin(HttpSession session,
-                                  UserEntity user){
-        Result<?> result = this.userService.login(user);
-        if(result == CommonResult.SUCCESS){
-            session.setAttribute("user", user);
-        }
-        JSONObject responseObject = new JSONObject();
-        responseObject.put("result", result.name().toLowerCase());
-        return responseObject.toString();
-    }
 
     @RequestMapping(value = "register", method= RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getRegister(){

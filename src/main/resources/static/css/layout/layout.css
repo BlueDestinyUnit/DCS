@@ -7,6 +7,10 @@ body {
   flex-direction: column;
 }
 
+.admin {
+  display: none;
+}
+
 #header {
   top: 0;
   left: 0;
@@ -21,12 +25,11 @@ body {
   align-items: center;
   display: flex;
   flex-direction: row;
-  gap: 1.5rem;
 }
 #header > .spring {
   flex-grow: 1;
 }
-#header > .logout-button {
+#header > .logout-container > .logout-button {
   width: 4rem;
   height: 4rem;
   box-sizing: border-box;
@@ -39,7 +42,7 @@ body {
   text-decoration: none;
   gap: 0.25rem;
 }
-#header > .logout-button > .icon {
+#header > .logout-container > .logout-button > .icon {
   font-size: 2rem;
 }
 #header > .profile-container {
@@ -140,6 +143,12 @@ body {
   justify-content: center;
   margin-bottom: 25rem;
   z-index: 3;
+}
+#asideFrame > .menu > .item {
+  list-style-type: none;
+}
+#asideFrame > .menu > .item::marker {
+  display: none;
 }
 #asideFrame > .menu > .item > .link {
   border-radius: 200px;

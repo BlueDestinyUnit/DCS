@@ -42,9 +42,12 @@ public class WorkController {
 
     @RequestMapping(value = "/work/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public SubmitImageEntity[] getWorkList(@RequestParam(value = "date",required = false) String date) throws IOException {
-        UserEntity user = new UserEntity();
-        user.setEmail("lsg9134@gmail.com");
+    public SubmitImageEntity[] getWorkList(@RequestParam(value = "date",required = false) String date, Authentication authentication) throws IOException {
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
+//        UserEntity user = new UserEntity();
+//        user.setEmail("lsg9134@gmail.com");
+
 
 //         서비스에서 전체 목록 들고오기
         return workService.imageList(user.getEmail(),date);
@@ -61,11 +64,11 @@ public class WorkController {
                             @RequestParam("images") MultipartFile[] images
     ) throws IOException {
         SubmitImageEntity[] submitImageEntities = new SubmitImageEntity[images.length];
-//        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
-//        UserEntity user = securityUser.getUserEntity();
-        UserEntity user = new UserEntity();
-        user.setEmail("lsg9134@gmail.com");
-        user.setPassword("1234");
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
+//        UserEntity user = new UserEntity();
+//        user.setEmail("lsg9134@gmail.com");
+//        user.setPassword("1234");
         workService.saveImage(user,images,date);
 
 

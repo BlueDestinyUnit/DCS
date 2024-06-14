@@ -1,12 +1,17 @@
 package com.scd.dcs.config.security;
 
 
+import com.scd.dcs.config.security.authentications.CustomAuthenticationFilter;
+import com.scd.dcs.config.security.authentications.CustomLoginAuthenticationEntryPoint;
+import com.scd.dcs.config.security.handlers.*;
 import com.scd.dcs.config.security.services.CustomUserDetailsService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -14,8 +19,14 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.context.DelegatingSecurityContextRepository;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -29,45 +40,61 @@ import java.util.Arrays;
 
 public class CustomSecurityConfig {
 
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+    private final CustomLoginAuthenticationEntryPoint authenticationEntryPoint;
+    private final AuthenticationConfiguration authenticationConfiguration;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
     private final DataSource dataSource;
 
-    private final CustomUserDetailsService customUserDetailsService;
 
     @Autowired
-    public CustomSecurityConfig(DataSource dataSource, CustomUserDetailsService customUserDetailsService) {
+    public CustomSecurityConfig(CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler,
+                                CustomAuthenticationFailureHandler customAuthenticationFailureHandler,
+                                CustomLoginAuthenticationEntryPoint authenticationEntryPoint,
+                                AuthenticationConfiguration authenticationConfiguration,
+                                CustomAccessDeniedHandler accessDeniedHandler,
+                                DataSource dataSource) {
+        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+        this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
+        this.authenticationEntryPoint = authenticationEntryPoint;
+        this.authenticationConfiguration = authenticationConfiguration;
+        this.accessDeniedHandler = accessDeniedHandler;
         this.dataSource = dataSource;
-        this.customUserDetailsService = customUserDetailsService;
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, CustomUserDetailsService customUserDetailsService) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/main").permitAll()
+                        .requestMatchers("/main").authenticated()
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/logout").permitAll()
+                        .requestMatchers("/logout").authenticated()
                         .requestMatchers("/favicon.ico").permitAll()
                         .requestMatchers("/test").permitAll()
-                        .requestMatchers("**").permitAll()
-                        .requestMatchers("/board/*").permitAll()
-                        .requestMatchers("/article/*").permitAll()
+                        .requestMatchers("/board/*").authenticated()
+                        .requestMatchers("/article/*").authenticated()
                         .requestMatchers("/user/*").permitAll()
-                        .requestMatchers("/addWork").permitAll()
-                        .requestMatchers("/work").permitAll()
-                        .requestMatchers("/work/").permitAll()
+                        .requestMatchers("/user/login/").permitAll()
+                        .requestMatchers("/addWork").authenticated()
+                        .requestMatchers("/work").authenticated()
+                        .requestMatchers("/work/").authenticated()
                         .requestMatchers("/subImage").permitAll()
                         .requestMatchers("/updateImage").permitAll()
-                        .requestMatchers("/admin2").permitAll()
+                        .requestMatchers("/admin2").authenticated()
+                        .requestMatchers("/assets/**").permitAll()
                 )
-                .formLogin(login -> login
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/main",true))
+                .addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .logout(logout -> logout.logoutUrl("/user/logout/")
+                        .addLogoutHandler(logoutHandler())
+                        .logoutSuccessHandler(logoutSuccessHandler())
                         .invalidateHttpSession(true)
-                        .logoutSuccessUrl("/login")
                         .deleteCookies("JSESSIONID"))
+                .exceptionHandling(config -> config
+                        .authenticationEntryPoint(authenticationEntryPoint)
+                        .accessDeniedHandler(accessDeniedHandler))
                 .rememberMe(httpSecurityRememberMeConfigurer -> httpSecurityRememberMeConfigurer
                         .userDetailsService(customUserDetailsService)
                         .tokenRepository(persistentTokenRepository())
@@ -75,9 +102,47 @@ public class CustomSecurityConfig {
         return http.build();
     }
 
+
+
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new CustomLogoutSuccessHandler();
+    }
+
+
+
+    @Bean
+    public LogoutHandler logoutHandler(){
+        return new CustomLogoutHandler();
+    }
+
+
+    @Bean
+    public CustomAuthenticationFilter ajaxAuthenticationFilter() throws Exception {
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter();
+        customAuthenticationFilter.setAuthenticationManager(authenticationManager());
+        customAuthenticationFilter.setAuthenticationSuccessHandler(customAuthenticationSuccessHandler);
+        customAuthenticationFilter.setAuthenticationFailureHandler(customAuthenticationFailureHandler);
+
+        // **
+        customAuthenticationFilter.setSecurityContextRepository(
+                new DelegatingSecurityContextRepository(
+                        new RequestAttributeSecurityContextRepository(),
+                        new HttpSessionSecurityContextRepository()
+                ));
+
+        return customAuthenticationFilter;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager() throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
 
