@@ -69,22 +69,22 @@ public class CustomSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/main").permitAll()
+                        .requestMatchers("/main").authenticated()
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/logout").permitAll()
+                        .requestMatchers("/logout").authenticated()
                         .requestMatchers("/favicon.ico").permitAll()
                         .requestMatchers("/test").permitAll()
-                        .requestMatchers("**").permitAll()
-                        .requestMatchers("/board/*").permitAll()
-                        .requestMatchers("/article/*").permitAll()
+                        .requestMatchers("/board/*").authenticated()
+                        .requestMatchers("/article/*").authenticated()
                         .requestMatchers("/user/*").permitAll()
-                        .requestMatchers("/user/login/").denyAll()
-                        .requestMatchers("/addWork").permitAll()
-                        .requestMatchers("/work").permitAll()
-                        .requestMatchers("/work/").permitAll()
+                        .requestMatchers("/user/login/").permitAll()
+                        .requestMatchers("/addWork").authenticated()
+                        .requestMatchers("/work").authenticated()
+                        .requestMatchers("/work/").authenticated()
                         .requestMatchers("/subImage").permitAll()
                         .requestMatchers("/updateImage").permitAll()
-                        .requestMatchers("/admin2").permitAll()
+                        .requestMatchers("/admin2").authenticated()
+                        .requestMatchers("/assets/**").permitAll()
                 )
                 .addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .logout(logout -> logout.logoutUrl("/user/logout/")
@@ -95,7 +95,6 @@ public class CustomSecurityConfig {
                 .exceptionHandling(config -> config
                         .authenticationEntryPoint(authenticationEntryPoint)
                         .accessDeniedHandler(accessDeniedHandler))
-
                 .rememberMe(httpSecurityRememberMeConfigurer -> httpSecurityRememberMeConfigurer
                         .userDetailsService(customUserDetailsService)
                         .tokenRepository(persistentTokenRepository())
@@ -124,8 +123,6 @@ public class CustomSecurityConfig {
     }
 
 
-
-
     @Bean
     public CustomAuthenticationFilter ajaxAuthenticationFilter() throws Exception {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter();
@@ -147,11 +144,6 @@ public class CustomSecurityConfig {
     public AuthenticationManager authenticationManager() throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-
-
-
-
 
 
     @Bean

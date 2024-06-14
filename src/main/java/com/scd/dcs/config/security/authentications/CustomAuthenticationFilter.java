@@ -25,17 +25,11 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException, IOException, ServletException {
 
-
-        System.out.println(request.getMethod());
-
-
         // 해당 요청이 POST 인지 확인
         if(!isPost(request)) {
             throw new IllegalStateException("Authentication is not supported");
         }
 
-
-        System.out.println(request.getReader());
         // POST 이면 body 를 AccountDto( 로그인 정보 DTO ) 에 매핑
         AccountDto accountDto = objectMapper.readValue(request.getReader(), AccountDto.class);
 

@@ -34,9 +34,11 @@ public class WorkService {
         // 작업 엔티티 생성 및 저장
         WorkEntity workEntity = workMapper.findWorkByDateAndUser(LocalDate.parse(date), user.getEmail());
         if (workEntity == null) {
+            System.out.println(1);
+            System.out.println(date);
             workEntity = new WorkEntity();
             workEntity.setUserEmail(user.getEmail());
-            workEntity.setWorkDate(LocalDate.parse(date));
+            workEntity.setDate(LocalDate.parse(date));
             workMapper.insertWork(workEntity);
         }
 

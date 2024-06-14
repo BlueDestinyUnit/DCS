@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -11,6 +13,9 @@
     <link rel="stylesheet" type="text/css" th:href="@{/assets/styles/login.css}">
     <script defer type="text/javascript" th:src="@{/js/user/common.js}"></script>
     <script defer type="text/javascript" th:src="@{/js/user/login.js}"></script>
+    <script sec:authorize="isAuthenticated()">
+        location.href='/main';
+    </script>
     <script th:if="${result != null && result.equals('FAILURE')}">
         alert('이메일 혹은 비밀번호가 올바르지 않습니다.');
         history.back();

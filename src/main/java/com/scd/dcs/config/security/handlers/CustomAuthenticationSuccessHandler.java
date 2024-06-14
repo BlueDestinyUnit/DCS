@@ -31,12 +31,12 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException {
 
-        log.info("석세스 핸들러");
+
         SecurityUser user = (SecurityUser) authentication.getPrincipal();
         String jsonResponse = "{\"result\": \"success\"}";
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.getWriter().write(jsonResponse);
 
-        objectMapper.writeValue(response.getWriter(), jsonResponse);
     }
 }

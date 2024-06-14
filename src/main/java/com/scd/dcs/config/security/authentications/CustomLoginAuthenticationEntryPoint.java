@@ -14,6 +14,6 @@ public class CustomLoginAuthenticationEntryPoint implements AuthenticationEntryP
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "UnAuthorized");
+        response.sendRedirect("/user/login");
     }
 }

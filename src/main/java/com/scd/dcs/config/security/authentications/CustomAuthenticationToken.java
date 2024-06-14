@@ -46,7 +46,6 @@ public class CustomAuthenticationToken extends AbstractAuthenticationToken {
     @Override
     public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
 
-        System.out.println("토큰");
         Assert.isTrue(!isAuthenticated,
                 "Cannot set this token to trusted - use constructor which takes a GrantedAuthority list instead");
         super.setAuthenticated(false);

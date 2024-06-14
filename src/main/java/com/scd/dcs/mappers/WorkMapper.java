@@ -23,9 +23,9 @@ public interface WorkMapper{
 
     SubmitImageEntity selectSubmitImage(@Param("index")int index);
 
-    SubmitImageEntity[] selectSubmitImages(@Param("email")String email, @Param("workDate") String workDate);
+    SubmitImageEntity[] selectSubmitImages(@Param("email")String email, @Param("date") String date);
 
-    WorkEntity findWorkByDateAndUser(@Param("workDate") LocalDate workDate, @Param("userEmail") String userEmail);
+    WorkEntity findWorkByDateAndUser(@Param("date") LocalDate date, @Param("userEmail") String userEmail);
 
     int updateImage(SubmitImageEntity submitImageEntity);
 

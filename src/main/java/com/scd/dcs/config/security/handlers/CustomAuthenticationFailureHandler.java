@@ -19,18 +19,13 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
-
-    private ObjectMapper objectMapper = new ObjectMapper();
-
     @Override
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {
         String jsonResponse = "{\"result\": \"failure\"}";
-
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.getWriter().write(jsonResponse);
 
-        objectMapper.writeValue(response.getWriter(), jsonResponse);
     }
 }
