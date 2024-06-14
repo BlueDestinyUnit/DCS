@@ -1,9 +1,7 @@
 package com.scd.dcs.controllers;
 
-import com.scd.dcs.config.security.domains.SecurityUser;
 import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.UserEntity;
-import com.scd.dcs.domains.entities.WorkEntity;
 import com.scd.dcs.results.CommonResult;
 import com.scd.dcs.results.Result;
 import com.scd.dcs.services.WorkService;
@@ -18,8 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Controller
 @RequestMapping()
@@ -38,7 +34,7 @@ public class WorkController {
             SubmitImageEntity submitImageEntity
     ){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("mosaic");
+        modelAndView.setViewName("work/mosaic");
         modelAndView.addObject("date", date);
         return modelAndView;
     }
