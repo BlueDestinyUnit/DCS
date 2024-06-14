@@ -91,7 +91,7 @@
     <select id="findWorkByDateAndUser" resultType="com.scd.dcs.domains.entities.WorkEntity">
         SELECT `index`      AS `index`,
                `user_email` AS `userEmail`,
-               `date`       AS `date`
+               `date`  AS `date`
         FROM `dcs`.`work`
         WHERE `user_email` = #{userEmail}
           AND `date` = #{date}

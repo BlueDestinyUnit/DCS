@@ -42,7 +42,7 @@ function events() {
         xhr.send();
     }
 }
-events();
+
 
 function createCalendar() {
     var today = moment();
