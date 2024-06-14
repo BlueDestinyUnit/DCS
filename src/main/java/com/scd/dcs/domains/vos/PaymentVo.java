@@ -8,6 +8,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class WorkVo extends WorkEntity {
+public class PaymentVo extends WorkEntity {
     private int workDays;
+    private double payment;
+    private String workType;
+    private String userName;
 }

@@ -11,8 +11,14 @@ menuList.forEach(item => {
             })
             break;
         case 'payment':
-            console.log('About 메뉴입니다.');
-            // About 메뉴에 대한 작업
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                if(admin === 'true'){
+                    location.href = `/admin/salary`
+                }else {
+
+                }
+            })
             break;
         case 'attendance':
             item.addEventListener('click', (e) => {

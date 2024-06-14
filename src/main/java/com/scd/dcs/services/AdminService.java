@@ -1,11 +1,9 @@
 package com.scd.dcs.services;
 
-import com.scd.dcs.domains.entities.PaymentEntity;
 import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.UserEntity;
-import com.scd.dcs.domains.entities.WorkEntity;
 import com.scd.dcs.domains.vos.UserProperty;
-import com.scd.dcs.domains.vos.WorkVo;
+import com.scd.dcs.domains.vos.PaymentVo;
 import com.scd.dcs.mappers.AdminMapper;
 import com.scd.dcs.mappers.UserMapper;
 import com.scd.dcs.mappers.WorkMapper;
@@ -14,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -89,6 +86,7 @@ public class AdminService {
         return this.userMapper.selectUserByEmail(email);
     }
 
-//    public WorkVo
-
+    public PaymentVo[] selectWorkVo(String date) {
+        return this.workMapper.selectUserAndWorkDaysByDate(date);
+    }
 }

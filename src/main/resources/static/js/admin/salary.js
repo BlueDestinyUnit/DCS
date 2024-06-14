@@ -5,8 +5,24 @@ $(document).ready(function(){
         minViewMode: "months", // 최소 선택 단위를 월로 설정
         language: "ko", // 한국어로 설정
         autoclose: true, // 선택 후 자동으로 닫기
-        container: ".board-container" // datepicker가 표시될 컨테이너 지정
+        container: ".board-container", // datepicker가 표시될 컨테이너 지정
+        orientation: 'bottom'
 
+    });
+
+    const demo = document.getElementById('demo');
+    const payments = demo.querySelectorAll('[rel="payments"]');
+
+    $(document).ready(function() {
+        // datepicker 초기화 등 다른 코드는 여기에 포함됩니다.
+
+        // payment 데이터 포맷팅
+        $('td[rel="payments"]').each(function() {
+            let paymentText = $(this).text(); // 현재 셀의 텍스트 가져오기
+            let paymentNumber = parseFloat(paymentText.replace(' ₩', '').replace(/,/g, '')); // 숫자로 변환, ₩와 쉼표 제거
+            let formattedPayment = paymentNumber.toLocaleString('ko-KR'); // 한국식 포맷으로 숫자 포맷팅
+            $(this).text(formattedPayment + ' ₩'); // 포맷팅된 숫자로 셀 내용 업데이트
+        });
     });
 
     $('#submitDate').on('click', function(e){

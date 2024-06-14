@@ -17,6 +17,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ko.min.js"></script>
 
     <style>
+        .label {
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            gap: 0.375rem;
+            justify-content: center;
+        }
+        .btn.btn-outline-secondary {
+            width: 5rem;
+            height: 2.3rem;
+        }
+        .mt-5 {
+            padding-top: 1rem;
+             margin-top: -0.5rem !important;
+        }
         /* datepicker z-index 설정 */
         .datepicker {
             z-index: 1000 !important;
@@ -44,7 +59,7 @@
                         <div class="form-group">
                             <label for="datepicker">날짜 선택</label>
                             <div class="input-group">
-                                <label>
+                                <label class="label">
                                     <input type="text" class="form-control datepicker" id="datepicker"
                                            placeholder="YYYY/MM">
                                         <button class="btn btn-outline-secondary" type="button" id="submitDate">선택</button>
@@ -61,12 +76,19 @@
                 <caption class="a11y-hidden">Table Caption</caption>
                 <thead>
                 <tr>
+                    <th scope="col">이름</th>
+                    <th scope="col">workType</th>
+                    <th scope="col">작업일</th>
+                    <th scope="col">급여</th>
 
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-
+                <tr th:each="payment : ${paymentList}">
+                    <td th:text="${payment.getUserName()}"></td>
+                    <td th:text="${payment.getWorkType() == 'full' ? '정규직' : '비정규직'}"></td>
+                    <td th:text="${payment.getWorkDays()}"></td>
+                    <td th:text="${payment.getPayment() + ' ₩'}" rel="payments"></td>
                 </tr>
                 </tbody>
             </table>

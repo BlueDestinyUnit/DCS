@@ -1,10 +1,9 @@
 package com.scd.dcs.mappers;
 
 
-import com.scd.dcs.domains.entities.PaymentEntity;
 import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.WorkEntity;
-import com.scd.dcs.results.Result;
+import com.scd.dcs.domains.vos.PaymentVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -31,5 +30,5 @@ public interface WorkMapper{
     SubmitImageEntity[] findSubmitImageByWorkIndex(@Param("index") int index);
     int updateImage(SubmitImageEntity submitImageEntity);
 
-    WorkEntity[] selectUserAndWorkDaysByDate(@Param("date") String date);
+    PaymentVo[] selectUserAndWorkDaysByDate(@Param("date") String date);
 }
