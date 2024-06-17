@@ -45,6 +45,11 @@
             display: inline-block;
             > .pagination {
               margin-bottom: 0;
+
+              > .page-count {
+                display: flex;
+                flex-direction: row;
+              }
             }
           }
         }

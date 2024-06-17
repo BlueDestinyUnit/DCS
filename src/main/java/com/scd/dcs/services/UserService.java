@@ -1,7 +1,9 @@
 package com.scd.dcs.services;
 
+import com.scd.dcs.domains.entities.AttendanceEntity;
 import com.scd.dcs.domains.entities.EmailAuthEntity;
 import com.scd.dcs.domains.entities.UserEntity;
+import com.scd.dcs.mappers.AttendanceMapper;
 import com.scd.dcs.mappers.UserMapper;
 import com.scd.dcs.mics.MailSender;
 import com.scd.dcs.regexes.EmailAuthRegex;
@@ -48,14 +50,17 @@ public class UserService {
     private final UserMapper userMapper;
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
+    private final AttendanceMapper attendanceMapper;
 
     @Autowired
-    public UserService(UserMapper userMapper, JavaMailSender mailSender, SpringTemplateEngine templateEngine){
+    public UserService(UserMapper userMapper, JavaMailSender mailSender, SpringTemplateEngine templateEngine,
+                       AttendanceMapper attendanceMapper){
         this.userMapper = userMapper;
 
         this.mailSender = mailSender;
 
         this.templateEngine = templateEngine;
+        this.attendanceMapper = attendanceMapper;
     }
 
     public Result<?> login(UserEntity user) {
@@ -236,4 +241,15 @@ public class UserService {
         user.setEmail(dbUser.getEmail());
         return CommonResult.SUCCESS;
     }
+
+    public Result<CommonResult> insertAttendance(UserEntity user){
+        AttendanceEntity attendance = new AttendanceEntity();
+        attendance.setUserEmail(user.getEmail());
+        attendance.setCheckIn(LocalDateTime.now());
+
+        attendanceMapper.insertAttendance(attendance);
+        return CommonResult.SUCCESS;
+    }
+
+
 }
