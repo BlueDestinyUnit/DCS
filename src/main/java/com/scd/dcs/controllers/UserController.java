@@ -49,6 +49,7 @@ public class UserController {
     @ResponseBody
     public String postRegister(EmailAuthEntity emailAuth,
             UserEntity user){
+        System.out.println(1);
         Result<?> result = this.userService.register(emailAuth, user);
         JSONObject responseObject = new JSONObject();
         responseObject.put("result", result.name().toLowerCase());

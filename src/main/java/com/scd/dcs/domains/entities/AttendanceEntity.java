@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 @EqualsAndHashCode
 @AllArgsConstructor
+@NoArgsConstructor
 public class AttendanceEntity {
     private int index;
     private String userEmail;
