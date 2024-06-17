@@ -13,6 +13,7 @@ $(document).ready(function(){
     const demo = document.getElementById('demo');
     const payments = demo.querySelectorAll('[rel="payments"]');
 
+
     $(document).ready(function() {
         // datepicker 초기화 등 다른 코드는 여기에 포함됩니다.
 
@@ -42,3 +43,37 @@ $(document).ready(function(){
         }
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    let radioButtons = document.querySelectorAll('input[name="check"]');
+    radioButtons.forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            let selectedOption = document.querySelector('input[name="check"]:checked').value;
+            fetchData(selectedOption);
+        });
+    });
+
+    // 초기 로드 시 기본값으로 체크된 라디오 버튼의 값을 서버로 전송
+    let initialCheckedRadioButton = document.querySelector('input[name="check"]:checked');
+    let selectedOption = initialCheckedRadioButton ? initialCheckedRadioButton.value : 'month'; // 기본값 'month' 설정
+    fetchData(selectedOption);
+});
+
+function fetchData(selectedOption) {
+    console.log(selectedOption);
+    const xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                let response = JSON.parse(xhr.responseText);
+                console.log(response); // 서버에서 받아온 데이터 처리
+            } else {
+                console.error('Request failed. Status: ' + xhr.status);
+            }
+        }
+    };
+
+    xhr.open('GET', `/admin/salary?option=${selectedOption}`);
+    xhr.send();
+}

@@ -2,6 +2,7 @@ package com.scd.dcs.controllers;
 
 import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.UserEntity;
+import com.scd.dcs.domains.vos.PaymentRadioButtonVo;
 import com.scd.dcs.domains.vos.UserProperty;
 import com.scd.dcs.domains.vos.WorkListRequest;
 import com.scd.dcs.domains.vos.PaymentVo;
@@ -51,8 +52,13 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/attendance", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getAttendance(@RequestParam("date") String date) {
+    public ModelAndView getAttendance(@RequestParam(value = "date", required = false) String date) {
         ModelAndView modelAndView = new ModelAndView();
+        if (date == null || date.isEmpty()) {
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            date = currentDate.format(formatter);
+        }
         List<UserProperty> userProperties = this.adminService.getUserProperty(date);
         modelAndView.addObject("Users", userProperties);
         modelAndView.addObject("date", date);
@@ -88,13 +94,15 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/salary", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getSalary(@RequestParam(value = "date", required = false) String date) {
-        System.out.println(date);
+    public ModelAndView getSalary(@RequestParam(value = "date", required = false) String date,
+                                  @RequestParam(value = "option", required = false) String option,
+                                  PaymentRadioButtonVo radioButton) {
         if (date == null || date.isEmpty()) {
             LocalDate currentDate = LocalDate.now().minusMonths(1);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
             date = currentDate.format(formatter);
         }
+        radioButton.setBy(option);
         ModelAndView modelAndView = new ModelAndView("admin/salary");
 
         PaymentVo[] paymentList = this.adminService.selectWorkVo(date);

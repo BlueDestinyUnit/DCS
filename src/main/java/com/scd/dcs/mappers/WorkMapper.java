@@ -31,4 +31,6 @@ public interface WorkMapper{
     int updateImage(SubmitImageEntity submitImageEntity);
 
     PaymentVo[] selectUserAndWorkDaysByDate(@Param("date") String date);
+
+    // by 값 보내야함
 }

@@ -124,18 +124,25 @@
     </select>
 
     <select id="selectUserAndWorkDaysByDate" resultType="PaymentVo">
-        SELECT `index`      AS `index`,
-               `user_email` AS `userEmail`,
-               `u`.`name`   AS `userName`,
-               `date`       AS `date`,
-               COUNT(1)     AS `workDays`,
-               `work_type`    AS `workType`,
+        SELECT `index`                  AS `index`,
+               `user_email`             AS `userEmail`,
+               `u`.`name`               AS `userName`,
+               `date`                   AS `date`,
+               COUNT(1)                 AS `workDays`,
+               `work_type`              AS `workType`,
                (COUNT(1) * `p`.`price`) AS `payment`
         FROM `dcs`.`work`
                  LEFT JOIN dcs.user u on work.user_email = u.email
                  LEFT JOIN dcs.payment p on u.work_type = p.uwork_type
-        WHERE DATE_FORMAT(`date`, '%Y-%m') = #{date}
+        <if test="by != null and by.equals('month')">
+            WHERE DATE_FORMAT(`date`, '%Y-%m') = #{date}
+        </if>
+        <if test="by != null and by.equals('year')">
+            WHERE DATE_FORMAT(`date`, '%Y') = #{date}
+        </if>
+            AND BINARY `u`.`role` = 'USER'
         GROUP BY(`user_email`)
+        ORDER BY `name` DESC
     </select>
     
     <update id="updateImage" parameterType="com.scd.dcs.domains.entities.SubmitImageEntity">

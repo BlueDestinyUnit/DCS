@@ -1,5 +1,6 @@
 const menuList = document.getElementById('asideFrame').querySelectorAll('.menu > .item');
 const admin = document.querySelector('.admin').textContent;
+console.log(admin);
 const today = moment().format('YYYY-MM-DD');
 menuList.forEach(item => {
     const menuName = item.dataset.menuName
@@ -23,8 +24,8 @@ menuList.forEach(item => {
         case 'attendance':
             item.addEventListener('click', (e) => {
                 e.preventDefault();
-                if(admin === 'false'){
-                    location.href = `/admin/`
+                if(admin === 'true'){
+                    location.href = `/admin/attendance`
                 }else {
                     location.href = `/user/attendance`
                 }
