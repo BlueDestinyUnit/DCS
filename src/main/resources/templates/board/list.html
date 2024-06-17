@@ -73,7 +73,7 @@
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li class="page-item">
+                        <li class="page-item page-count">
                             <a class="page-link"
                                th:each="page : ${#numbers.sequence(board.getMinPage(), board.getMaxPage())}"
                                th:href="@{/board/list (code=${board.getCode()}, page=${page})}"

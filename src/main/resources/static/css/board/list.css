@@ -25,5 +25,9 @@
 #mainSection > .table > tfoot > .page > td > nav > .pagination {
   margin-bottom: 0;
 }
+#mainSection > .table > tfoot > .page > td > nav > .pagination > .page-count {
+  display: flex;
+  flex-direction: row;
+}
 
 /*# sourceMappingURL=list.css.map */
