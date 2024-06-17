@@ -8,9 +8,9 @@ AI에게 학습하기위한 이미지들을 정제(모자이크)하기 위한 �
 |이름|역할| 주요 Controller|
 |------|---|---|
 |조성환|팀장, 게시판|BoardController|
-|김주혁|유저| UserController|
+|김주혁|유저 기능| UserController|
 |구본겸|이미지 정제(모자이크)|MosaicController|
-|이상규|관리자|AdminController|
+|이상규|관리자 기능|AdminController|
 
 
 ## 일지
