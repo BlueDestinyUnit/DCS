@@ -29,7 +29,8 @@ public class MainController {
             SecurityUser securityUser = (SecurityUser)authentication.getPrincipal();
             UserEntity user = securityUser.getUserEntity();
 
-//            Result<?> result =  userService.insertAttendance(user);
+            Result<?> result =  userService.insertAttendance(user);
+
         }
 
         ModelAndView modelAndView = new ModelAndView();

@@ -8,12 +8,12 @@
         VALUES (#{index}, #{userEmail}, #{checkIn})
     </insert>
 
-    <select id="selectAttendanceByDate" resultType="AttendanceEntity">
-        SELECT  IFNULL(true, false) AS `Boolean`
+    <select id="selectAttendanceByDate" resultType="UserProperty">
+        SELECT  IFNULL(true, false) AS `attendance`
         FROM `dcs`.`attendance`
         WHERE `attendance`.`user_email` = #{email}
           AND `attendance`.`check_in` BETWEEN #{firstDate} AND #{secondDate}
-        LIMIT 1
+        LIMIT 01
     </select>
 
 
