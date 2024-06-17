@@ -1,5 +1,6 @@
 package com.scd.dcs.controllers;
 
+import com.scd.dcs.config.security.domains.SecurityUser;
 import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.UserEntity;
 import com.scd.dcs.results.CommonResult;
@@ -113,7 +114,6 @@ public class WorkController {
         }catch (Exception e) {
             responseObject.put("result",CommonResult.FAILURE.name().toLowerCase());
         }
-
         if(dragCount > 0 && submitImageEntity.isMosaic() == false) {
              submitImageEntity.setMosaic(true);
         }
