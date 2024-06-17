@@ -114,7 +114,6 @@ public class WorkController {
         }catch (Exception e) {
             responseObject.put("result",CommonResult.FAILURE.name().toLowerCase());
         }
-
         if(dragCount > 0 && submitImageEntity.isMosaic() == false) {
              submitImageEntity.setMosaic(true);
         }
