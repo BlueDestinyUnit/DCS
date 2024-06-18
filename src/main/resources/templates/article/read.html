@@ -42,7 +42,7 @@
                 <div>
                     <a class="btn btn-primary" th:href="@{/board/list (code=${article.getBoardCode()})}">목록</a>
                     <div class="auth" sec:authorize="isAuthenticated()">
-                        <div th:if="${#authentication.name == article.getUserEmail()}">
+                        <div th:if="${#authentication.name == article.getUserEmail() || #authentication.getPrincipal().getUserEntity().getRole() == 'ADMIN'}">
                             <a class="btn btn-info"  th:href="@{/article/modify (index=${article.getIndex()})}">수정</a>
                             <a class="btn btn-danger" href="#" onclick="deleteArticle()">삭제</a>
                         </div>

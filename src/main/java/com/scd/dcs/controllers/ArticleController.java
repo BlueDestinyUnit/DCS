@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -95,24 +96,30 @@ public class ArticleController {
     @RequestMapping(value = "modify", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getModify(Authentication authentication,
                                   @RequestParam("index") int index) {
-        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
-        UserEntity user = securityUser.getUserEntity();
         ModelAndView modelAndView = new ModelAndView();
-
-        modelAndView.setViewName("article/modify");
-        ArticleEntity dbArticle;
-        if (user == null) {
+        if (authentication == null) {
             modelAndView.addObject("article", null);
             return modelAndView;
-        } else {
-            dbArticle = this.articleService.getArticle(index);
-            if (dbArticle != null && !dbArticle.getUserEmail().equals(user.getEmail())) {
-                dbArticle = null;
-            }
-            modelAndView.addObject("article", dbArticle);
         }
-        return modelAndView;
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
+        modelAndView.setViewName("article/modify");
+        ArticleEntity dbArticle = this.articleService.getArticle(index);
 
+        if(dbArticle == null){
+            modelAndView.addObject("article", dbArticle);
+            return modelAndView;
+        }
+
+        if(user.getRole().equals("ADMIN")){
+            modelAndView.addObject("article", dbArticle);
+            return modelAndView;
+        }
+        if(!dbArticle.getUserEmail().equals(user.getEmail())) {
+          dbArticle = null;
+        }
+        modelAndView.addObject("article", dbArticle);
+        return modelAndView;
     }
 
     @RequestMapping(value = "modify", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
@@ -124,8 +131,7 @@ public class ArticleController {
         if (result == CommonResult.SUCCESS) {
             modelAndView.setViewName("redirect:/article/read?index=" + article.getIndex());
         } else {
-            modelAndView.setViewName("article/modify");
-            modelAndView.addObject("result", result.name());
+            modelAndView.setViewName("redirect:/article/modify?index=" + article.getIndex());
         }
         return modelAndView;
     }
@@ -133,8 +139,9 @@ public class ArticleController {
     @RequestMapping(value = "delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String postDelete(Authentication authentication, ArticleEntity article) {
-        SecurityUser user=(SecurityUser) authentication.getPrincipal();
-        Result result = this.articleService.delete(user.getUserEntity(), article);
+        SecurityUser securityUser=(SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
+        Result result = this.articleService.delete(user, article);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("result", result.name().toLowerCase());
         if(result == CommonResult.SUCCESS){

@@ -67,11 +67,14 @@ public class ArticleService {
         if(dbArticle == null){
             return CommonResult.FAILURE;
         }
+        dbArticle.setContent(article.getContent());
+        dbArticle.setTitle(article.getTitle());
+        if(user.getRole().equals("ADMIN")){
+            return this.articleMapper.updateArticle(dbArticle) > 0 ? CommonResult.SUCCESS : CommonResult.FAILURE;
+        }
         if(!user.getEmail().equals(dbArticle.getUserEmail())){
             return CommonResult.FAILURE_DENIED;
         }
-        dbArticle.setContent(article.getContent());
-        dbArticle.setTitle(article.getTitle());
         return this.articleMapper.updateArticle(dbArticle) > 0 ? CommonResult.SUCCESS : CommonResult.FAILURE;
     }
 
@@ -83,10 +86,14 @@ public class ArticleService {
         if(dbArticle == null){
             return CommonResult.FAILURE;
         }
+        article.setBoardCode(dbArticle.getBoardCode());
+        if(user.getRole().equals("ADMIN")){
+            return this.articleMapper.deleteArticle(dbArticle) > 0 ? CommonResult.SUCCESS : CommonResult.FAILURE;
+        }
+
         if(!user.getEmail().equals(dbArticle.getUserEmail())){
             return CommonResult.FAILURE_DENIED;
         }
-        article.setBoardCode(dbArticle.getBoardCode());
         return this.articleMapper.deleteArticle(dbArticle) > 0 ? CommonResult.SUCCESS : CommonResult.FAILURE;
     }
 

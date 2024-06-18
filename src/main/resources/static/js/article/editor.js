@@ -1,8 +1,8 @@
-const main = document.getElementById('mainSection');
+const mainSeciton = document.getElementById('mainSection');
 
-main.form = main.querySelector(':scope > .form');
+mainSeciton.form = mainSeciton.querySelector(':scope > .form');
 
-ClassicEditor.create(main.form['content'], {
+ClassicEditor.create(mainSeciton.form['content'], {
     simpleUpload: {
         uploadUrl: './image',
     }
@@ -14,7 +14,7 @@ ClassicEditor.create(main.form['content'], {
         inputEl.setAttribute('type', 'hidden');
         inputEl.setAttribute('value', index);
         inputEl.style.display = 'none';
-        main.form.append(inputEl);
+        mainSeciton.form.append(inputEl);
     });
 }).catch(error => {
     console.log(error);

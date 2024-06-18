@@ -27,6 +27,7 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -249,6 +250,14 @@ public class UserService {
 
         attendanceMapper.insertAttendance(attendance);
         return CommonResult.SUCCESS;
+    }
+
+
+    public AttendanceEntity selectAttendance(String email){
+        String currentDate = LocalDate.now().toString();
+        String firstTime =currentDate + " 00:00:00";
+        String endTime = currentDate + " 23:59:59";
+        return this.attendanceMapper.selectAttendanceByDates(email, firstTime, endTime);
     }
 
 
