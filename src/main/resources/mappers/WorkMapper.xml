@@ -5,10 +5,11 @@
 <mapper namespace="com.scd.dcs.mappers.WorkMapper">
 
 
-
     <insert id="insertSubmitImage" parameterType="com.scd.dcs.domains.entities.SubmitImageEntity">
-        INSERT INTO `dcs`.`submit_images` (`index`, `work_index`, `content_type`, `original_name`, `image_data`, `is_mosaic`, `is_sign`, `comment`)
-        VALUES (#{index}, #{workIndex}, #{contentType}, #{originalName}, #{imageData}, #{isMosaic}, #{isSign}, #{comment})
+        INSERT INTO `dcs`.`submit_images` (`index`, `work_index`, `content_type`, `original_name`, `image_data`,
+                                           `is_mosaic`, `is_sign`, `comment`)
+        VALUES (#{index}, #{workIndex}, #{contentType}, #{originalName}, #{imageData}, #{isMosaic}, #{isSign},
+                #{comment})
     </insert>
 
     <insert id="insertWork"
@@ -21,32 +22,33 @@
     </insert>
 
 
-<!--w.`user_email` = #{email} AND-->
+    <!--w.`user_email` = #{email} AND-->
     <select id="mosaicImages" resultType="int">
         SELECT COUNT(*)
-        FROM `dcs`.`submit_images` AS s LEFT JOIN `dcs`.`work` AS w ON s.`work_index` = w.index
-        WHERE  w.`date` = #{date} AND s.is_mosaic = true
+        FROM `dcs`.`submit_images` AS s
+                 LEFT JOIN `dcs`.`work` AS w ON s.`work_index` = w.index
+        WHERE w.`date` = #{date}
+          AND s.is_mosaic = true
     </select>
 
     <select id="selectWork" resultType="com.scd.dcs.domains.entities.WorkEntity">
-        SELECT
-            `index`              AS   `index`,
-            `user_email`         AS   `userEmail`,
-            `date`          AS   `date`
+        SELECT `index`      AS `index`,
+               `user_email` AS `userEmail`,
+               `date`       AS `date`
         FROM `dcs`.`work`
         WHERE BINARY `index` = #{index}
         LIMIT 1
     </select>
 
     <select id="selectSubmitImage" resultType="com.scd.dcs.domains.entities.SubmitImageEntity">
-        SELECT `index`        AS `index`,
-               `work_index`   AS `workIndex`,
-               `content_type` AS `contentType`,
+        SELECT `index`         AS `index`,
+               `work_index`    AS `workIndex`,
+               `content_type`  AS `contentType`,
                `original_name` AS `originalName`,
-               `image_data`   AS `imageData`,
-               `is_mosaic`    AS `isMosaic`,
-               `is_sign`      AS `isSign`,
-               `comment`      AS `comment`
+               `image_data`    AS `imageData`,
+               `is_mosaic`     AS `isMosaic`,
+               `is_sign`       AS `isSign`,
+               `comment`       AS `comment`
         FROM `dcs`.`submit_images`
         WHERE BINARY `index` = #{index}
         LIMIT 1
@@ -54,14 +56,14 @@
 
 
     <select id="selectSubmitImages" resultType="com.scd.dcs.domains.entities.SubmitImageEntity">
-        SELECT `images`.`index`        AS `index`,
-               `images`.`work_index`   AS `workIndex`,
-               `images`.`content_type` AS `contentType`,
+        SELECT `images`.`index`         AS `index`,
+               `images`.`work_index`    AS `workIndex`,
+               `images`.`content_type`  AS `contentType`,
                `images`.`original_name` AS `originalName`,
-               `images`.`image_data`   AS `imageData`,
-               `images`.`is_mosaic`    AS `isMosaic`,
-               `images`.`is_sign`      AS `isSign`,
-               `images`.`comment`      AS `comment`
+               `images`.`image_data`    AS `imageData`,
+               `images`.`is_mosaic`     AS `isMosaic`,
+               `images`.`is_sign`       AS `isSign`,
+               `images`.`comment`       AS `comment`
 
         FROM `dcs`.`submit_images` AS `images`
                  LEFT JOIN `dcs`.`work` AS `work` on `work`.`index` = `images`.`work_index`
@@ -70,15 +72,15 @@
     </select>
 
     <select id="selectSubmitImageVos" resultType="com.scd.dcs.domains.entities.SubmitImageEntity">
-        SELECT `images`.`index`        AS `index`,
-               `images`.`work_index`   AS `workIndex`,
-               `images`.`content_type` AS `contentType`,
+        SELECT `images`.`index`         AS `index`,
+               `images`.`work_index`    AS `workIndex`,
+               `images`.`content_type`  AS `contentType`,
                `images`.`original_name` AS `originalName`,
-               `images`.`image_data`   AS `imageData`,
-               `images`.`is_mosaic`    AS `isMosaic`,
-               `images`.`is_sign`      AS `isSign`,
-               `images`.`comment`      AS `comment`,
-               COUNT(*)                AS `count`
+               `images`.`image_data`    AS `imageData`,
+               `images`.`is_mosaic`     AS `isMosaic`,
+               `images`.`is_sign`       AS `isSign`,
+               `images`.`comment`       AS `comment`,
+               COUNT(*)                 AS `count`
         FROM `dcs`.`submit_images` AS `images`
                  LEFT JOIN `dcs`.`work` AS `work` on `work`.`index` = `images`.`work_index`
         WHERE `user_email` = #{email}
@@ -86,12 +88,10 @@
     </select>
 
 
-
-
     <select id="findWorkByDateAndUser" resultType="com.scd.dcs.domains.entities.WorkEntity">
         SELECT `index`      AS `index`,
                `user_email` AS `userEmail`,
-               `date`  AS `date`
+               `date`       AS `date`
         FROM `dcs`.`work`
         WHERE `user_email` = #{userEmail}
           AND `date` = #{date}
@@ -134,17 +134,34 @@
         FROM `dcs`.`work`
                  LEFT JOIN dcs.user u on work.user_email = u.email
                  LEFT JOIN dcs.payment p on u.work_type = p.uwork_type
-        <if test="by != null and by.equals('month')">
-            WHERE DATE_FORMAT(`date`, '%Y-%m') = #{date}
-        </if>
-        <if test="by != null and by.equals('year')">
-            WHERE DATE_FORMAT(`date`, '%Y') = #{date}
-        </if>
-            AND BINARY `u`.`role` = 'USER'
+        WHERE DATE_FORMAT(`date`, '%Y-%m') = #{date}
+          AND BINARY `u`.`role` = 'USER'
         GROUP BY(`user_email`)
         ORDER BY `name` DESC
     </select>
-    
+
+    <select id="selectUserAndWorkDaysByDateAndOption" resultType="PaymentVo">
+        SELECT `index` AS `index`,
+        `user_email` AS `userEmail`,
+        `u`.`name` AS `userName`,
+        `date` AS `date`,
+        COUNT(1) AS `workDays`,
+        `work_type` AS `workType`,
+        (COUNT(1) * `p`.`price`) AS `payment`
+        FROM `dcs`.`work`
+        LEFT JOIN dcs.user u on work.user_email = u.email
+        LEFT JOIN dcs.payment p on u.work_type = p.uwork_type
+        <if test="option != null and option.equals('month')">
+            WHERE DATE_FORMAT(`date`, '%Y-%m') = #{date}
+        </if>
+        <if test="option != null and option.equals('year')">
+            WHERE DATE_FORMAT(`date`, '%Y') = #{date}
+        </if>
+        AND BINARY `u`.`role` = 'USER'
+        GROUP BY(`user_email`)
+        ORDER BY `name` DESC
+    </select>
+
     <update id="updateImage" parameterType="com.scd.dcs.domains.entities.SubmitImageEntity">
         UPDATE `dcs`.`submit_images`
         SET `index`         = #{index},

@@ -26,8 +26,11 @@ $(document).ready(function(){
         });
     });
 
+
+
     $('#submitDate').on('click', function(e){
         e.preventDefault();
+
         let Date = $('#datepicker').val();
         let dateParts = Date.split('/');
         let year = dateParts[0];
@@ -45,35 +48,41 @@ $(document).ready(function(){
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    let radioButtons = document.querySelectorAll('input[name="check"]');
-    radioButtons.forEach(function(radio) {
-        radio.addEventListener('change', function() {
-            let selectedOption = document.querySelector('input[name="check"]:checked').value;
-            fetchData(selectedOption);
-        });
-    });
+
 
     // 초기 로드 시 기본값으로 체크된 라디오 버튼의 값을 서버로 전송
-    let initialCheckedRadioButton = document.querySelector('input[name="check"]:checked');
-    let selectedOption = initialCheckedRadioButton ? initialCheckedRadioButton.value : 'month'; // 기본값 'month' 설정
-    fetchData(selectedOption);
+    // let initialCheckedRadioButton = document.querySelector('input[name="check"]:checked');
+    // let selectedOption = initialCheckedRadioButton ? initialCheckedRadioButton.value : 'month'; // 기본값 'month' 설정
+    // fetchData(selectedOption);
 });
+
+function checkRadio() {
+    let dateButtons = document.querySelectorAll('button[rel="dateButton"]');
+    let hiddenValue = document.querySelector('.hiddenValue').value;
+    dateButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            switch (button.textContent) {
+                case '월 별' :
+                    location.href = `/admin/salary?date=${hiddenValue}`;
+                    break;
+            }
+        });
+    });
+}
+
+checkRadio();
+
 
 function fetchData(selectedOption) {
     console.log(selectedOption);
     const xhr = new XMLHttpRequest();
+    const selectedDate = document.querySelector('.hiddenValue').value;
+    console.log(selectedDate)
+    let url = `/admin/salary?date=${encodeURIComponent(selectedDate)}`;
 
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                let response = JSON.parse(xhr.responseText);
-                console.log(response); // 서버에서 받아온 데이터 처리
-            } else {
-                console.error('Request failed. Status: ' + xhr.status);
-            }
-        }
-    };
-
-    xhr.open('GET', `/admin/salary?option=${selectedOption}`);
-    xhr.send();
+    // option 값이 존재하면 추가
+    if (selectedOption) {
+        url += `&option=${encodeURIComponent(selectedOption)}`;
+    }
+    location.href = url;
 }

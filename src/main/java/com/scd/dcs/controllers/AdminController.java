@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -93,21 +94,52 @@ public class AdminController {
         return jsonObject.toString();
     }
 
+//    @RequestMapping(value = "/salary", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+//    public ModelAndView getSalary(@RequestParam(value = "date", required = false) String date,
+//                                  @RequestParam(value = "option", required = false) String option,
+//                                  PaymentRadioButtonVo radioButton) {
+////        System.out.println(date);
+////        System.out.println(option);
+//        if (date == null || date.isEmpty()) {
+//            LocalDate currentDate = LocalDate.now().minusMonths(1);
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+//            date = currentDate.format(formatter);
+//        }
+////        radioButton.setBy(option);
+//        ModelAndView modelAndView = new ModelAndView("admin/salary");
+//
+//        PaymentVo[] paymentList = this.adminService.selectWorkVo(date, option);
+//        modelAndView.addObject("paymentList",paymentList);
+//        return modelAndView;
+//    }
+
     @RequestMapping(value = "/salary", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getSalary(@RequestParam(value = "date", required = false) String date,
-                                  @RequestParam(value = "option", required = false) String option,
-                                  PaymentRadioButtonVo radioButton) {
+                                  @RequestParam(value = "option", required = false) String option) {
+
         if (date == null || date.isEmpty()) {
             LocalDate currentDate = LocalDate.now().minusMonths(1);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
             date = currentDate.format(formatter);
         }
-        radioButton.setBy(option);
+
         ModelAndView modelAndView = new ModelAndView("admin/salary");
 
-        PaymentVo[] paymentList = this.adminService.selectWorkVo(date);
-        modelAndView.addObject("paymentList",paymentList);
+        System.out.println(option);
+        if ("month".equals(option) || "year".equals(option)) {
+            PaymentVo[] paymentList = adminService.selectWorkVoByOption(date, option);
+            System.out.println(Arrays.toString(paymentList));
+            modelAndView.addObject("selectDate", date);
+            modelAndView.addObject("paymentList", paymentList);
+        } else {
+            // 기본 옵션이나 처리할 옵션이 없는 경우
+            PaymentVo[] paymentList = adminService.selectWorkVo(date);
+            modelAndView.addObject("selectDate", date);
+            modelAndView.addObject("paymentList", paymentList);
+//        }
+            return modelAndView;
+
+        }
         return modelAndView;
     }
-
 }

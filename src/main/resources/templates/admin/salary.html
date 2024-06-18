@@ -20,7 +20,7 @@
 <body>
 <section layout:fragment="content">
 
-    <form method="post" id="demo">
+    <form id="demo">
         <div class="board-container">
             <div class="container mt-5">
                 <div class="form-group">
@@ -36,14 +36,15 @@
                 <div class="spring"></div>
                 <div class="option">
                     <label class="label">
-                        <input checked name="check" type="radio" value="month" rel="monthRadio"><span class="gap">월 별</span>
-                        <input name="check" type="radio" value="year" rel="yearRadio"><span>년 별</span>
+                        <button class="btn btn-primary" rel="dateButton">월 별</button>
+                        <button class="btn btn-primary" rel="dateButton">년 별</button>
                     </label>
                 </div>
             </div>
         </div>
 
         <div class="container">
+            <input class="hiddenValue" th:value="${selectDate}" type="hidden">
             <table class="table">
                 <caption class="a11y-hidden">Table Caption</caption>
                 <thead>
@@ -66,7 +67,6 @@
                 </tbody>
             </table>
         </div>
-
 
     </form>
 

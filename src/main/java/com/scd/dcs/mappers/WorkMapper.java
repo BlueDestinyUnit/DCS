@@ -30,7 +30,10 @@ public interface WorkMapper{
     SubmitImageEntity[] findSubmitImageByWorkIndex(@Param("index") int index);
     int updateImage(SubmitImageEntity submitImageEntity);
 
+
     PaymentVo[] selectUserAndWorkDaysByDate(@Param("date") String date);
+    PaymentVo[] selectUserAndWorkDaysByDateAndOption(@Param("date") String date,
+                                            @Param("option") String option);
 
     // by 값 보내야함
 }
