@@ -1,5 +1,4 @@
 @charset "UTF-8";
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 @import "mosaic.datepicker";
 body {
   font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
@@ -11,14 +10,9 @@ body {
 
 
 #mainSection {
-  //display: flex;
-  //flex-direction: column;
-
-
   .title {
     width: 90%;
     text-align: center;
-
   }
 
   > .main-container {

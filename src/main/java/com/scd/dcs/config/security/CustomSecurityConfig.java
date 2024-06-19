@@ -90,7 +90,7 @@ public class CustomSecurityConfig {
                         .requestMatchers("/libraries/**").permitAll()
                 )
                 .addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .logout(logout -> logout.logoutUrl("/user/logout/")
+                .logout(logout -> logout.logoutUrl("/logout/")
                         .addLogoutHandler(logoutHandler())
                         .logoutSuccessHandler(logoutSuccessHandler())
                         .invalidateHttpSession(true)

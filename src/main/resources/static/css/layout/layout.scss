@@ -10,6 +10,10 @@ body {
   display: flex;
   flex-direction: column;
 }
+input {
+  font-family: inherit;
+}
+
 
 .admin {
   display: none;
@@ -77,7 +81,7 @@ body {
         width: 3.25rem;
         height: 3.25rem;
         border-radius: 50%;
-        background-color: black;
+        border-color: black;
       }
     }
 
@@ -95,7 +99,7 @@ body {
       > .userName {
         width: 6.25rem;
         height: 2rem;
-        background-color: black;
+        border: 1px solid black;
       }
       > .image {
         width: 2rem;
@@ -111,7 +115,7 @@ body {
   top: 0;
   left: 0;
   width: $aside-width;
-  height: 95%;
+  height: 70%;
   position: fixed;
   align-items: stretch;
   display: flex;
@@ -119,12 +123,16 @@ body {
   justify-content: flex-start;
   z-index: 2;
 
+  transition: left;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in;
+
   > .aside {
     background-color: #212121;
     top: 0;
     left: 0;
     width: $aside-width - 2rem;
-    height: 85%;
+    height: 70%;
     margin: 1.5rem 1rem;
     border-radius: 1rem;
     position: fixed;
@@ -132,6 +140,10 @@ body {
     display: flex;
     flex-direction: row;
     z-index: 3;
+
+    transition: left;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in;
 
     > .spring {
       flex-grow: 1;
@@ -164,7 +176,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-bottom: 25rem;
+    margin-bottom: 9rem;
     z-index: 3;
 
     > .item {
@@ -201,6 +213,10 @@ body {
           height: 1.75rem;
         }
 
+        > .text {
+          font-family: inherit;
+        }
+
       }
 
       > .link:hover {
@@ -217,6 +233,10 @@ body {
   margin-top: $header_height;
   margin-left: $aside-width;
   position: relative;
+
+
+  transition: margin-left 0.5s;
+  transition-timing-function: ease-in;
 }
 
 #footer{

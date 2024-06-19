@@ -1,6 +1,7 @@
 package com.scd.dcs.config.security.handlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.scd.dcs.results.CommonResult;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,7 +24,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
         // 예를 들어, 로그아웃한 사용자의 세션을 종료하거나 리다이렉트를 수행할 수 있습니다.
 //        response.sendRedirect("/login?logout");
         Map<String, Object> responseBody = new HashMap<>();
-        responseBody.put("message", "Logout successful");
+        responseBody.put("result", CommonResult.SUCCESS.name().toLowerCase());
 
         // JSON 형식으로 변환
         ObjectMapper objectMapper = new ObjectMapper();
