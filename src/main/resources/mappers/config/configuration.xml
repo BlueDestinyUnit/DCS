@@ -22,6 +22,6 @@
         <typeAlias alias="SubmitImageEntity" type="com.scd.dcs.domains.entities.SubmitImageEntity"/>
         <typeAlias alias="PaymentEntity" type="com.scd.dcs.domains.entities.PaymentEntity"/>
         <typeAlias alias="WorkEntity" type="com.scd.dcs.domains.entities.WorkEntity"/>
-        <typeAlias alias="WorkVo" type="com.scd.dcs.domains.vos.WorkVo"/>
+        <typeAlias alias="PaymentVo" type="com.scd.dcs.domains.vos.PaymentVo"/>
     </typeAliases>
 </configuration>

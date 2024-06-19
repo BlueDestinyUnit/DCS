@@ -2,8 +2,10 @@ package com.scd.dcs.controllers;
 
 import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.UserEntity;
+import com.scd.dcs.domains.vos.PaymentRadioButtonVo;
 import com.scd.dcs.domains.vos.UserProperty;
 import com.scd.dcs.domains.vos.WorkListRequest;
+import com.scd.dcs.domains.vos.PaymentVo;
 import com.scd.dcs.results.Result;
 import com.scd.dcs.services.AdminService;
 import com.scd.dcs.services.SalaryService;
@@ -16,6 +18,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -46,8 +53,13 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/attendance", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getAttendance(@RequestParam("date") String date) {
+    public ModelAndView getAttendance(@RequestParam(value = "date", required = false) String date) {
         ModelAndView modelAndView = new ModelAndView();
+        if (date == null || date.isEmpty()) {
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            date = currentDate.format(formatter);
+        }
         List<UserProperty> userProperties = this.adminService.getUserProperty(date);
         modelAndView.addObject("Users", userProperties);
         modelAndView.addObject("date", date);
@@ -82,10 +94,53 @@ public class AdminController {
         return jsonObject.toString();
     }
 
+//    @RequestMapping(value = "/salary", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+//    public ModelAndView getSalary(@RequestParam(value = "date", required = false) String date,
+//                                  @RequestParam(value = "option", required = false) String option,
+//                                  PaymentRadioButtonVo radioButton) {
+////        System.out.println(date);
+////        System.out.println(option);
+//        if (date == null || date.isEmpty()) {
+//            LocalDate currentDate = LocalDate.now().minusMonths(1);
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+//            date = currentDate.format(formatter);
+//        }
+////        radioButton.setBy(option);
+//        ModelAndView modelAndView = new ModelAndView("admin/salary");
+//
+//        PaymentVo[] paymentList = this.adminService.selectWorkVo(date, option);
+//        modelAndView.addObject("paymentList",paymentList);
+//        return modelAndView;
+//    }
+
     @RequestMapping(value = "/salary", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getSalary(@RequestParam("date") String date) {
+    public ModelAndView getSalary(@RequestParam(value = "date", required = false) String date,
+                                  @RequestParam(value = "option", required = false) String option) {
 
-        return new ModelAndView("admin/salary");
+        if (date == null || date.isEmpty()) {
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+            date = currentDate.format(formatter);
+        }
+
+        ModelAndView modelAndView = new ModelAndView("admin/salary");
+
+        System.out.println(option);
+        if ("month".equals(option) || "year".equals(option)) {
+            PaymentVo[] paymentList = adminService.selectWorkVoByOption(date, option);
+            System.out.println(Arrays.toString(paymentList));
+            modelAndView.addObject("selectDate", date);
+            modelAndView.addObject("paymentList", paymentList);
+            modelAndView.addObject("option", option);
+        } else {
+            // 기본 옵션이나 처리할 옵션이 없는 경우
+            PaymentVo[] paymentList = adminService.selectWorkVo(date);
+            modelAndView.addObject("selectDate", date);
+            modelAndView.addObject("paymentList", paymentList);
+//        }
+            return modelAndView;
+
+        }
+        return modelAndView;
     }
-
 }

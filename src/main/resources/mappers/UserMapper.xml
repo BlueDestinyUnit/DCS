@@ -24,6 +24,7 @@
                `is_state`     AS `isState`,
                `is_insurance` AS `isInsurance`
         FROM `dcs`.`user`
+        WHERE BINARY `user`.`role` = 'USER'
     </select>
 
     <select id="selectUserByEmail" resultType="UserEntity">

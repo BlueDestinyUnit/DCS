@@ -1,11 +1,9 @@
 package com.scd.dcs.services;
 
-import com.scd.dcs.domains.entities.PaymentEntity;
 import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.UserEntity;
-import com.scd.dcs.domains.entities.WorkEntity;
 import com.scd.dcs.domains.vos.UserProperty;
-import com.scd.dcs.domains.vos.WorkVo;
+import com.scd.dcs.domains.vos.PaymentVo;
 import com.scd.dcs.mappers.AdminMapper;
 import com.scd.dcs.mappers.UserMapper;
 import com.scd.dcs.mappers.WorkMapper;
@@ -14,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -64,20 +61,20 @@ public class AdminService {
     @Transactional
     public CommonResult updateComment(List<Object> sendList) {
         // 선택 바로 , 검수 x
-        try{
+        try {
             for (Object item : sendList) {
                 Map<String, Object> listItem = (Map<String, Object>) item;
                 Object comment = listItem.get("comment");
                 Object index = listItem.get("index");
                 SubmitImageEntity dbSubmitImage = this.workMapper.selectSubmitImage(Integer.parseInt((String) index));
                 System.out.println(dbSubmitImage);
-                dbSubmitImage.setComment((String)comment);
+                dbSubmitImage.setComment((String) comment);
                 System.out.println(3);
                 dbSubmitImage.setSign(true);
 
                 this.workMapper.updateImage(dbSubmitImage);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             return CommonResult.FAILURE;
         }
         return CommonResult.SUCCESS;
@@ -87,6 +84,17 @@ public class AdminService {
         return this.userMapper.selectUserByEmail(email);
     }
 
-//    public WorkVo
+    public PaymentVo[] selectWorkVo(String date) {
+        System.out.println("초기화면임");
+        return this.workMapper.selectUserAndWorkDaysByDate(date);
+    }
 
+    public PaymentVo[] selectWorkVoByOption(String date, String option) {
+        System.out.println(option + " 이 선택됨");
+        if (option.equals("year")) {
+            date = date.substring(0, 4);
+        }
+        System.out.println(date);
+        return this.workMapper.selectUserAndWorkDaysByDateAndOption(date, option);
+    }
 }

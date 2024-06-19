@@ -41,6 +41,7 @@ html, body {
   align-items: center;
   flex-direction: row;
   margin-right: 8rem;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   gap: 1rem;
 }
 .form-group > .text-center {
@@ -96,6 +97,7 @@ html, body {
   border: none;
 }
 .table > tbody > tr > td > .button {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   margin-left: 1.5rem;
   border: none;
 }

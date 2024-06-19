@@ -40,6 +40,7 @@ html, body {
   align-items: center;
   flex-direction: row;
   margin-right: 8rem;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   gap: 1rem;
 
   > .text-center {
@@ -99,11 +100,15 @@ html, body {
         padding-bottom: 2.35rem;
         font-weight: 20;
         text-align: center;
+        //&:nth-child(odd) {
+        //  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        //}
         &:last-child {
           border: none;
         }
 
         > .button {
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
           margin-left: 1.5rem;
           border: none;
 

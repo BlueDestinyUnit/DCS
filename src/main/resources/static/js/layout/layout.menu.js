@@ -1,5 +1,6 @@
 const menuList = document.getElementById('asideFrame').querySelectorAll('.menu > .item');
 const admin = document.querySelector('.admin').textContent;
+console.log(admin);
 const today = moment().format('YYYY-MM-DD');
 menuList.forEach(item => {
     const menuName = item.dataset.menuName
@@ -11,14 +12,20 @@ menuList.forEach(item => {
             })
             break;
         case 'payment':
-            console.log('About 메뉴입니다.');
-            // About 메뉴에 대한 작업
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                if(admin === 'true'){
+                    location.href = `/admin/salary`
+                }else {
+
+                }
+            })
             break;
         case 'attendance':
             item.addEventListener('click', (e) => {
                 e.preventDefault();
-                if(admin === 'false'){
-                    location.href = `/admin/`
+                if(admin === 'true'){
+                    location.href = `/admin/attendance`
                 }else {
                     location.href = `/user/attendance`
                 }
