@@ -118,7 +118,7 @@ public class AdminController {
                                   @RequestParam(value = "option", required = false) String option) {
 
         if (date == null || date.isEmpty()) {
-            LocalDate currentDate = LocalDate.now().minusMonths(1);
+            LocalDate currentDate = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
             date = currentDate.format(formatter);
         }
@@ -131,6 +131,7 @@ public class AdminController {
             System.out.println(Arrays.toString(paymentList));
             modelAndView.addObject("selectDate", date);
             modelAndView.addObject("paymentList", paymentList);
+            modelAndView.addObject("option", option);
         } else {
             // 기본 옵션이나 처리할 옵션이 없는 경우
             PaymentVo[] paymentList = adminService.selectWorkVo(date);

@@ -26,63 +26,35 @@ $(document).ready(function(){
         });
     });
 
+    $('button[rel="dateButton"]').each(function() {
+        $(this).on('click', function(e) {
+            e.preventDefault();
+            let Date = $('#datepicker').val();
+            if (!Date) {
+                let hiddenValue = $('#hiddenValue').val();
+                alert('날짜를 입력해주세요.');
+            } else {
 
 
-    $('#submitDate').on('click', function(e){
-        e.preventDefault();
-
-        let Date = $('#datepicker').val();
-        let dateParts = Date.split('/');
-        let year = dateParts[0];
-        let month = dateParts[1];
-        if (Date.length !== 0) {
-            let selectedDate = year + '-' + month;
-            $('#pickedDate').html(selectedDate);
-            window.location.href = `/admin/salary?date=${selectedDate}`;
-            // GET 요청을 사용하여 AJAX 호출
-        } else {
-            alert('날짜를 입력해주세요.');
-            window.location.href = `/admin/salary`;
-        }
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
+                let dateParts = Date.split('/');
+                let year = dateParts[0];
+                let month = dateParts[1];
+                let selectedDate = year + '-' + month;
+                alert(Date);
+                const selectButtonText = $(this).text();
 
 
-    // 초기 로드 시 기본값으로 체크된 라디오 버튼의 값을 서버로 전송
-    // let initialCheckedRadioButton = document.querySelector('input[name="check"]:checked');
-    // let selectedOption = initialCheckedRadioButton ? initialCheckedRadioButton.value : 'month'; // 기본값 'month' 설정
-    // fetchData(selectedOption);
-});
-
-function checkRadio() {
-    let dateButtons = document.querySelectorAll('button[rel="dateButton"]');
-    let hiddenValue = document.querySelector('.hiddenValue').value;
-    dateButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            switch (button.textContent) {
-                case '월 별' :
-                    location.href = `/admin/salary?date=${hiddenValue}`;
-                    break;
+                switch (selectButtonText) {
+                    case '월 별' :
+                        window.location.href = `/admin/salary?date=${selectedDate}`
+                        break;
+                    case '년 별' :
+                        window.location.href = `/admin/salary?date=${selectedDate}&option=year`
+                        break;
+                }
             }
+
         });
     });
-}
 
-checkRadio();
-
-
-function fetchData(selectedOption) {
-    console.log(selectedOption);
-    const xhr = new XMLHttpRequest();
-    const selectedDate = document.querySelector('.hiddenValue').value;
-    console.log(selectedDate)
-    let url = `/admin/salary?date=${encodeURIComponent(selectedDate)}`;
-
-    // option 값이 존재하면 추가
-    if (selectedOption) {
-        url += `&option=${encodeURIComponent(selectedOption)}`;
-    }
-    location.href = url;
-}
+});

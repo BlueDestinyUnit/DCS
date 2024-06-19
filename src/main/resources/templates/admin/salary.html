@@ -29,17 +29,18 @@
                         <label class="label">
                             <input type="text" class="form-control datepicker" id="datepicker"
                                    placeholder="YYYY/MM">
-                            <button class="btn btn-outline-secondary" type="button" id="submitDate">선택</button>
+<!--                            <button class="btn btn-outline-secondary" type="button" id="submitDate">선택</button>-->
+                            <label class="label">
+                                <button class="btn btn-primary" rel="dateButton">월 별</button>
+                                <button class="btn btn-primary nonSelect" rel="dateButton">년 별</button>
+                            </label>
                         </label>
                     </div>
                 </div>
-                <div class="spring"></div>
-                <div class="option">
-                    <label class="label">
-                        <button class="btn btn-primary" rel="dateButton">월 별</button>
-                        <button class="btn btn-primary" rel="dateButton">년 별</button>
-                    </label>
+                <div class="selectedDate">
+                    <h1 th:text="${option} == 'year' ? ${#strings.substring(selectDate, 0, 4)} : ${selectDate}"></h1>
                 </div>
+                <div class="spring"></div>
             </div>
         </div>
 

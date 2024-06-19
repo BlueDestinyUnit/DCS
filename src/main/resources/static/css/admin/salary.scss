@@ -36,13 +36,15 @@
   }
 }
 
+.nonSelect {
+
+}
+
 
 .spacer {
   height: 2.5rem !important; /* 간격 설정 */
 }
-.spring {
-flex-grow: 1;
-}
+
 .label {
   margin-right: 1rem;
   align-items: center;
@@ -54,9 +56,24 @@ flex-grow: 1;
 .gap {
   margin-right: 1rem;
 }
-.btn.btn-outline-secondary {
+//.btn.btn-outline-secondary {
+//  width: 5rem;
+//  height: 2.3rem;
+//}
+.btn.btn-primary {
   width: 5rem;
   height: 2.3rem;
+}
+.form-group {
+  width: 3rem;
+  flex-grow: 1;
+}
+.selectedDate {
+  flex-grow: 1;
+  text-align: center;
+}
+.spring {
+  flex-grow: 1;
 }
 .mt-5 {
   display: flex;
