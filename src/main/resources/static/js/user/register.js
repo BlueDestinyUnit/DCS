@@ -8,6 +8,7 @@ registerForm.telLabelObj = new LabelObj(registerForm.querySelector('[rel="telLab
 registerForm.addressLabelObj = new LabelObj(registerForm.querySelector('[rel="addressLabelObj"]'));
 
 
+
 registerForm['emailSend'].onclick = () => {
     registerForm.emailLabelObj.setValid(registerForm['email'].tests());
     if (!registerForm.emailLabelObj.isValid()) {

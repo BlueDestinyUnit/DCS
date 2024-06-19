@@ -31,6 +31,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -244,17 +246,43 @@ public class UserService {
         return CommonResult.SUCCESS;
     }
 
-    public Result<?> getAttendance(String email,
-                                   String date,
-                                   String StartDate,
-                                   String endDate){
-        UserProperty dbUser = this.adminMapper.selectUserProperty(email, date, StartDate, endDate);
-        if(dbUser == null){
-            return CommonResult.FAILURE;
+    public List<UserProperty> getAttendance(String email,
+                                   String date){
+        System.out.println(email);
+        List<UserProperty> list = new ArrayList<>();
+
+        String fDate = date.substring(0,7);
+        System.out.println(fDate);
+        String endDate  = date.split("-")[2];
+        String currentDate = null;
+        String firstDate = null;
+        String secondDate = null;
+        for (int i = 1; i < Integer.parseInt(endDate); i++) {
+            if (i <10){
+                currentDate = String.format(fDate + "-0"+"%d",i);
+            }else{
+                currentDate = String.format(fDate + "-"+"%d",i);
+            }
+            firstDate = currentDate + " 00:00:00";
+            secondDate = currentDate + " 23:59:59";
+
+            System.out.println(i+"번쨰");
+            System.out.println(currentDate);
+            System.out.println(firstDate);
+            System.out.println(secondDate);
+
+
+            UserProperty dbUserProperty = adminMapper.selectUserProperty(email, currentDate, firstDate, secondDate);
+            System.out.println(dbUserProperty);
+            if(dbUserProperty == null){
+                continue;
+            }
+            if(dbUserProperty.isAttendance() == true){
+                list.add(dbUserProperty);
+            }
         }
-        return CommonResult.SUCCESS;
+        return list;
     }
-}
     public Result<CommonResult> insertAttendance(UserEntity user){
         AttendanceEntity attendance = new AttendanceEntity();
         attendance.setUserEmail(user.getEmail());
@@ -267,10 +295,9 @@ public class UserService {
 
     public AttendanceEntity selectAttendance(String email){
         String currentDate = LocalDate.now().toString();
-        String firstTime =currentDate + " 00:00:00";
+        String firstTime = currentDate + " 00:00:00";
         String endTime = currentDate + " 23:59:59";
         return this.attendanceMapper.selectAttendanceByDates(email, firstTime, endTime);
     }
-
 
 }

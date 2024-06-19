@@ -1,7 +1,9 @@
 package com.scd.dcs.controllers;
 
+import com.scd.dcs.config.security.domains.SecurityUser;
 import com.scd.dcs.domains.entities.EmailAuthEntity;
 import com.scd.dcs.domains.entities.UserEntity;
+import com.scd.dcs.domains.vos.UserProperty;
 import com.scd.dcs.results.CommonResult;
 import com.scd.dcs.results.Result;
 import com.scd.dcs.services.UserService;
@@ -12,13 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -152,8 +153,17 @@ public class UserController {
     }
 
     @RequestMapping(value = "/attendance", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getCalendar(String startDate, String endDate){
-//        Result<?> result = this.userService.getAttendance(startDate, endDate);
-        return null;
+    @ResponseBody
+    public String getCalendar(Authentication authentication, String endDate){
+        System.out.println(endDate);
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
+        List<UserProperty> dbList = this.userService.getAttendance(user.getEmail(), endDate);
+
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("list",dbList);
+        return jsonObject.toString();
     }
 }
