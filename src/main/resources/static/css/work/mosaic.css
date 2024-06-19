@@ -15,8 +15,8 @@
 }
 
 .board-container {
-  margin: 0 auto;
-  width: 50%;
+  margin-left: 464px;
+  width: 500px;
   text-align: center;
 }
 .board-container > .form-group > .text-center {
@@ -99,11 +99,12 @@ body {
   height: 100%;
 }
 
-#mainSection .title, #mainSection .workDate {
-  width: 92%;
+#mainSection .title {
+  width: 90%;
   text-align: center;
 }
 #mainSection > .main-container {
+  margin-top: -60px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -191,15 +192,10 @@ body {
   list-style-type: none;
   height: 587px;
 }
-#mainSection > .main-container > .list-container #workListAside > .menuBox > .menu-list > .item > .image-name {
-  width: 50%;
-}
-.imageCount {
-  width: 50%;
-}
-
-#completeButton {
-  transform: translate(695px);
+#mainSection > .bottom-container {
+  text-align: center;
+  margin-left: -165px;
+  margin-top: -20px;
 }
 
 /*# sourceMappingURL=mosaic.css.map */
