@@ -123,4 +123,8 @@ public class ArticleService {
     public boolean postImage(ArticleImageEntity image){
         return this.articleMapper.insertImage(image) > 0;
     }
+
+    public ArticleEntity mainNoticeArticle(){
+        return this.articleMapper.selectMainNotice();
+    }
 }

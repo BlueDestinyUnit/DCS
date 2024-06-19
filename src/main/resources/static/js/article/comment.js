@@ -28,7 +28,7 @@ function deleteComment(index) {
         }
 
     }
-    xhr.open('DELETE', '../comment/');
+    xhr.open('DELETE', '/article/comment/');
     xhr.send(formData);
 }
 

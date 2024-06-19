@@ -27,5 +27,7 @@ public interface ArticleMapper {
 
     int updateImage(ArticleImageEntity image);
 
+    ArticleEntity selectMainNotice();
+
 
 }

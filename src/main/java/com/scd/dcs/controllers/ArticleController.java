@@ -171,7 +171,9 @@ public class ArticleController {
 
     @RequestMapping(value = "comment/", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String deleteCommentIndex(@SessionAttribute(value = "user",required = false)UserEntity user, @RequestParam("index") int index){
+    public String deleteCommentIndex(Authentication authentication, @RequestParam("index") int index){
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
         Result result = this.commentService.deleteComment(index,user);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("result",result.name().toLowerCase());

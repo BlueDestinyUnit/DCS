@@ -104,6 +104,18 @@
         LIMIT 1
     </select>
 
+    <select id="selectMainNotice" resultType="ArticleEntity">
+        SELECT `index`    AS `index`,
+               `board_code` AS `boardCode`,
+               `user_email` AS `userEmail`,
+               `title`      AS `title`,
+               `content`    AS `content`,
+               `created_at` AS `createdAt`,
+               `view`       AS `view`
+        FROM `dcs`.`articles`
+        WHERE BINARY `board_code` = 'mainNotice'
+    </select>
+
     <update id="updateImage" parameterType="ArticleImageEntity">
         UPDATE `dcs`.`article_images`
         SET `article_index` = #{articleIndex},
