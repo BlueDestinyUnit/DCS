@@ -1,6 +1,7 @@
 package com.scd.dcs.controllers;
 
 import com.scd.dcs.config.security.domains.SecurityUser;
+import com.scd.dcs.domains.dtos.AttendaceEventDto;
 import com.scd.dcs.domains.entities.EmailAuthEntity;
 import com.scd.dcs.domains.entities.UserEntity;
 import com.scd.dcs.domains.vos.UserProperty;
@@ -158,8 +159,8 @@ public class UserController {
         System.out.println(endDate);
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
         UserEntity user = securityUser.getUserEntity();
-        List<UserProperty> dbList = this.userService.getAttendance(user.getEmail(), endDate);
-
+//        List<UserProperty> dbList = this.userService.getAttendance(user.getEmail(), endDate);
+        List<AttendaceEventDto> dbList = this.userService.getAttendance(user.getEmail(), endDate);
 
         JSONObject jsonObject = new JSONObject();
 

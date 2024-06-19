@@ -8,12 +8,12 @@
 
 createCalendar();
 
-function events() {
+function events2() {
     var startDate = moment().startOf('month'); // 이번 달의 첫째 날
     var endDate = moment().endOf('month'); // 이번 달의 마지막 날
     endDate = endDate.clone().format(('YYYY-MM-DD'));
-    console.log(endDate);
 
+    var data = [];
 
     const xhr = new XMLHttpRequest();
     const formData = new FormData();
@@ -24,27 +24,31 @@ function events() {
         }
         if (xhr.status < 200 || xhr.status >= 300) {
             alert("알 수없는 오류가 발생했습니다.");
-        }
             return;
+        }
         const responseObject = JSON.parse(xhr.responseText);
-        console.log(responseObject);
-        // 작업 완료후 data.push(responseObject)
+        const list = responseObject['list'];
+        for (let i = 0; i < list.length; i++){
+            list[i].eventAttendance.date = moment(list[i].eventAttendance.date);
+            list[i].eventCount.date = moment(list[i].eventCount.date);
+            data.push(list[i].eventAttendance);
+            data.push(list[i].eventCount);
+        }
+
     }
+
     xhr.open('GET', `./attendance?endDate=${endDate}`); // 본인 ?email=${유저이메일}&date=${dates[i]} 일단 현재 date는 String 문자열로 넘길것
     xhr.send();
+    return data;
 }
 
-events();
+events2();
 
 function createCalendar() {
-
-
-
-
     var today = moment();
     function Calendar(selector, events) {
+        console.log(1+': 생성')
         this.el = document.querySelector(selector);
-        console.log(events)
         this.events = events;
         this.current = moment().date(1);
         this.draw();
@@ -58,6 +62,7 @@ function createCalendar() {
     }
 
     Calendar.prototype.draw = function() {
+        console.log(2+" 핸들러")
         //Create Header
         this.drawHeader();
 
@@ -68,6 +73,7 @@ function createCalendar() {
     }
 
     Calendar.prototype.drawHeader = function() {
+        console.log(3+" 헤더")
         var self = this;
         if(!this.header) {
             //Create the header elements
@@ -93,12 +99,14 @@ function createCalendar() {
     }
 
     Calendar.prototype.drawMonth = function() {
+        console.log(4+" 달 그리기")
         var self = this;
-
+        console.log(this.events);
         this.events.forEach(function(ev) {
+            var eventDate = ev.eventDate.split('-');
 
-            ev.date = self.current.clone().date(Math.random() * (29 - 1) + 1);
-            console.log(ev)
+            ev.date = self.current.clone().date(eventDate[2]);
+            console.log(ev.date)
         });
 
 
@@ -127,6 +135,7 @@ function createCalendar() {
     }
 
     Calendar.prototype.backFill = function() {
+        console.log(5)
         var clone = this.current.clone();
         var dayOfWeek = clone.day();
 
@@ -140,6 +149,7 @@ function createCalendar() {
     }
 
     Calendar.prototype.fowardFill = function() {
+        console.log(6)
         var clone = this.current.clone().add('months', 1).subtract('days', 1);
         var dayOfWeek = clone.day();
 
@@ -151,6 +161,7 @@ function createCalendar() {
     }
 
     Calendar.prototype.currentMonth = function() {
+        console.log(7)
         var clone = this.current.clone();
 
         while(clone.month() === this.current.month()) {
@@ -160,6 +171,7 @@ function createCalendar() {
     }
 
     Calendar.prototype.getWeek = function(day) {
+        console.log(8)
         if(!this.week || day.day() === 0) {
             this.week = createElement('div', 'week');
             this.month.appendChild(this.week);
@@ -167,6 +179,7 @@ function createCalendar() {
     }
 
     Calendar.prototype.drawDay = function(day) {
+        console.log(9)
         var self = this;
         this.getWeek(day);
 
@@ -185,20 +198,32 @@ function createCalendar() {
 
         //Events
         var events = createElement('div', 'day-events');
+        console.log(events)
         this.drawEvents(day, events);
+        console.log("day"+day);
+        console.log("event",events)
 
         outer.appendChild(name);
         outer.appendChild(number);
         outer.appendChild(events);
         this.week.appendChild(outer);
-        console.log("날짜:", day.format('YYYY-MM-DD'));
     }
 
     Calendar.prototype.drawEvents = function(day, element) {
-
+        console.log(10)
+        console.log(day.month() === this.current.month());
         if(day.month() === this.current.month()) {
+            console.log("테스트")
+            console.log(this.events);
+
+
             var todaysEvents = this.events.reduce(function(memo, ev) {
+                console.log(ev.date.isSame(day, 'day'));
+                console.log(typeof memo);
+                console.log("ev"+ev);
+                console.log("ev.date"+ev.date);
                 if(ev.date.isSame(day, 'day')) {
+                    console.log("푸시")
                     memo.push(ev);
                 }
                 return memo;
@@ -212,6 +237,7 @@ function createCalendar() {
     }
 
     Calendar.prototype.getDayClass = function(day) {
+        console.log(11)
         classes = ['day'];
         if(day.month() !== this.current.month()) {
             classes.push('other');
@@ -222,6 +248,7 @@ function createCalendar() {
     }
 
     Calendar.prototype.openDay = function(el) {
+        console.log(12)
         var details, arrow;
         var dayNumber = +el.querySelectorAll('.day-number')[0].innerText || +el.querySelectorAll('.day-number')[0].textContent;
         var day = this.current.clone().date(dayNumber);
@@ -267,6 +294,9 @@ function createCalendar() {
         }
 
         var todaysEvents = this.events.reduce(function(memo, ev) {
+            console.log(memo);
+            console.log(ev);
+            console.log("현재 :" + day)
             if(ev.date.isSame(day, 'day')) {
                 memo.push(ev);
             }
@@ -279,7 +309,8 @@ function createCalendar() {
     }
 
     Calendar.prototype.renderEvents = function(events, ele) {
-        console.log(events)
+        console.log(13)
+
         //Remove any events in the current details element
         var currentWrapper = ele.querySelector('.events');
         var wrapper = createElement('div', 'events in' + (currentWrapper ? ' new' : ''));
@@ -326,6 +357,7 @@ function createCalendar() {
     }
 
     Calendar.prototype.drawLegend = function() {
+        console.log(14)
         var legend = createElement('div', 'legend');
         var calendars = this.events.map(function(e) {
             return e.calendar + '|' + e.color;
@@ -343,12 +375,14 @@ function createCalendar() {
     }
 
     Calendar.prototype.nextMonth = function() {
+        console.log(15)
         this.current.add('months', 1);
         this.next = true;
         this.draw();
     }
 
     Calendar.prototype.prevMonth = function() {
+        console.log(16)
         this.current.subtract('months', 1);
         this.next = false;
         this.draw();
@@ -357,30 +391,43 @@ function createCalendar() {
     window.Calendar = Calendar;
 
     function createElement(tagName, className, innerText) {
+        console.log(17 + " 엘리멘트 요소 생성")
+
         var ele = document.createElement(tagName);
         if(className) {
             ele.className = className;
         }
         if(innerText) {
+
             ele.innderText = ele.textContent = innerText;
         }
         return ele;
     }
 };
 
+// function createEvent() {
+//     var data = events2();
+//     var calendar = new Calendar('#calendar', data);
+// }
+//
+// createEvent();
+
 !function() {
-    var data = [
-        // {date: 2024-06-01 , attendance: true,work : 123123}
-        // {date: 2024-06-02 , attendance: true,work : 123123}
-
-        // {eventName: '출석',calendar: 'Work', color: 'orange', date: '2024-06-19'}
-        // {eventName: '작업량',calendar: 'Work', color: 'red', date: '2024-06-19'}
-
-        // 출석 여부{ eventName: 'Lunch Meeting w/ Mark', calendar: 'Work', color: 'orange', date: '2024-06-07' },
-        // 작업량{ eventName: 'Interview - Jr. Web Developer', calendar: 'Work', color: 'orange' }
-
-    ];
-
+    console.log(18)
+    var data = events2();
+    // console.log("dfaf"+data);
+    // var data = [
+    //     // {date: 2024-06-01 , attendance: true,work : 123123}
+    //     // {date: 2024-06-02 , attendance: true,work : 123123}
+    //
+    //     {eventName: '출석',calendar: 'Work', color: 'orange', date: '2024-06-19',eventDate:'2024-06-19'},
+    //     {eventName: 1,calendar: 'Sports', color: 'blue', date: '2024-06-19',eventDate:'2024-06-19'}
+    //
+    //     // 출석 여부{ eventName: 'Lunch Meeting w/ Mark', calendar: 'Work', color: 'orange', date: '2024-06-07' },
+    //     // 작업량{ eventName: 'Interview - Jr. Web Developer', calendar: 'Work', color: 'orange' }
+    //
+    // ];
+    console.log(data)
 
 
     function addDate(ev) {
