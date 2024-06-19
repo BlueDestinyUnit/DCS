@@ -18,21 +18,12 @@
     </select>
 
 
-
     <select id="selectAttendanceByUserEmail" resultType="AttendanceEntity">
         SELECT `index`      AS `index`,
                `user_email` AS `userEmail`,
                `check_in`   AS `checkIn`
         FROM `dcs`.`attendance`
         WHERE `user_email` = #{userEmail}
-        LIMIT 1
-    </select>
-
-    <select id="selectAttendanceByDate" resultType="AttendanceEntity">
-        SELECT  IFNULL(true, false) AS `Boolean`
-        FROM `dcs`.`attendance`
-        WHERE `attendance`.`user_email` = #{email}
-          AND `attendance`.`check_in` BETWEEN #{firstDate} AND #{secondDate}
         LIMIT 1
     </select>
 </mapper>

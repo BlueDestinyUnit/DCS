@@ -8,42 +8,39 @@
 
 createCalendar();
 
-// function events() {
-//     var data = [];
-//
-//
-//     var startDate = moment().startOf('month'); // 이번 달의 첫째 날
-//     var endDate = moment().endOf('month'); // 이번 달의 마지막 날
-//
-//     var dates = [];
-//     var currentDate = startDate.clone();
-//
-//     while (currentDate.isSameOrBefore(endDate,'days')) {
-//         dates.push(currentDate.clone().format(('YYYY-MM-DD')));
-//         currentDate.add(1, 'days');
-//     }
-//
-//     for (var i = 0; i < dates.length; i++) {
-//         const xhr = new XMLHttpRequest();
-//         const formData = new FormData();
-//         xhr.onreadystatechange = function () {
-//             if (xhr.readyState !== XMLHttpRequest.DONE) {
-//                 return;
-//             }
-//             if (xhr.status < 200 || xhr.status >= 300) {
-//                 alert("알 수없는 오류가 발생했습니다.")
-//                 return;
-//             }
-//             const responseObject = JSON.parse(xhr.responseText);
-//             // 작업 완료후 data.push(responseObject)
-//         }
-//         xhr.open('',''); // 본인 ?email=${유저이메일}&date=${dates[i]} 일단 현재 date는 String 문자열로 넘길것
-//         xhr.send();
-//     }
-// }
-// events();
+function events() {
+    var startDate = moment().startOf('month'); // 이번 달의 첫째 날
+    var endDate = moment().endOf('month'); // 이번 달의 마지막 날
+    endDate = endDate.clone().format(('YYYY-MM-DD'));
+    console.log(endDate);
+
+
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    formData.append('endDate', endDate);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState !== XMLHttpRequest.DONE) {
+            return;
+        }
+        if (xhr.status < 200 || xhr.status >= 300) {
+            alert("알 수없는 오류가 발생했습니다.");
+        }
+            return;
+        const responseObject = JSON.parse(xhr.responseText);
+        console.log(responseObject);
+        // 작업 완료후 data.push(responseObject)
+    }
+    xhr.open('GET', `./attendance?endDate=${endDate}`); // 본인 ?email=${유저이메일}&date=${dates[i]} 일단 현재 date는 String 문자열로 넘길것
+    xhr.send();
+}
+
+events();
 
 function createCalendar() {
+
+
+
+
     var today = moment();
     function Calendar(selector, events) {
         this.el = document.querySelector(selector);
@@ -373,25 +370,15 @@ function createCalendar() {
 
 !function() {
     var data = [
-        { eventName: 'Lunch Meeting w/ Mark', calendar: 'Work', color: 'orange', date: '2024-06-07' },
-        { eventName: 'Interview - Jr. Web Developer', calendar: 'Work', color: 'orange' },
-        { eventName: 'Demo New App to the Board', calendar: 'Work', color: 'orange' },
-        { eventName: 'Dinner w/ Marketing', calendar: 'Work', color: 'orange' },
+        // {date: 2024-06-01 , attendance: true,work : 123123}
+        // {date: 2024-06-02 , attendance: true,work : 123123}
 
-        { eventName: 'Game vs Portalnd', calendar: 'Sports', color: 'blue' },
-        { eventName: 'Game vs Houston', calendar: 'Sports', color: 'blue' },
-        { eventName: 'Game vs Denver', calendar: 'Sports', color: 'blue' },
-        { eventName: 'Game vs San Degio', calendar: 'Sports', color: 'blue' },
+        // {eventName: '출석',calendar: 'Work', color: 'orange', date: '2024-06-19'}
+        // {eventName: '작업량',calendar: 'Work', color: 'red', date: '2024-06-19'}
 
-        { eventName: 'School Play', calendar: 'Kids', color: 'yellow' },
-        { eventName: 'Parent/Teacher Conference', calendar: 'Kids', color: 'yellow' },
-        { eventName: 'Pick up from Soccer Practice', calendar: 'Kids', color: 'yellow' },
-        { eventName: 'Ice Cream Night', calendar: 'Kids', color: 'yellow' },
+        // 출석 여부{ eventName: 'Lunch Meeting w/ Mark', calendar: 'Work', color: 'orange', date: '2024-06-07' },
+        // 작업량{ eventName: 'Interview - Jr. Web Developer', calendar: 'Work', color: 'orange' }
 
-        { eventName: 'Free Tamale Night', calendar: 'Other', color: 'green' },
-        { eventName: 'Bowling Team', calendar: 'Other', color: 'green' },
-        { eventName: 'Teach Kids to Code', calendar: 'Other', color: 'green' },
-        { eventName: 'Startup Weekend', calendar: 'Other', color: 'green' }
     ];
 
 
