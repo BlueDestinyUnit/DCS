@@ -52,9 +52,6 @@ public class AdminService {
             }else {
                 userPropertyList.add(dbUser);
             }
-
-
-
         }
         return userPropertyList;
     }

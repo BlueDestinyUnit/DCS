@@ -1,48 +1,48 @@
 /*
- 1. 모든 날짜 불러오기 events()
- 2. 날짜마다 해당 출석여부와 작업량 가져오기 (XHR)
- 3. 모든 JSONObject를 합치기
- 4. Calendar.prototype.drawMonth 쪽 ev를 적절히 넣기
+ 1. 모든 날짜 불러오기 events() 첫날짜랑 끝날짜만 보내면됨
+ 2. 날짜마다 해당 출석여부 AdminMapper의 selectUserProperty 에서 attendance 참고
+ 3. 작업량 가져오기 (XHR)
+ 4. 서비스에서 반복문으로 하나씩 처리하기
+ 5. Calendar.prototype.drawMonth 쪽 ev를 적절히 넣기
  */
 
 createCalendar();
 
 
-function events() {
-
-    var data = [];
-
-
-    var startDate = moment().startOf('month'); // 이번 달의 첫째 날
-    var endDate = moment().endOf('month'); // 이번 달의 마지막 날
-
-    var dates = [];
-    var currentDate = startDate.clone();
-
-    while (currentDate.isSameOrBefore(endDate,'days')) {
-        dates.push(currentDate.clone().format(('YYYY-MM-DD')));
-        currentDate.add(1, 'days');
-    }
-
-    for (var i = 0; i < dates.length; i++) {
-        const xhr = new XMLHttpRequest();
-        const formData = new FormData();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState !== XMLHttpRequest.DONE) {
-                return;
-            }
-            if (xhr.status < 200 || xhr.status >= 300) {
-                alert("알 수없는 오류가 발생했습니다.")
-                return;
-            }
-            const responseObject = JSON.parse(xhr.responseText);
-            // 작업 완료후 data.push(responseObject)
-        }
-        xhr.open('',''); // 본인 ?email=${유저이메일}&date=${dates[i]} 일단 현재 date는 String 문자열로 넘길것
-        xhr.send();
-    }
-}
-events();
+// function events() {
+//     var data = [];
+//
+//
+//     var startDate = moment().startOf('month'); // 이번 달의 첫째 날
+//     var endDate = moment().endOf('month'); // 이번 달의 마지막 날
+//
+//     var dates = [];
+//     var currentDate = startDate.clone();
+//
+//     while (currentDate.isSameOrBefore(endDate,'days')) {
+//         dates.push(currentDate.clone().format(('YYYY-MM-DD')));
+//         currentDate.add(1, 'days');
+//     }
+//
+//     for (var i = 0; i < dates.length; i++) {
+//         const xhr = new XMLHttpRequest();
+//         const formData = new FormData();
+//         xhr.onreadystatechange = function () {
+//             if (xhr.readyState !== XMLHttpRequest.DONE) {
+//                 return;
+//             }
+//             if (xhr.status < 200 || xhr.status >= 300) {
+//                 alert("알 수없는 오류가 발생했습니다.")
+//                 return;
+//             }
+//             const responseObject = JSON.parse(xhr.responseText);
+//             // 작업 완료후 data.push(responseObject)
+//         }
+//         xhr.open('',''); // 본인 ?email=${유저이메일}&date=${dates[i]} 일단 현재 date는 String 문자열로 넘길것
+//         xhr.send();
+//     }
+// }
+// events();
 
 function createCalendar() {
     var today = moment();

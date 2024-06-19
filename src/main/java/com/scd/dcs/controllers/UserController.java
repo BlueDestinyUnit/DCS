@@ -160,4 +160,9 @@ public class UserController {
         return new ModelAndView("user/attendance");
     }
 
+    @RequestMapping(value = "/attendance", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getCalendar(String startDate, String endDate){
+//        Result<?> result = this.userService.getAttendance(startDate, endDate);
+        return null;
+    }
 }
