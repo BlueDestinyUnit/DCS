@@ -1,8 +1,33 @@
 #mainSection {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
+  margin: 0 auto;
+  width: 80%;
+}
+#mainSection > h1 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+#mainSection > .table > thead > tr > th {
+  text-align: center;
+}
+#mainSection > .table > tbody > tr > th, #mainSection > .table > tbody > tr td {
+  text-align: center;
+}
+#mainSection > .table > tfoot > tr > td > form > label > .form-control {
+  width: 25rem;
+}
+#mainSection > .table > tfoot > .page > td {
+  text-align: center;
+}
+#mainSection > .table > tfoot > .page > td > nav {
+  display: inline-block;
+}
+#mainSection > .table > tfoot > .page > td > nav > .pagination {
+  margin-bottom: 0;
+}
+#mainSection > .table > tfoot > .page > td > nav > .pagination > .page-count {
+  display: flex;
+  flex-direction: row;
 }
 
 /*# sourceMappingURL=list.css.map */

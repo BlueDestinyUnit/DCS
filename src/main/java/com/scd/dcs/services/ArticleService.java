@@ -1,6 +1,7 @@
 package com.scd.dcs.services;
 
 import com.scd.dcs.domains.entities.ArticleEntity;
+import com.scd.dcs.domains.entities.ArticleImageEntity;
 import com.scd.dcs.domains.entities.BoardEntity;
 import com.scd.dcs.domains.entities.UserEntity;
 import com.scd.dcs.domains.vos.BoardVo;
@@ -26,19 +27,32 @@ public class ArticleService {
         this.boardMapper = boardMapper;
     }
 
-    public Result<?> write(ArticleEntity article){
-        if(article== null){
-            return CommonResult.FAILURE;
-        }
+    public boolean write(ArticleEntity article, int[] imageIndexes) {
         article.setCreatedAt(LocalDateTime.now());
-        article.setView(0);
-        return this.articleMapper.insertArticle(article) > 0 ? CommonResult.SUCCESS : CommonResult.FAILURE;
+        if (this.articleMapper.insertArticle(article) == 0) {
+            return false;
+        }
+        ;
+        for (int imageIndex : imageIndexes) {
+            ArticleImageEntity image = this.getImage(imageIndex);
+            System.out.println(image.getIndex());
+            image.setArticleIndex(article.getIndex());
+            if (this.articleMapper.updateImage(image) == 0) {
+                throw new RuntimeException();
+            }
+        }
+        return true;
     }
 
     public ArticleEntity getArticle(int index){
         ArticleEntity dbArticle = this.articleMapper.selectArticleByIndex(index);
         return dbArticle;
     }
+
+    public ArticleImageEntity getImage(int index){
+        return this.articleMapper.selectImage(index);
+    }
+
 
     public boolean updateArticle(ArticleEntity article){
         article.setView(article.getView()+1);
@@ -97,5 +111,9 @@ public class ArticleService {
         System.out.println("get " + board);
 
         return this.articleMapper.selectArticlesByBoardVo(board);
+    }
+
+    public boolean postImage(ArticleImageEntity image){
+        return this.articleMapper.insertImage(image) > 0;
     }
 }

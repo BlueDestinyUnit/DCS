@@ -14,5 +14,5 @@ import java.time.LocalDateTime;
 public class WorkEntity {
     private int index;
     private String userEmail;
-    private LocalDate workDate;
+    private LocalDate date;
 }

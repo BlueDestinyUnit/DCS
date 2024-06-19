@@ -17,7 +17,7 @@
             keyProperty="index"
             parameterType="com.scd.dcs.domains.entities.WorkEntity">
         INSERT INTO `dcs`.`work` (`user_email`, `date`)
-        VALUES (#{userEmail}, #{workDate})
+        VALUES (#{userEmail}, #{date})
     </insert>
 
 
@@ -32,7 +32,7 @@
         SELECT
             `index`              AS   `index`,
             `user_email`         AS   `userEmail`,
-            `date`          AS   `workDate`
+            `date`          AS   `date`
         FROM `dcs`.`work`
         WHERE BINARY `index` = #{index}
         LIMIT 1
@@ -42,6 +42,7 @@
         SELECT `index`        AS `index`,
                `work_index`   AS `workIndex`,
                `content_type` AS `contentType`,
+               `original_name` AS `originalName`,
                `image_data`   AS `imageData`,
                `is_mosaic`    AS `isMosaic`,
                `is_sign`      AS `isSign`,
@@ -65,7 +66,7 @@
         FROM `dcs`.`submit_images` AS `images`
                  LEFT JOIN `dcs`.`work` AS `work` on `work`.`index` = `images`.`work_index`
         WHERE `user_email` = #{email}
-          AND `work`.`date` = #{workDate}
+          AND `work`.`date` = #{date}
     </select>
 
     <select id="selectSubmitImageVos" resultType="com.scd.dcs.domains.entities.SubmitImageEntity">
@@ -81,7 +82,7 @@
         FROM `dcs`.`submit_images` AS `images`
                  LEFT JOIN `dcs`.`work` AS `work` on `work`.`index` = `images`.`work_index`
         WHERE `user_email` = #{email}
-          AND `work`.`date` = #{workDate}
+          AND `work`.`date` = #{date}
     </select>
 
 
@@ -90,12 +91,26 @@
     <select id="findWorkByDateAndUser" resultType="com.scd.dcs.domains.entities.WorkEntity">
         SELECT `index`      AS `index`,
                `user_email` AS `userEmail`,
-               `date`  AS `workDate`
+               `date`  AS `date`
         FROM `dcs`.`work`
         WHERE `user_email` = #{userEmail}
-          AND `date` = #{workDate}
+          AND `date` = #{date}
         LIMIT 1
     </select>
+
+    <select id="findSubmitImageByWorkIndex" resultType="SubmitImageEntity">
+        SELECT `index`         AS `index`,
+               `work_index`    AS `workIndex`,
+               `content_type`  AS `contentType`,
+               `original_name` AS `originalName`,
+               `image_data`    AS `imageData`,
+               `is_sign`       AS `isSign`,
+               `is_mosaic`     AS `isMosaic`,
+               comment
+        FROM `dcs`.`submit_images`
+        WHERE `work_index` = #{workIndex}
+    </select>
+
 
     <select id="selectAllImages" resultType="com.scd.dcs.domains.entities.SubmitImageEntity">
         SELECT `index`        AS `index`,
@@ -106,6 +121,15 @@
                `is_sign`      AS `isSign`,
                `comment`      AS `comment`
         FROM `dcs`.`submit_images`
+    </select>
+
+    <select id="selectUserAndWorkDaysByDate" resultType="WorkVo">
+        SELECT `index`      AS `index`,
+               `user_email` AS `userEmail`,
+               `date`       AS `date`,
+               COUNT(1)     AS `workDays`
+        FROM `dcs`.`work`
+        WHERE DATE_FORMAT(`date`, '%Y-%m') = #{date}
     </select>
     
     <update id="updateImage" parameterType="com.scd.dcs.domains.entities.SubmitImageEntity">
@@ -121,6 +145,5 @@
         WHERE `index` = #{index}
         LIMIT 1
     </update>
-
 
 </mapper>

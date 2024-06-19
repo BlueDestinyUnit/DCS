@@ -66,7 +66,7 @@
                     <td th:text="${user.isAttendance() ? '✔' : '❌'}"></td>
                     <td th:text="${user.getCount()}"></td>
                     <td class="has-text-right">
-                        <button id="imageButton" type="button" class="button is-small is-primary">이미지 보기</button>
+                        <button th:if="${user.isAttendance()}" id="imageButton" type="button" class="button is-small is-primary">이미지 보기</button>
                     </td>
                 </tr>
                 </tbody>

@@ -15,7 +15,6 @@ html, body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  min-height: 100vh;
   gap: 3rem;            // 통일
   .board-container {
     height: 10rem;      // 통일
@@ -93,10 +92,13 @@ html, body {
   > tbody {
     > tr {
       > td {
-        border-bottom: 0.075rem solid #515151;
-        padding: 2.35rem 0;
+        border-bottom: 0.075rem solid #919191;
+        //padding: 2.35rem 0;
+        font-size: 1.125rem;
+        padding-top: 3.25rem;
+        padding-bottom: 2.35rem;
+        font-weight: 20;
         text-align: center;
-
         &:last-child {
           border: none;
         }

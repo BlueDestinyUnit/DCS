@@ -1,0 +1,55 @@
+#mainSection {
+  margin: 0 auto;
+  padding-top: 2rem;
+  max-width: 80%;
+  width: 70%;
+
+  > form {
+    > .write-form-head {
+      margin-bottom: 0.5rem;
+
+      > label {
+        > .form-control {
+          width: 30rem;
+        }
+      }
+    }
+
+    > label {
+      > textarea {
+        min-height: 400px;
+      }
+    }
+  }
+}
+
+.ck-editor__editable_inline {
+  min-height: 400px !important;
+}#mainSection {
+  margin: 0 auto;
+  padding-top: 2rem;
+  max-width: 80%;
+  width: 70%;
+
+  > form {
+    > .write-form-head {
+      margin-bottom: 0.5rem;
+
+      > label {
+        > .form-control {
+          width: 30rem;
+        }
+      }
+    }
+
+    > label {
+      > textarea {
+        min-height: 400px;
+      }
+    }
+  }
+}
+
+.ck-editor__editable_inline {
+  min-height: 400px !important;
+}

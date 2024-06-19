@@ -1,0 +1,41 @@
+#mainSection {
+  margin: 0 auto;
+  padding-top: 2rem;
+  max-width: 80%;
+  width: 70%;
+}
+#mainSection > form > .write-form-head {
+  margin-bottom: 0.5rem;
+}
+#mainSection > form > .write-form-head > label > .form-control {
+  width: 30rem;
+}
+#mainSection > form > label > textarea {
+  min-height: 400px;
+}
+
+.ck-editor__editable_inline {
+  min-height: 400px !important;
+}
+
+#mainSection {
+  margin: 0 auto;
+  padding-top: 2rem;
+  max-width: 80%;
+  width: 70%;
+}
+#mainSection > form > .write-form-head {
+  margin-bottom: 0.5rem;
+}
+#mainSection > form > .write-form-head > label > .form-control {
+  width: 30rem;
+}
+#mainSection > form > label > textarea {
+  min-height: 400px;
+}
+
+.ck-editor__editable_inline {
+  min-height: 400px !important;
+}
+
+/*# sourceMappingURL=modify.css.map */

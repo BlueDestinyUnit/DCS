@@ -58,13 +58,9 @@ public class UserService {
     @Autowired
     public UserService(UserMapper userMapper, JavaMailSender mailSender, SpringTemplateEngine templateEngine, AdminMapper adminMapper, AttendanceMapper attendanceMapper){
         this.userMapper = userMapper;
-
         this.mailSender = mailSender;
-
         this.templateEngine = templateEngine;
-
         this.adminMapper = adminMapper;
-
         this.attendanceMapper = attendanceMapper;
     }
 
@@ -257,4 +253,15 @@ public class UserService {
         }
         return CommonResult.SUCCESS;
     }
+}
+    public Result<CommonResult> insertAttendance(UserEntity user){
+        AttendanceEntity attendance = new AttendanceEntity();
+        attendance.setUserEmail(user.getEmail());
+        attendance.setCheckIn(LocalDateTime.now());
+
+        attendanceMapper.insertAttendance(attendance);
+        return CommonResult.SUCCESS;
+    }
+
+
 }

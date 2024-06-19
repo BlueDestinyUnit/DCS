@@ -3,6 +3,7 @@ package com.scd.dcs.controllers;
 
 import com.scd.dcs.config.security.domains.SecurityUser;
 import com.scd.dcs.domains.entities.ArticleEntity;
+import com.scd.dcs.domains.entities.ArticleImageEntity;
 import com.scd.dcs.domains.entities.CommentEntity;
 import com.scd.dcs.domains.entities.UserEntity;
 import com.scd.dcs.results.CommonResult;
@@ -13,11 +14,14 @@ import com.scd.dcs.services.CommentService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -45,29 +49,35 @@ public class ArticleController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "write", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView postWrite(Authentication authentication , ArticleEntity article ) {
-        // 게시글 작성 겨로가가 SUCCESS 일 때,
-        // "/article/read?index=" + article.getIndex()
-        // 위 주소로 redirect 시킬 것. (당연히 404 뜸. ㄱㅊ)
+    @RequestMapping(value = "write", method = RequestMethod.POST,produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView postWrite(@RequestParam(value = "imageIndexes",required = false) int[] imageIndexes , ArticleEntity article,Authentication authentication) {
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
+        article.setUserEmail(user.getEmail());
+        if(imageIndexes == null) {
+            imageIndexes = new int[0];
+        }
+        for(int imageIndex : imageIndexes) {
+            System.out.println(imageIndex);
+        }
+
         ModelAndView modelAndView = new ModelAndView();
-        SecurityUser user = (SecurityUser) authentication.getPrincipal();
-        article.setUserEmail(user.getUserEntity().getEmail());
-        Result result = this.articleService.write(article);
-        modelAndView.addObject("boards", this.boardService.getBoards());
-        modelAndView.addObject("result", result.name());
-        System.out.println(result);
-        if (result == CommonResult.SUCCESS) {
+        boolean result = this.articleService.write(article,imageIndexes);
+        if(result){
             modelAndView.setViewName("redirect:/article/read?index=" + article.getIndex());
-        } else {
+        }else {
             modelAndView.setViewName("article/write");
+            modelAndView.addObject("result", false);
         }
         return modelAndView;
     }
 
     @RequestMapping(value = "read", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getRead(@RequestParam(value = "index") int index) {
+    public ModelAndView getRead(@RequestParam(value = "index") int index, Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView();
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
+        modelAndView.addObject("user", user);
         ArticleEntity dbArticle = this.articleService.getArticle(index);
         if (dbArticle == null) {
             modelAndView.addObject("result", "FAILURE");
@@ -85,17 +95,18 @@ public class ArticleController {
     @RequestMapping(value = "modify", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getModify(Authentication authentication,
                                   @RequestParam("index") int index) {
-        SecurityUser user=(SecurityUser) authentication.getPrincipal();
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
         ModelAndView modelAndView = new ModelAndView();
 
         modelAndView.setViewName("article/modify");
         ArticleEntity dbArticle;
-        if (authentication == null) {
+        if (user == null) {
             modelAndView.addObject("article", null);
             return modelAndView;
         } else {
             dbArticle = this.articleService.getArticle(index);
-            if (dbArticle != null && !dbArticle.getUserEmail().equals(user.getUserEntity().getEmail())) {
+            if (dbArticle != null && !dbArticle.getUserEmail().equals(user.getEmail())) {
                 dbArticle = null;
             }
             modelAndView.addObject("article", dbArticle);
@@ -105,7 +116,7 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "modify", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getModify(Authentication authentication,
+    public ModelAndView postModify(Authentication authentication,
                                   ArticleEntity article) {
         SecurityUser user=(SecurityUser) authentication.getPrincipal();
         ModelAndView modelAndView = new ModelAndView();
@@ -169,5 +180,32 @@ public class ArticleController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("result",result.name().toLowerCase());
         return jsonObject.toString();
+    }
+
+    @RequestMapping(value = "image",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String postImage(@RequestParam("upload") MultipartFile upload) throws IOException {
+        System.out.println("실행 테스트");
+        ArticleImageEntity image = new ArticleImageEntity();
+        image.setOriginalName(upload.getOriginalFilename());
+        image.setContentType(upload.getContentType());
+        image.setData(upload.getBytes());
+        this.articleService.postImage(image);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("url", "./image?index=" + image.getIndex());
+        return jsonObject.toString();
+    }
+
+    @RequestMapping(value = "image", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<byte[]> getImage(@RequestParam(value = "index", required = false,defaultValue = "0") int index) {
+        ArticleImageEntity image = this.articleService.getImage(index);
+        if(image == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok()
+                .contentLength(image.getData().length)
+                .contentType(MediaType.parseMediaType(image.getContentType()))
+                .body(image.getData());
     }
 }

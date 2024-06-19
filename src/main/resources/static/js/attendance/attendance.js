@@ -8,7 +8,6 @@
 
 createCalendar();
 
-
 // function events() {
 //     var data = [];
 //

@@ -1,23 +1,21 @@
 package com.scd.dcs.controllers;
 
-import com.scd.dcs.domains.entities.AttendanceEntity;
 import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.UserEntity;
-import com.scd.dcs.domains.entities.WorkEntity;
 import com.scd.dcs.domains.vos.UserProperty;
+import com.scd.dcs.domains.vos.WorkListRequest;
+import com.scd.dcs.results.Result;
 import com.scd.dcs.services.AdminService;
 import com.scd.dcs.services.SalaryService;
 import com.scd.dcs.services.UserService;
 import com.scd.dcs.services.WorkService;
-import org.springframework.aop.config.AdvisorEntry;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -51,7 +49,6 @@ public class AdminController {
     public ModelAndView getAttendance(@RequestParam("date") String date) {
         ModelAndView modelAndView = new ModelAndView();
         List<UserProperty> userProperties = this.adminService.getUserProperty(date);
-        System.out.println(userProperties);
         modelAndView.addObject("Users", userProperties);
         modelAndView.addObject("date", date);
 
@@ -66,17 +63,29 @@ public class AdminController {
                                     @RequestParam("email") String email) {
         ModelAndView modelAndView = new ModelAndView();
         SubmitImageEntity[] imageList = this.workService.imageList(email, date);
+        UserEntity user = this.adminService.selectUser(email);
         modelAndView.addObject("imageList", imageList);
+        modelAndView.addObject("user", user.getName());
+        modelAndView.addObject("date", date);
         modelAndView.setViewName("admin/workList");
         return modelAndView;
     }
 
+
     @RequestMapping(value = "/workList", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String postWorkList(@RequestParam("date") String date,
-                               @RequestParam("email") String email,
-                               @ModelAttribute("comment") String comment) {
-        System.out.println(comment);
-        return null;
+    public String postWorkList(@RequestBody WorkListRequest request) {
+        List<Object> sendList = request.getSendList();
+        Result<?> result = this.adminService.updateComment(sendList);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("result", result.name().toLowerCase());
+        return jsonObject.toString();
     }
+
+    @RequestMapping(value = "/salary", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getSalary(@RequestParam("date") String date) {
+
+        return new ModelAndView("admin/salary");
+    }
+
 }

@@ -8,5 +8,10 @@ import org.apache.ibatis.annotations.Param;
 public interface AttendanceMapper {
     int insertAttendance(AttendanceEntity attendance);
 
+    AttendanceEntity selectAttendanceByDate(@Param("email") String email,
+                                            @Param("date") String date,
+                                            @Param("firstDate") String firstDate,
+                                            @Param("secondDate") String secondDate);
+
     AttendanceEntity selectAttendanceByUserEmail(@Param("userEmail") String userEmail);
 }

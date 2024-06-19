@@ -3,7 +3,6 @@ package com.scd.dcs.controllers;
 import com.scd.dcs.config.security.domains.SecurityUser;
 import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.UserEntity;
-import com.scd.dcs.domains.entities.WorkEntity;
 import com.scd.dcs.results.CommonResult;
 import com.scd.dcs.results.Result;
 import com.scd.dcs.services.WorkService;
@@ -18,8 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Controller
 @RequestMapping()
@@ -38,7 +35,7 @@ public class WorkController {
             SubmitImageEntity submitImageEntity
     ){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("mosaic");
+        modelAndView.setViewName("work/mosaic");
         modelAndView.addObject("date", date);
         return modelAndView;
     }
@@ -46,9 +43,12 @@ public class WorkController {
 
     @RequestMapping(value = "/work/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public SubmitImageEntity[] getWorkList(@RequestParam(value = "date",required = false) String date) throws IOException {
-        UserEntity user = new UserEntity();
-        user.setEmail("lsg9134@gmail.com");
+    public SubmitImageEntity[] getWorkList(@RequestParam(value = "date",required = false) String date, Authentication authentication) throws IOException {
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
+//        UserEntity user = new UserEntity();
+//        user.setEmail("lsg9134@gmail.com");
+
 
 //         서비스에서 전체 목록 들고오기
         return workService.imageList(user.getEmail(),date);
@@ -65,11 +65,11 @@ public class WorkController {
                             @RequestParam("images") MultipartFile[] images
     ) throws IOException {
         SubmitImageEntity[] submitImageEntities = new SubmitImageEntity[images.length];
-//        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
-//        UserEntity user = securityUser.getUserEntity();
-        UserEntity user = new UserEntity();
-        user.setEmail("lsg9134@gmail.com");
-        user.setPassword("1234");
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
+//        UserEntity user = new UserEntity();
+//        user.setEmail("lsg9134@gmail.com");
+//        user.setPassword("1234");
         workService.saveImage(user,images,date);
 
 
@@ -114,7 +114,6 @@ public class WorkController {
         }catch (Exception e) {
             responseObject.put("result",CommonResult.FAILURE.name().toLowerCase());
         }
-
         if(dragCount > 0 && submitImageEntity.isMosaic() == false) {
              submitImageEntity.setMosaic(true);
         }
@@ -125,23 +124,6 @@ public class WorkController {
     }
 
 
-//    @RequestMapping(value = "/complete", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseBody
-//    public String completeWork(@RequestParam(value = "date", required = false) String date,
-////                               @RequestParam(value = "nonModifiedCount",required = false) String  nonModifiedCount,
-//                               SubmitImageEntity submitImageEntity) {
-//        int modifiedCount = workService.countNonMosaicImages(date);
-//        JSONObject responseObject = new JSONObject();
-////        if (!submitImageEntity.isMosaic()) {
-////            nonModifiedCount += 1;
-////            responseObject.put("nonModifiedCount",nonModifiedCount);
-////        }
-//
-//
-//        responseObject.put("result", "success");
-//        responseObject.put("modifiedCount", modifiedCount);
-//        return responseObject.toString();
-//    }
 
 
 }

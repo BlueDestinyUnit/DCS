@@ -1,6 +1,7 @@
 package com.scd.dcs.mappers;
 
 
+import com.scd.dcs.domains.entities.PaymentEntity;
 import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.WorkEntity;
 import com.scd.dcs.results.Result;
@@ -23,11 +24,12 @@ public interface WorkMapper{
 
     SubmitImageEntity selectSubmitImage(@Param("index")int index);
 
-    SubmitImageEntity[] selectSubmitImages(@Param("email")String email, @Param("workDate") String workDate);
+    SubmitImageEntity[] selectSubmitImages(@Param("email")String email, @Param("date") String date);
 
-    WorkEntity findWorkByDateAndUser(@Param("workDate") LocalDate workDate, @Param("userEmail") String userEmail);
+    WorkEntity findWorkByDateAndUser(@Param("date") LocalDate date, @Param("userEmail") String userEmail);
 
+    SubmitImageEntity[] findSubmitImageByWorkIndex(@Param("index") int index);
     int updateImage(SubmitImageEntity submitImageEntity);
 
-
+    WorkEntity[] selectUserAndWorkDaysByDate(@Param("date") String date);
 }

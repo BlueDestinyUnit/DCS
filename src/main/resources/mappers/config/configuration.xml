@@ -13,11 +13,15 @@
         <typeAlias alias="UserEntity" type="com.scd.dcs.domains.entities.UserEntity"/>
         <typeAlias alias="EmailAuthEntity" type="com.scd.dcs.domains.entities.EmailAuthEntity"/>
         <typeAlias alias="ArticleEntity" type="com.scd.dcs.domains.entities.ArticleEntity"/>
+        <typeAlias alias="ArticleImageEntity" type="com.scd.dcs.domains.entities.ArticleImageEntity"/>
         <typeAlias alias="BoardEntity" type="com.scd.dcs.domains.entities.BoardEntity"/>
         <typeAlias alias="CommentEntity" type="com.scd.dcs.domains.entities.CommentEntity"/>
         <typeAlias alias="BoardVo" type="com.scd.dcs.domains.vos.BoardVo"/>
         <typeAlias alias="AttendanceEntity" type="com.scd.dcs.domains.entities.AttendanceEntity"/>
         <typeAlias alias="UserProperty" type="com.scd.dcs.domains.vos.UserProperty"/>
         <typeAlias alias="SubmitImageEntity" type="com.scd.dcs.domains.entities.SubmitImageEntity"/>
+        <typeAlias alias="PaymentEntity" type="com.scd.dcs.domains.entities.PaymentEntity"/>
+        <typeAlias alias="WorkEntity" type="com.scd.dcs.domains.entities.WorkEntity"/>
+        <typeAlias alias="WorkVo" type="com.scd.dcs.domains.vos.WorkVo"/>
     </typeAliases>
 </configuration>

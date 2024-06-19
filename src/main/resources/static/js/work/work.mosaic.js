@@ -168,12 +168,7 @@ saveForm.onclick = function (e) {
                 loadWorkList();
 
 
-                const workList = document.querySelector('.work-list').querySelectorAll('.item');
-                for (let i = 0; i < workList.length; i++) {
-                    if (falseList.includes(workList[i].children[0].innerText)) {
-                        workList[i].children[1].style.color = "#fd040c"; // Keep it red
-                    }
-                }
+
             }
             xhr.open('POST', './updateImage');
             xhr.send(formData);
@@ -193,8 +188,8 @@ resetButton.onclick = function (e) {
 };
 
 // 사진 파일 - > 버튼
-document.querySelector('.photoAddButton').addEventListener('click', function() {
-    this.querySelector('input[type="file"]').click();
+document.getElementById('photoButton').addEventListener('click', function() {
+    document.getElementById('file').click();
 });
 
 
@@ -235,9 +230,10 @@ function loadWorkList() {
             const itemEl = new DOMParser().parseFromString(`
             <li class="item">
                 <span class="imageIndex" style="display: none">${workObject['index']}</span>
-                <span>${workObject['originalName']}</span>
                 <img class="imageList"  src="./subImage?index=${workObject['index']}" alt="" width="100" height="100">
+                <span class="image-name">${workObject['originalName']}</span>
                 <div style="display: none">${workObject['mosaic']}</div>
+           
             </li>`,'text/html').querySelector('li');
             itemEl.querySelector('img').onclick = (e) => {
                 const mainImage = document.getElementById('image');
@@ -291,19 +287,20 @@ input.onchange = function (e) {
     xhr.send(formData);
 }
 
-
+    // .querySelectorAll('.item');
 completeButton.onclick = function (e) {
     e.preventDefault();
-    const workList = document.querySelector('.work-list').querySelectorAll('.item');
+    const workList = document.querySelector('.menu-list').querySelectorAll('.item');
     console.log(workList[3])
     let falseList = [];
     for (let i = 0; i < workList.length; i++) {
         if (workList[i].children[3].innerText === 'false'){
             falseList.push(workList[i].children[0].innerText);
-            alert(`수정파일 ${falseList}가 수정되지 않음`)
+
         }
     }
 
+    alert(`수정파일 ${falseList}가 수정되지 않음`)
 
 
     // 수정 안한거 파일 이름 색상 변경
@@ -362,6 +359,47 @@ function loadImageListCount(length) {
     let modifiedCountDisplay = document.getElementById('modifiedCount');
     imageCountDisplay.textContent = "저장된 파일의 총 개수: " + length
 }
+
+$(function () {
+    // INITIALIZE DATEPICKER PLUGIN
+    $('.datepicker').datepicker({
+        clearBtn: true,
+        format: 'yyyy-mm-dd',
+        todayHighlight: true,
+        autoclose: true,
+        language: 'ko',
+        orientation: 'bottom'
+    });
+    console.log('.datepicker');
+
+    // FOR DEMO PURPOSE
+    $('#saveBtn').click(function (e) {
+        e.preventDefault();
+        // 수정된 부분: 선택된 날짜를 표시하는 코드
+        let selectedDate = $('#reservationDate').val();
+
+        if (selectedDate.length !== 0) {
+            $('#pickedDate').html(selectedDate);
+            window.location.href = `/work?date=${selectedDate}`;
+            // GET 요청을 사용하여 AJAX 호출
+
+        } else {
+            alert('날짜를 입력해주세요.');
+            location.href;
+        }
+    });
+
+
+    $(".user-list").each(function() {
+        $(this).find("#imageButton").click(function() {
+            let date = $("#dateValue").text(); // h2의 텍스트 값을 가져옵니다.
+            let email = $(this).closest("tr").data("email"); // 선택한 email 값을 가져옵니다.
+
+            window.location.href = `/admin/workList?date=${date}&email=${email}`;
+            // 여기에 email 값을 이용한 추가 동작을 구현할 수 있습니다.
+        });
+    });
+});
 
 
 

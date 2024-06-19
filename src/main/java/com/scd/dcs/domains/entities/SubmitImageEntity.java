@@ -7,6 +7,7 @@ import lombok.*;
 @EqualsAndHashCode(of = "index")
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "imageData")
 public class SubmitImageEntity {
     private int index;
     private int workIndex;

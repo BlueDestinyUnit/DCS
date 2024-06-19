@@ -1,6 +1,59 @@
 #mainSection{
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position:absolute;
+  margin:0 auto;
+  width:80%;
+
+  > h1 {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    text-align:center;
+  }
+
+  > .table {
+    > thead {
+      > tr {
+        > th {
+          text-align: center;
+        }
+      }
+    }
+    > tbody {
+      > tr {
+        > th, td {
+          text-align: center;
+        }
+      }
+    }
+
+    > tfoot {
+
+      > tr {
+        > td {
+          > form {
+            > label {
+              > .form-control {
+                width: 25rem;
+              }
+            }
+          }
+        }
+      }
+
+      > .page {
+        > td {
+          text-align: center;
+          > nav{
+            display: inline-block;
+            > .pagination {
+              margin-bottom: 0;
+
+              > .page-count {
+                display: flex;
+                flex-direction: row;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
