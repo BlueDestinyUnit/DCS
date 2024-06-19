@@ -10,13 +10,13 @@ body {
 
 
 #mainSection {
-  .title, .workDate {
-    width: 92%;
+  .title {
+    width: 90%;
     text-align: center;
   }
 
   > .main-container {
-
+    margin-top: -60px;
 
     display: flex;
     flex-direction: row;
@@ -148,7 +148,6 @@ body {
 
           > .menu-list {
             list-style-type: none;
-            //background-color: #f9f9f9;
             height: 587px;
 
 
@@ -156,7 +155,7 @@ body {
             > .item {
 
               > .image-name {
-                width: 50%;
+
               }
 
               > .image {
@@ -169,6 +168,12 @@ body {
     }
   }
 
+  > .bottom-container {
+    text-align: center;
+    margin-left: -165px;
+    margin-top: -20px;
+  }
+
 
 }
 
@@ -177,13 +182,13 @@ body {
 
 
 
-.imageCount {
-  width: 50%;
-}
-
-#completeButton {
-  transform: translate(695px);
-}
+//.imageCount {
+//  width: 50%;
+//}
+//
+//#completeButton {
+//  transform: translate(695px);
+//}
 
 
 

@@ -15,5 +15,4 @@ public class WorkEntity {
     private int index;
     private String userEmail;
     private LocalDate date;
-
 }

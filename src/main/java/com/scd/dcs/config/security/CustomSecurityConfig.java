@@ -85,6 +85,7 @@ public class CustomSecurityConfig {
                         .requestMatchers("/subImage").permitAll()
                         .requestMatchers("/updateImage").permitAll()
                         .requestMatchers("/admin").authenticated()
+                        .requestMatchers("/admin/*").authenticated()
                         .requestMatchers("/assets/**").permitAll()
                         .requestMatchers("/libraries/**").permitAll()
                 )

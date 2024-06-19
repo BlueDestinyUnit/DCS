@@ -1,0 +1,128 @@
+#demo {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;            // 통일
+  .board-container {
+    width: 90%;
+    height: 10rem;      // 통일
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+.table {
+  text-align: center;
+  width: 90%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  table-layout: auto;
+  thead {
+    border-bottom: 0.1rem solid #acacac;
+    > tr {
+      > th {
+        border: none;
+      }
+
+      height: 2.5rem;
+    }
+  }
+
+  > tbody {
+    > tr {
+      height: 3rem;
+    }
+  }
+}
+
+.nonSelect {
+
+}
+
+
+.spacer {
+  height: 2.5rem !important; /* 간격 설정 */
+}
+
+.label {
+  margin-right: 1rem;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.325rem;
+  justify-content: center;
+}
+.gap {
+  margin-right: 1rem;
+}
+//.btn.btn-outline-secondary {
+//  width: 5rem;
+//  height: 2.3rem;
+//}
+.btn.btn-primary {
+  width: 5rem;
+  height: 2.3rem;
+}
+.form-group {
+  width: 3rem;
+  flex-grow: 1;
+}
+.selectedDate {
+  flex-grow: 1;
+  text-align: center;
+}
+.spring {
+  flex-grow: 1;
+}
+.mt-5 {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: row;
+  padding-top: 1rem;
+  margin-top: -0.5rem !important;
+}
+/* datepicker z-index 설정 */
+.datepicker {
+
+  z-index: 1000 !important;
+  background-color: #fff; /* 배경색을 하얀색으로 설정 */
+  color: #000; /* 글자색을 검은색으로 설정 */
+  border-color: #ccc; /* 테두리 색상 설정 */
+}
+.text {
+  margin-bottom: 0.5rem;
+}
+
+.datepicker-dropdown {
+  margin-top: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 드롭다운의 그림자 설정 */
+  width: auto !important; /* 드롭다운 너비 자동으로 설정 */
+  max-width: 200px; /* 최대 너비 설정 */
+}
+
+.a11y-hidden {
+  overflow: hidden;
+  position: absolute;
+  clip: rect(0 0 0 0); /* IE 6,7 */
+  clip: rect(0, 0, 0, 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+
+  &.focusable:focus {
+    overflow: visible;
+    position: static;
+    clip: auto;
+    width: auto;
+    height: auto;
+    margin: 0;
+  }
+}
+
+caption.a11y-hidden {
+  position: static;
+}
+

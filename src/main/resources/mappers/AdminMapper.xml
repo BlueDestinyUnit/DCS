@@ -31,6 +31,7 @@
                  LEFT JOIN `dcs`.`work` AS `work` ON `user`.`email` = `work`.`user_email`
         WHERE `work`.`user_email` = #{email}
           AND `work`.`date` = #{date}
+          AND BINARY `user`.`role` = 'USER'
         LIMIT 1;
 
     </select>

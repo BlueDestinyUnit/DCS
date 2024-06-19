@@ -15,63 +15,59 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ko.min.js"></script>
-
-    <style>
-        /* datepicker z-index 설정 */
-        .datepicker {
-            z-index: 1000 !important;
-            background-color: #fff; /* 배경색을 하얀색으로 설정 */
-            color: #000; /* 글자색을 검은색으로 설정 */
-            border-color: #ccc; /* 테두리 색상 설정 */
-        }
-
-        .datepicker-dropdown {
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 드롭다운의 그림자 설정 */
-            width: auto !important; /* 드롭다운 너비 자동으로 설정 */
-            max-width: 200px; /* 최대 너비 설정 */
-        }
-
-    </style>
+    <link rel="stylesheet" th:href="@{/css/admin/salary.css}">
 </head>
 <body>
 <section layout:fragment="content">
 
-    <form method="post" id="demo">
+    <form id="demo">
         <div class="board-container">
             <div class="container mt-5">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="datepicker">날짜 선택</label>
-                            <div class="input-group">
-                                <label>
-                                    <input type="text" class="form-control datepicker" id="datepicker"
-                                           placeholder="YYYY/MM">
-                                        <button class="btn btn-outline-secondary" type="button" id="submitDate">선택</button>
-                                </label>
-                            </div>
-                        </div>
+                <div class="form-group">
+                    <label class="text" for="datepicker">날짜 선택</label>
+                    <div class="input-group">
+                        <label class="label">
+                            <input type="text" class="form-control datepicker" id="datepicker"
+                                   placeholder="YYYY/MM">
+<!--                            <button class="btn btn-outline-secondary" type="button" id="submitDate">선택</button>-->
+                            <label class="label">
+                                <button class="btn btn-primary" rel="dateButton">월 별</button>
+                                <button class="btn btn-primary nonSelect" rel="dateButton">년 별</button>
+                            </label>
+                        </label>
                     </div>
                 </div>
+                <div class="selectedDate">
+                    <h1 th:text="${option} == 'year' ? ${#strings.substring(selectDate, 0, 4)} : ${selectDate}"></h1>
+                </div>
+                <div class="spring"></div>
             </div>
         </div>
 
         <div class="container">
+            <input class="hiddenValue" th:value="${selectDate}" type="hidden">
             <table class="table">
                 <caption class="a11y-hidden">Table Caption</caption>
                 <thead>
                 <tr>
+                    <th scope="col">이름</th>
+                    <th scope="col">정규직</th>
+                    <th scope="col">작업일</th>
+                    <th scope="col">급여</th>
 
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-
+                <tr class="spacer"></tr> <!-- 간격을 위한 빈 행 -->
+                <tr th:each="payment : ${paymentList}">
+                    <td th:text="${payment.getUserName()}"></td>
+                    <td th:text="${payment.getWorkType() == 'full' ? 'O' : 'X'}"></td>
+                    <td th:text="${payment.getWorkDays()}"></td>
+                    <td th:text="${payment.getPayment() + ' ₩'}" rel="payments"></td>
                 </tr>
                 </tbody>
             </table>
         </div>
-
 
     </form>
 
