@@ -35,8 +35,6 @@
 </style>
 <body>
 <section id="mainSection" layout:fragment="content">
-
-
     <div class="title">
         <h2 class="text">사진 수정</h2>
     </div>
@@ -103,7 +101,7 @@
                 <div class="menuBox">
                     <ul class="menu-list">
                         <li class="item">
-                            <span class="image-name"></span>
+                            <span class="imageIndex"></span>
                             <img class="image"  src="https://www.hyundai.com/contents/repn-car/side-45/main-palisade-24my-45side.png" alt="" width="100" height="100">
                             <span class="image-name"></span>
                         </li>
@@ -114,18 +112,14 @@
     </section>
 
 
+    <div class="bottom-container">
+        <a id="imageCount"></a>
+        <a id="modifiedCount"></a>
+        <br>
+        <button class="btn btn-primary" type="submit" id="completeButton">완료</button>
 
 
-
-    <a id="imageCount"></a>
-    <a id="modifiedCount"></a>
-    <br>
-    <!--        <div id="result"></div>-->
-    <button class="btn btn-primary" type="submit" id="completeButton">완료</button>
+    </div>
 </section>
-
-
-
-
 </body>
 </html>
