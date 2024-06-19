@@ -1,27 +1,28 @@
 @charset "UTF-8";
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
-
+@import "mosaic.datepicker";
 body {
   font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-
-
-
 }
+
 #main {
   height: 100%;
 }
 
 
 #mainSection {
-  .title, .workDate {
+  //display: flex;
+  //flex-direction: column;
+
+
+  .title {
+    width: 90%;
     text-align: center;
-
-
 
   }
 
   > .main-container {
-
+    margin-top: -60px;
 
     display: flex;
     flex-direction: row;
@@ -83,14 +84,15 @@ body {
     }
     
     > .list-container {
+
       display: flex;
       flex-direction: column;
 
       #photoAddButton {
 
         border-bottom: 0.0625rem solid #e0e0e0;
-        //display: grid;
-        width: 10%;
+        margin-top: 25px;
+
 
         > .photoAddButtonForm {
 
@@ -110,11 +112,11 @@ body {
 
 
 
-              align-items: center;
-              display: flex;
-              flex-direction: row;
-              gap: 0.375rem;
-              justify-content: center;
+              //align-items: center;
+              //display: flex;
+              //flex-direction: row;
+              //gap: 0.375rem;
+              //justify-content: center;
 
               &:hover {
                 background-color: darken(#ffffff, 2.5%);
@@ -134,6 +136,7 @@ body {
               }
               > .text {
 
+
               }
             }
           }
@@ -141,9 +144,6 @@ body {
       }
 
       #workListAside {
-
-
-        //width: 10%;
         clear: both;
 
         > .menuBox {
@@ -154,14 +154,14 @@ body {
 
           > .menu-list {
             list-style-type: none;
-            //background-color: #f9f9f9;
             height: 587px;
+
 
 
             > .item {
 
               > .image-name {
-                width: 50%;
+
               }
 
               > .image {
@@ -174,6 +174,12 @@ body {
     }
   }
 
+  > .bottom-container {
+    text-align: center;
+    margin-left: -165px;
+    margin-top: -20px;
+  }
+
 
 }
 
@@ -182,13 +188,13 @@ body {
 
 
 
-#imageCount {
-
-}
-
-#completeButton {
-
-}
+//.imageCount {
+//  width: 50%;
+//}
+//
+//#completeButton {
+//  transform: translate(695px);
+//}
 
 
 

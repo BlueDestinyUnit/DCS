@@ -230,7 +230,7 @@ function loadWorkList() {
             const itemEl = new DOMParser().parseFromString(`
             <li class="item">
                 <span class="imageIndex" style="display: none">${workObject['index']}</span>
-                <img class="imageList"  src="./subImage?index=${workObject['index']}" alt="" width="100" height="100">
+                <img class="image"  src="./subImage?index=${workObject['index']}" alt="" width="100" height="100">
                 <span class="image-name">${workObject['originalName']}</span>
                 <div style="display: none">${workObject['mosaic']}</div>
            
@@ -288,77 +288,103 @@ input.onchange = function (e) {
 }
 
     // .querySelectorAll('.item');
-completeButton.onclick = function (e) {
+// completeButton.onclick = function (e) {
+//     e.preventDefault();
+//     const workList = document.querySelector('.menu-list').querySelectorAll('.item');
+//     console.log(workList[3])
+//     let falseList = [];
+//     for (let i = 0; i < workList.length; i++) {
+//         if (workList[i].children[3].innerText === 'false'){
+//             falseList.push(workList[i].children[0].innerText);
+//
+//         }
+//     }
+//
+//     alert(`수정파일 ${falseList}가 수정되지 않음`)
+//
+//
+//     // 수정 안한거 파일 이름 색상 변경
+//     for (let i = 0; i < workList.length; i++) {
+//         if (falseList.includes(workList[i].children[0].innerText)) {
+//             workList[i].children[1].style.color = "#fd040c";
+//         }
+//     }
+//
+//
+//     location.href
+//
+// };
+
+document.getElementById('completeButton').onclick = function (e) {
     e.preventDefault();
-    const workList = document.querySelector('.menu-list').querySelectorAll('.item');
-    console.log(workList[3])
+
+    const workList = document.querySelectorAll('.menu-list .item');
     let falseList = [];
-    for (let i = 0; i < workList.length; i++) {
-        if (workList[i].children[3].innerText === 'false'){
-            falseList.push(workList[i].children[0].innerText);
 
+    workList.forEach(item => {
+        if (item.children[3] && item.children[3].innerText === 'false') {
+            falseList.push(item.children[0].innerText);
         }
-    }
+    });
 
-    alert(`수정파일 ${falseList}가 수정되지 않음`)
+    alert(`수정파일 ${falseList}가 수정되지 않음`);
 
 
-    // 수정 안한거 파일 이름 색상 변경
-    for (let i = 0; i < workList.length; i++) {
-        if (falseList.includes(workList[i].children[0].innerText)) {
-            workList[i].children[1].style.color = "#fd040c";
+    workList.forEach(item => {
+        if (falseList.includes(item.children[0].innerText)) {
+            console.log(`수정안됨: ${item.children[0].innerText}`);
+            item.children[0].style.color = "#fd040c";
         }
-    }
-
-    // .style.color = "#fd040c";
-
-    location.href
-    // e.preventDefault();
-    // const xhr = new XMLHttpRequest();
-    // const formData = new FormData();
-    // formData.append('date', workDate);
-    // // formData.append('nonModifiedCount',nonModifiedCount);
-    //
-    //
-    // xhr.onreadystatechange = function () {
-    //     if (xhr.readyState !== XMLHttpRequest.DONE) {
-    //         return;
-    //     }
-    //     if (xhr.status < 200 || xhr.status >= 300) {
-    //         alert('200~300임');
-    //         return;
-    //     }
-    //
-    //     const responseObject = JSON.parse(xhr.responseText);
-    //     console.log(responseObject)
-    //     const imageCount = loadImageListCount(length);
-    //
-    //     if (modifiedCount === imageCount) {
-    //         const result = responseObject['result'];
-    //         switch (result) {
-    //             case 'failure':
-    //                 alert(`수정파일 ${modifiedCount}개 남았습니다.`);
-    //                 break;
-    //             case 'success':
-    //                 alert('수고하셨습니다.');
-    //                 loadWorkList();
-    //                 break;
-    //             default:
-    //                 alert('서버가 알 수 없는 응답을 반환하였습니다. 잠시 후 다시 시도해 주세요.');
-    //         }
-    //     }
-    //
-    // };
-    //
-    // xhr.open('GET', `./complete?date=${workDate}`);
-    // xhr.send(formData);
+    });
 };
+
 
 function loadImageListCount(length) {
     let imageCountDisplay = document.getElementById('imageCount');
     let modifiedCountDisplay = document.getElementById('modifiedCount');
     imageCountDisplay.textContent = "저장된 파일의 총 개수: " + length
 }
+
+$(function () {
+    // INITIALIZE DATEPICKER PLUGIN
+    $('.datepicker').datepicker({
+        clearBtn: true,
+        format: 'yyyy-mm-dd',
+        todayHighlight: true,
+        autoclose: true,
+        language: 'ko',
+        orientation: 'bottom'
+    });
+    console.log('.datepicker');
+
+    // FOR DEMO PURPOSE
+    $('#saveBtn').click(function (e) {
+        e.preventDefault();
+        // 수정된 부분: 선택된 날짜를 표시하는 코드
+        let selectedDate = $('#reservationDate').val();
+
+        if (selectedDate.length !== 0) {
+            $('#pickedDate').html(selectedDate);
+            window.location.href = `/work?date=${selectedDate}`;
+            // GET 요청을 사용하여 AJAX 호출
+
+        } else {
+            alert('날짜를 입력해주세요.');
+            location.href;
+        }
+    });
+
+
+    $(".user-list").each(function() {
+        $(this).find("#imageButton").click(function() {
+            let date = $("#dateValue").text(); // h2의 텍스트 값을 가져옵니다.
+            let email = $(this).closest("tr").data("email"); // 선택한 email 값을 가져옵니다.
+
+            window.location.href = `/admin/workList?date=${date}&email=${email}`;
+            // 여기에 email 값을 이용한 추가 동작을 구현할 수 있습니다.
+        });
+    });
+});
 
 
 

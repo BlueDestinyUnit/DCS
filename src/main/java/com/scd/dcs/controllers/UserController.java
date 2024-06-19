@@ -49,6 +49,7 @@ public class UserController {
     @ResponseBody
     public String postRegister(EmailAuthEntity emailAuth,
             UserEntity user){
+        System.out.println(1);
         Result<?> result = this.userService.register(emailAuth, user);
         JSONObject responseObject = new JSONObject();
         responseObject.put("result", result.name().toLowerCase());
@@ -150,4 +151,9 @@ public class UserController {
         return new ModelAndView("user/attendance");
     }
 
+    @RequestMapping(value = "/attendance", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getCalendar(String startDate, String endDate){
+//        Result<?> result = this.userService.getAttendance(startDate, endDate);
+        return null;
+    }
 }

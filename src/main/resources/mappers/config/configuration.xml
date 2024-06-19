@@ -13,6 +13,7 @@
         <typeAlias alias="UserEntity" type="com.scd.dcs.domains.entities.UserEntity"/>
         <typeAlias alias="EmailAuthEntity" type="com.scd.dcs.domains.entities.EmailAuthEntity"/>
         <typeAlias alias="ArticleEntity" type="com.scd.dcs.domains.entities.ArticleEntity"/>
+        <typeAlias alias="ArticleImageEntity" type="com.scd.dcs.domains.entities.ArticleImageEntity"/>
         <typeAlias alias="BoardEntity" type="com.scd.dcs.domains.entities.BoardEntity"/>
         <typeAlias alias="CommentEntity" type="com.scd.dcs.domains.entities.CommentEntity"/>
         <typeAlias alias="BoardVo" type="com.scd.dcs.domains.vos.BoardVo"/>
