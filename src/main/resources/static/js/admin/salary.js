@@ -40,15 +40,14 @@ $(document).ready(function(){
                 let year = dateParts[0];
                 let month = dateParts[1];
                 let selectedDate = year + '-' + month;
-                alert(Date);
                 const selectButtonText = $(this).text();
 
 
                 switch (selectButtonText) {
-                    case '월 별' :
+                    case '월' :
                         window.location.href = `/admin/salary?date=${selectedDate}`
                         break;
-                    case '년 별' :
+                    case '년' :
                         window.location.href = `/admin/salary?date=${selectedDate}&option=year`
                         break;
                 }

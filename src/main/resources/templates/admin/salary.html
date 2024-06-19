@@ -23,30 +23,29 @@
     <form id="demo">
         <div class="board-container">
             <div class="container mt-5">
+                <div class="spring"></div>
+                <div class="selectedDate">
+                    <h1 class="date-value" th:text="${option} == 'year' ? ${#strings.substring(selectDate, 0, 4)} + '년' : ${#strings.substring(selectDate, 0, 4)} + '년 ' + ${#strings.substring(selectDate, 6, 7)} + '월'"></h1>
+                </div>
                 <div class="form-group">
                     <label class="text" for="datepicker">날짜 선택</label>
                     <div class="input-group">
                         <label class="label">
                             <input type="text" class="form-control datepicker" id="datepicker"
                                    placeholder="YYYY/MM">
-<!--                            <button class="btn btn-outline-secondary" type="button" id="submitDate">선택</button>-->
-                            <label class="label">
-                                <button class="btn btn-primary" rel="dateButton">월 별</button>
-                                <button class="btn btn-primary nonSelect" rel="dateButton">년 별</button>
-                            </label>
+<!--                            <button class="btn btn-primary" rel="dateButton">월 별</button>-->
+<!--                            <button class="btn btn-primary" rel="dateButton">년 별</button>-->
+                            <button class="blue" rel="dateButton">월</button>
+                            <button class="blue" rel="dateButton">년</button>
                         </label>
                     </div>
                 </div>
-                <div class="selectedDate">
-                    <h1 th:text="${option} == 'year' ? ${#strings.substring(selectDate, 0, 4)} : ${selectDate}"></h1>
-                </div>
-                <div class="spring"></div>
             </div>
         </div>
 
         <div class="container">
             <input class="hiddenValue" th:value="${selectDate}" type="hidden">
-            <table class="table">
+            <table id="table" class="table">
                 <caption class="a11y-hidden">Table Caption</caption>
                 <thead>
                 <tr>

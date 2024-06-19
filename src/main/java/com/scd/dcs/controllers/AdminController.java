@@ -41,7 +41,6 @@ public class AdminController {
         this.userService = userService;
     }
 
-
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getSelectDate() {
         return new ModelAndView("admin/selectDate");

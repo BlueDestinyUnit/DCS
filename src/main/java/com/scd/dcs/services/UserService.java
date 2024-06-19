@@ -254,7 +254,6 @@ public class UserService {
         }
         return CommonResult.SUCCESS;
     }
-}
     public Result<CommonResult> insertAttendance(UserEntity user){
         AttendanceEntity attendance = new AttendanceEntity();
         attendance.setUserEmail(user.getEmail());

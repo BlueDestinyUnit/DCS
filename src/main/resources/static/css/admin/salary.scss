@@ -1,10 +1,10 @@
 #demo {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;            // 통일
+  gap: 8rem; // 통일
   .board-container {
     width: 90%;
-    height: 10rem;      // 통일
+    height: 10rem; // 통일
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,32 +12,54 @@
     gap: 1rem;
   }
 }
+
+th, td {
+  width: 25%; /* 각 셀의 너비를 25%로 설정 (4개의 열이 있다면 각 열은 동일한 너비를 가짐) */
+  //padding: 10px; /* 필요에 따라 패딩 설정 */
+  border-bottom: 1px solid #dfdfdf; /* 테두리 설정 */
+  word-wrap: break-word; /* 긴 텍스트 줄 바꿈 설정 */
+  vertical-align: middle; /* 원하는 정렬 방식으로 설정 (middle, top, bottom 등) */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+#table {
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards; /* 페이드 인 애니메이션 적용 */
+}
+
 .table {
   text-align: center;
   width: 90%;
   border-collapse: collapse;
   border-spacing: 0;
-  table-layout: auto;
+  table-layout: fixed;
+
   thead {
-    border-bottom: 0.1rem solid #acacac;
+    border-bottom: 0.12rem solid #acacac !important;
+
     > tr {
       > th {
         border: none;
       }
 
-      height: 2.5rem;
+      height: 2.75rem;
     }
   }
 
   > tbody {
     > tr {
-      height: 3rem;
+      height: 4.5rem;
     }
+
   }
-}
-
-.nonSelect {
-
 }
 
 
@@ -53,28 +75,60 @@
   gap: 0.325rem;
   justify-content: center;
 }
+
 .gap {
   margin-right: 1rem;
 }
-//.btn.btn-outline-secondary {
+
+//.btn {
+//  width: 7rem !important;
+//}
+//
+//
+//.btn.btn-primary {
 //  width: 5rem;
 //  height: 2.3rem;
 //}
-.btn.btn-primary {
-  width: 5rem;
+button.blue {
+  width: 7rem;
   height: 2.3rem;
+  color: white;
+  background: #4C8FFB;
+  border: 1px #3079ED solid;
+  border-radius: 0.3rem;
+  box-shadow: inset 0 1px 0 #80B0FB;
 }
-.form-group {
-  width: 3rem;
-  flex-grow: 1;
+
+button.blue:hover {
+  border: 1px #2F5BB7 solid;
+  box-shadow: 0 1px 1px #EAEAEA, inset 0 1px 0 #5A94F1;
+  background: #3F83F1;
 }
+
+button.blue:active {
+  box-shadow: inset 0 2px 5px #2370FE;
+}
+
+.container.mt-5 {
+  position: relative;
+  top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 2개의 컬럼을 동일한 비율로 설정 */
+  gap: 20px; /* 그리드 간격 설정 */
+}
+
 .selectedDate {
-  flex-grow: 1;
+  position: relative;
+  top: 1rem;
   text-align: center;
 }
-.spring {
-  flex-grow: 1;
+
+.form-group {
+  position: relative;
+  top: 6rem;
+  left: 5rem;
 }
+
 .mt-5 {
   display: flex;
   align-items: flex-end;
@@ -82,6 +136,7 @@
   padding-top: 1rem;
   margin-top: -0.5rem !important;
 }
+
 /* datepicker z-index 설정 */
 .datepicker {
 
@@ -90,7 +145,10 @@
   color: #000; /* 글자색을 검은색으로 설정 */
   border-color: #ccc; /* 테두리 색상 설정 */
 }
+
 .text {
+  position: relative;
+  left: 0.25rem;
   margin-bottom: 0.5rem;
 }
 
