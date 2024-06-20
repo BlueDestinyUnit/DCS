@@ -200,7 +200,7 @@ const photoAddButton = document.getElementById('photoAddButton');
 const photoAddButtonForm = document.getElementById('photoAddButtonForm')
 const completeButton = document.getElementById('completeButton');
 const workDate = document.getElementById('workDate').innerText;
-
+const photoDeleteButton = document.getElementById('deleteButton');
 
 loadWorkList();
 
@@ -229,6 +229,9 @@ function loadWorkList() {
             // const
             const itemEl = new DOMParser().parseFromString(`
             <li class="item">
+<!--                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">-->
+<!--                <label class="form-check-label" for="flexCheckDefault"></label>            -->
+                <input class="checkbox" type="checkbox" value="${workObject['index']}">
                 <span class="imageIndex" style="display: none">${workObject['index']}</span>
                 <img class="image"  src="./subImage?index=${workObject['index']}" alt="" width="100" height="100">
                 <span class="image-name">${workObject['originalName']}</span>
@@ -287,63 +290,95 @@ input.onchange = function (e) {
     xhr.send(formData);
 }
 
-    // .querySelectorAll('.item');
-// completeButton.onclick = function (e) {
-//     e.preventDefault();
-//     const workList = document.querySelector('.menu-list').querySelectorAll('.item');
-//     console.log(workList[3])
-//     let falseList = [];
-//     for (let i = 0; i < workList.length; i++) {
-//         if (workList[i].children[3].innerText === 'false'){
-//             falseList.push(workList[i].children[0].innerText);
-//
-//         }
-//     }
-//
-//     alert(`수정파일 ${falseList}가 수정되지 않음`)
-//
-//
-//     // 수정 안한거 파일 이름 색상 변경
-//     for (let i = 0; i < workList.length; i++) {
-//         if (falseList.includes(workList[i].children[0].innerText)) {
-//             workList[i].children[1].style.color = "#fd040c";
-//         }
-//     }
-//
-//
-//     location.href
-//
-// };
 
-document.getElementById('completeButton').onclick = function (e) {
+completeButton.onclick = function (e) {
     e.preventDefault();
-
     const workList = document.querySelectorAll('.menu-list .item');
+
     let falseList = [];
+    for (let i = 0; i < workList.length; i++) {
+        const imageName = workList[i].querySelector('.image-name').innerText;
+        const mosaicValue = workList[i].querySelector('div').innerText;
 
-    workList.forEach(item => {
-        if (item.children[3] && item.children[3].innerText === 'false') {
-            falseList.push(item.children[0].innerText);
+        if (mosaicValue === 'false') {
+            falseList.push(imageName);
         }
-    });
+    }
 
-    alert(`수정파일 ${falseList}가 수정되지 않음`);
+    alert(`수정되지 않은 파일: ${falseList.join(', ')}`);
 
+    for (let i = 0; i < workList.length; i++) {
+        const imageName = workList[i].querySelector('.image-name').innerText;
 
-    workList.forEach(item => {
-        if (falseList.includes(item.children[0].innerText)) {
-            console.log(`수정안됨: ${item.children[0].innerText}`);
-            item.children[0].style.color = "#fd040c";
+        if (falseList.includes(imageName)) {
+            workList[i].querySelector('.image-name').style.color = "#fd040c";
         }
-    });
+    }
 };
+
+
+
+
+photoDeleteButton.onclick = function (e) {
+    e.preventDefault();
+    const checkboxList = document.querySelectorAll('.checkbox');
+    let checkedList = [];
+
+    checkboxList.forEach(checkbox => {
+        if (checkbox.checked) {
+            checkedList.push(checkbox.value);
+        }
+    });
+
+    if (checkedList.length > 0) {
+        const xhr = new XMLHttpRequest();
+        const formData = new FormData();
+        formData.append('indexArray', checkedList);
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState !== XMLHttpRequest.DONE) {
+                return;
+            }
+            if (xhr.status < 200 || xhr.status >= 300) {
+                console.log('삭제에 실패했습니다.');
+                return;
+            }
+
+            console.log('삭제 성공');
+            loadWorkList();
+        };
+
+        xhr.open('DELETE', './delete');
+        xhr.send(formData);
+    }
+};
+
 
 
 function loadImageListCount(length) {
     let imageCountDisplay = document.getElementById('imageCount');
-    let modifiedCountDisplay = document.getElementById('modifiedCount');
+    // let modifiedCountDisplay = document.getElementById('modifiedCount');
     imageCountDisplay.textContent = "저장된 파일의 총 개수: " + length
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 $(function () {
     // INITIALIZE DATEPICKER PLUGIN

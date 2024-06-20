@@ -21,6 +21,13 @@
         VALUES (#{userEmail}, #{date})
     </insert>
 
+    <delete id="deleteIndex">
+        DELETE
+        FROM `dcs`.`submit_images`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </delete>
+
 
     <!--w.`user_email` = #{email} AND-->
     <select id="mosaicImages" resultType="int">

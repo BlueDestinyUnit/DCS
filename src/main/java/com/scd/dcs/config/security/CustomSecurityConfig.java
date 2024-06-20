@@ -88,6 +88,7 @@ public class CustomSecurityConfig {
                         .requestMatchers("/admin/*").authenticated()
                         .requestMatchers("/assets/**").permitAll()
                         .requestMatchers("/libraries/**").permitAll()
+                        .requestMatchers("/delete").permitAll()
                 )
                 .addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .logout(logout -> logout.logoutUrl("/logout/")

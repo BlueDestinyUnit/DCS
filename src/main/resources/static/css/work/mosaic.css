@@ -179,6 +179,25 @@ body {
 #mainSection > .main-container > .list-container #photoAddButton > .photoAddButtonForm > .item > .button > .file {
   display: none;
 }
+#mainSection > .main-container > .list-container > .deletedButtonForm {
+  background-color: white;
+}
+#mainSection > .main-container > .list-container > .deletedButtonForm > .deleted {
+  background-color: white;
+  border: none;
+  padding: 0.375rem 1rem;
+  position: absolute;
+  right: 220px;
+  margin-top: -37px;
+}
+#mainSection > .main-container > .list-container > .deletedButtonForm > .deleted:hover {
+  background-color: #f9f9f9;
+  color: #353535;
+}
+#mainSection > .main-container > .list-container > .deletedButtonForm > .deleted:active {
+  background-color: #f2f2f2;
+  color: #292929;
+}
 #mainSection > .main-container > .list-container #workListAside {
   clear: both;
 }
@@ -190,6 +209,12 @@ body {
 #mainSection > .main-container > .list-container #workListAside > .menuBox > .menu-list {
   list-style-type: none;
   height: 587px;
+}
+#mainSection > .main-container > .list-container #workListAside > .menuBox > .menu-list > .item {
+  margin-left: -20px;
+}
+#mainSection > .main-container > .list-container #workListAside > .menuBox > .menu-list > .item > .checkbox {
+  margin-right: 5px;
 }
 #mainSection > .bottom-container {
   text-align: center;

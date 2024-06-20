@@ -28,6 +28,17 @@ public class WorkController {
         this.workService = workService;
     }
 
+
+
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String deleteIndex(@RequestParam("indexArray") int[] indexArray){
+        Result<?> result = this.workService.delete(indexArray);
+        JSONObject responseObject = new JSONObject();
+        responseObject.put("result", result.name().toLowerCase());
+        return responseObject.toString();
+    }
+
     @RequestMapping(value = "/work", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getWork(
             Authentication authentication,
