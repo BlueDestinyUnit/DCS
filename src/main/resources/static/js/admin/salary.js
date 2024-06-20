@@ -31,7 +31,6 @@ $(document).ready(function(){
             e.preventDefault();
             let Date = $('#datepicker').val();
             if (!Date) {
-                let hiddenValue = $('#hiddenValue').val();
                 alert('날짜를 입력해주세요.');
             } else {
 

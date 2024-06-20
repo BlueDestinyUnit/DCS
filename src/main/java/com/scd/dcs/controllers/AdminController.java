@@ -61,11 +61,13 @@ public class AdminController {
         }
         List<UserProperty> userProperties = this.adminService.getUserProperty(date);
         modelAndView.addObject("Users", userProperties);
+        System.out.println(date);
+        System.out.println(userProperties);
         modelAndView.addObject("date", date);
 
         // 1, user 서비스로 모든 유저를 들고온다.
         // 2. admin 서비스로 해당 date에 적합한 유저들을 검색한다.
-        modelAndView.setViewName("admin/attendance");
+        modelAndView.setViewName("admin/attendance2");
         return modelAndView;
     }
 
