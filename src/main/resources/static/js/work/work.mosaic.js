@@ -165,7 +165,11 @@ saveForm.onclick = function (e) {
                     return;
                 }
                 const responseObject = JSON.parse(xhr.responseText);
+
+
                 loadWorkList();
+
+
 
 
 
@@ -229,9 +233,9 @@ function loadWorkList() {
             // const
             const itemEl = new DOMParser().parseFromString(`
             <li class="item">
-<!--                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">-->
-<!--                <label class="form-check-label" for="flexCheckDefault"></label>            -->
-                <input class="checkbox" type="checkbox" value="${workObject['index']}">
+                <input class="checkbox form-check-input" type="checkbox" value="${workObject['index']}" id="flexCheckDefault">
+                <label class="checkbox form-check-label" for="flexCheckDefault"></label>            
+<!--                <input class="checkbox" type="checkbox" value="${workObject['index']}">-->
                 <span class="imageIndex" style="display: none">${workObject['index']}</span>
                 <img class="image"  src="./subImage?index=${workObject['index']}" alt="" width="100" height="100">
                 <span class="image-name">${workObject['originalName']}</span>
