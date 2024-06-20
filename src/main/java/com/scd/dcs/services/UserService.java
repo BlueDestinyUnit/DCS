@@ -1,6 +1,5 @@
 package com.scd.dcs.services;
 
-import com.scd.dcs.domains.dtos.AttendaceEventDto;
 import com.scd.dcs.domains.entities.AttendanceEntity;
 import com.scd.dcs.domains.entities.EmailAuthEntity;
 import com.scd.dcs.domains.entities.UserEntity;
@@ -247,81 +246,36 @@ public class UserService {
         return CommonResult.SUCCESS;
     }
 
-//    public List<UserProperty> getAttendance(String email,
-//                                   String date){
-//        System.out.println(email);
-//        List<UserProperty> list = new ArrayList<>();
-//
-//        String fDate = date.substring(0,7);
-//        System.out.println(fDate);
-//        String endDate  = date.split("-")[2];
-//        String currentDate = null;
-//        String firstDate = null;
-//        String secondDate = null;
-//        for (int i = 1; i < Integer.parseInt(endDate); i++) {
-//            if (i <10){
-//                currentDate = String.format(fDate + "-0"+"%d",i);
-//            }else{
-//                currentDate = String.format(fDate + "-"+"%d",i);
-//            }
-//            firstDate = currentDate + " 00:00:00";
-//            secondDate = currentDate + " 23:59:59";
-//
-//            System.out.println(i+"번쨰");
-//            System.out.println(currentDate);
-//            System.out.println(firstDate);
-//            System.out.println(secondDate);
-//
-//
-//            UserProperty dbUserProperty = adminMapper.selectUserProperty(email, currentDate, firstDate, secondDate);
-//            System.out.println(dbUserProperty);
-//            if(dbUserProperty == null){
-//                continue;
-//            }
-//            if(dbUserProperty.isAttendance() == true){
-//                list.add(dbUserProperty);
-//            }
-//        }
-//        return list;
-//    }
-public List<AttendaceEventDto> getAttendance(String email,
-                                             String date){
-    List<AttendaceEventDto> list = new ArrayList<>();
+    public List<UserProperty> getAttendance(String email,
+                                   String date){
+        System.out.println(email);
+        List<UserProperty> list = new ArrayList<>();
 
-    String fDate = date.substring(0,7);
-    String endDate  = date.split("-")[2];
-    String currentDate = null;
-    String firstDate = null;
-    String secondDate = null;
-    for (int i = 1; i < Integer.parseInt(endDate); i++) {
-        if (i <10){
-            currentDate = String.format(fDate + "-0"+"%d",i);
-        }else{
-            currentDate = String.format(fDate + "-"+"%d",i);
+        String fDate = date.substring(0,7);
+        String endDate  = date.split("-")[2];
+        String currentDate = null;
+        String firstDate = null;
+        String secondDate = null;
+        for (int i = 1; i < Integer.parseInt(endDate); i++) {
+            if (i <10){
+                currentDate = String.format(fDate + "-0"+"%d",i);
+            }else{
+                currentDate = String.format(fDate + "-"+"%d",i);
+            }
+            firstDate = currentDate + " 00:00:00";
+            secondDate = currentDate + " 23:59:59";
+
+            UserProperty dbUserProperty = adminMapper.selectUserProperty(email, currentDate, firstDate, secondDate);
+            if(dbUserProperty == null){
+                continue;
+            }
+            if(dbUserProperty.isAttendance() == true){
+                dbUserProperty.setDate(currentDate);
+                list.add(dbUserProperty);
+            }
         }
-        firstDate = currentDate + " 00:00:00";
-        secondDate = currentDate + " 23:59:59";
-
-
-        UserProperty dbUserProperty = adminMapper.selectUserProperty(email, currentDate, firstDate, secondDate);
-
-        if(dbUserProperty == null){
-            continue;
-        }
-        if(dbUserProperty.isAttendance() == true){
-            AttendaceEventDto attendaceEventDto = new AttendaceEventDto();
-
-            attendaceEventDto.getEventAttendance().setEventDate(currentDate);
-            attendaceEventDto.getEventAttendance().setDate(currentDate);
-            attendaceEventDto.getEventCount().setDate(currentDate);
-            attendaceEventDto.getEventCount().setEventDate(currentDate);
-            attendaceEventDto.getEventCount().setEventName(String.valueOf(dbUserProperty.getCount()));
-            list.add(attendaceEventDto);
-        }
+        return list;
     }
-    return list;
-}
-
 
     public Result<CommonResult> insertAttendance(UserEntity user){
         AttendanceEntity attendance = new AttendanceEntity();

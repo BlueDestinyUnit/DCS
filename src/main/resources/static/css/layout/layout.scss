@@ -233,7 +233,7 @@ input {
   margin-top: $header_height;
   margin-left: $aside-width;
   position: relative;
-
+  height: 100%;
 
   transition: margin-left 0.5s;
   transition-timing-function: ease-in;
