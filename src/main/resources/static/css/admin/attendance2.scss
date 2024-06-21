@@ -64,6 +64,7 @@ body {
   position: relative;
   top: 1rem;
   text-align: center;
+
 }
 
 .form-group {
@@ -232,6 +233,7 @@ th, td {
   animation: fadeIn 0.5s ease forwards; /* 페이드 인 애니메이션 적용 */
 }
 
+
 .table {
   position: relative;
   right: 1.35rem;
@@ -251,7 +253,7 @@ th, td {
       height: 2.75rem;
 
       > .fix {
-        border-bottom: 0.12rem solid #acacac !important;
+        border-bottom: 0.1235rem solid #797979 !important;
         position: sticky;
         top: 84px;
         z-index: 1;
@@ -276,8 +278,9 @@ th, td {
     > tr {
       height: 4.5rem;
 
-
       > td {
+        transition: font-size 0.1s ease-in-out;
+
         margin-bottom: 0.3rem;
 
         .link {
@@ -294,6 +297,14 @@ th, td {
         :last-child {
           font-size: 1.2rem;
         }
+      }
+
+      &:hover > td {
+        border-bottom: 1px solid #aaaaaaa0;
+      }
+
+      &:hover > td:first-child {
+        font-size: 1.4rem;
       }
     }
   }

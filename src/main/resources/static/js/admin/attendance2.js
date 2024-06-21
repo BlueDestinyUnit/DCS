@@ -34,15 +34,6 @@ $(document).ready(function() {
     });
 
 
-    // $(".user-list").each(function() {
-    //     $(this).find("#imageButton").click(function() {
-    //         // let date = $("#dateValue").val(); // h2의 텍스트 값을 가져옵니다.
-    //         let dateValue = $("#dateValue").data("date");
-    //         let email = $(this).closest("tr").data("email"); // 선택한 email 값을 가져옵니다.
-    //         window.location.href = `/admin/workList?date=${dateValue}&email=${email}`;
-    //         // 여기에 email 값을 이용한 추가 동작을 구현할 수 있습니다.
-    //     });
-    // });
 });
 
 

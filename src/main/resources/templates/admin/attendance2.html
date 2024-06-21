@@ -27,7 +27,7 @@
             <div class="container mt-5">
                 <div class="spring"></div>
                 <div class="selectedDate">
-                    <h1 class="date-value" id="dateValue" th:data-date="${date}"  th:text="${#strings.substring(date, 0, 4)} + '년 ' + ${#strings.substring(date, 6, 7)} + '월'"></h1>
+                    <h1 class="date-value" id="dateValue" th:data-date="${date}"  th:text="${#strings.substring(date, 0, 4)} + '년 ' + ${#strings.substring(date, 5, 7)} + '월 ' + ${#strings.substring(date, 8, 10)} + '일'"></h1>
                 </div>
                 <div class="form-group">
                     <label class="text" for="datepicker">날짜 선택</label>
@@ -49,19 +49,15 @@
                     <th class="fix" scope="col" data-th="Name">이름</th>
                     <th class="fix" scope="col" data-th="Email">출석 현황</th>
                     <th class="fix" scope="col" data-th="Status">작업량</th>
-<!--                    <th scope="col">이미지</th>-->
                 </tr>
                 </thead>
                 <tbody>
                 <tr class="spacer"></tr> <!-- 간격을 위한 빈 행 -->
                 <tr class="user-list" th:each="user : ${Users}" th:data-email="${user.getEmail()}">
-                    <td th:text="${user.getName()}"></td>
-                    <td th:text="${user.isAttendance() ? 'O' : 'X'}"></td>
-                    <td><a class="link" th:if="${user.getCount() > 0}" th:href="@{/admin/workList(date=${date}, email=${user.getEmail()})}" th:text="${user.getCount()}"></a>
+                    <td class="td" th:text="${user.getName()}"></td>
+                    <td class="td" th:text="${user.isAttendance() ? 'O' : 'X'}"></td>
+                    <td class="td"><a class="link" th:if="${user.getCount() > 0}" th:href="@{/admin/workList(date=${date}, email=${user.getEmail()})}" th:text="${user.getCount()}"></a>
                         <span th:unless="${user.getCount() > 0}" th:text="0"></span></td>
-<!--                    <td class="has-text-right">-->
-<!--                        <button th:if="${user.isAttendance()}" id="imageButton" type="button" class="button is-small is-primary">이미지 보기</button>-->
-<!--                    </td>-->
                 </tr>
                 </tbody>
             </table>

@@ -55,7 +55,7 @@ th, td {
   height: 2.75rem;
 }
 .table thead > tr > .fix {
-  border-bottom: 0.12rem solid #acacac !important;
+  border-bottom: 0.1235rem solid #797979 !important;
   position: sticky;
   top: 84px;
   z-index: 1;
@@ -68,6 +68,15 @@ th, td {
 }
 .table > tbody > tr {
   height: 4.5rem;
+}
+.table > tbody > tr > td {
+  transition: font-size 0.1s ease-in-out;
+}
+.table > tbody > tr:hover > td {
+  border-bottom: 1px solid rgba(170, 170, 170, 0.6274509804);
+}
+.table > tbody > tr:hover > td:first-child {
+  font-size: 1.4rem;
 }
 
 .spacer {
