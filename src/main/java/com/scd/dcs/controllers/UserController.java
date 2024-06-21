@@ -156,7 +156,9 @@ public class UserController {
     @RequestMapping(value = "/attendance", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String getCalendar(Authentication authentication, String endDate){
-        System.out.println(endDate);
+        if(authentication == null) {
+            return "null";
+        }
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
         UserEntity user = securityUser.getUserEntity();
         List<UserProperty> dbList = this.userService.getAttendance(user.getEmail(), endDate);

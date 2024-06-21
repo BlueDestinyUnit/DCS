@@ -46,12 +46,12 @@ menuList.forEach(item => {
             console.log('Contact 메뉴입니다.');
             // Contact 메뉴에 대한 작업
             break;
-        case 'board':
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                location.href = '../board/list'
-            })
-            break;
+        // case 'board':
+        //     item.addEventListener('click', (e) => {
+        //         e.preventDefault();
+        //         location.href = '../board/list'
+        //     })
+        //     break;
         default:
             console.log('알 수 없는 메뉴입니다.');
 

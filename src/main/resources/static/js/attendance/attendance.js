@@ -1,40 +1,105 @@
 function eventsData(current) {
     return new Promise((resolve, reject) => {
-        let data = []
-        let endDate = moment().endOf('month')
-        if(current !== null) {
+        let endDate = moment().endOf('month');
+        if (current !== null) {
             endDate = current.endOf('month');
         }
         endDate = endDate.clone().format('YYYY-MM-DD');
 
-        const xhr = new XMLHttpRequest();
-        const formData = new FormData();
-        formData.append('endDate', endDate);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState !== XMLHttpRequest.DONE) {
-                return;
-            }
-            if (xhr.status < 200 || xhr.status >= 300) {
-                console.log('알 수 없는 오류가 발생했습니다.')
-                // alert("알 수 없는 오류가 발생했습니다.");
-                // reject(new Error("알 수 없는 오류가 발생했습니다."));
-                return;
-            }
-            const responseObject = JSON.parse(xhr.responseText);
-            const list = responseObject['list'];
-            for (let i = 0; i < list.length; i++) {
-                const attendance = {eventName: '출석', calendar: '출석', color: 'orange', date: moment(list[i].date), eventDate: list[i].date};
-                const workCount = {eventName: list[i].count, calendar: '작업량', color: 'blue', date: moment(list[i].date), eventDate: list[i].date};
-                data.push(attendance);
-                data.push(workCount);
-            }
-            resolve(data); // 프로미스 해결
-        }
 
-        xhr.open('GET', `./attendance?endDate=${endDate}`);
-        xhr.send();
+        fetch(`./attendance?endDate=${endDate}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(responseObject => {
+                const list = responseObject['list'];
+                const listLength = list.length;
+                let data = [];
+                for (let i = 0; i < listLength; i++) {
+                    let attendanceDate = list[i].date;
+                    let momentDate = moment(attendanceDate);
+                    let dateCount = list[i].count;
+                    let attendance = {
+                        eventName: '출석',
+                        calendar: '출석',
+                        color: 'orange',
+                        date: momentDate,
+                        eventDate: attendanceDate
+                    };
+                    let workCount = {
+                        eventName: dateCount,
+                        calendar: '작업량',
+                        color: 'blue',
+                        date: momentDate,
+                        eventDate: attendanceDate
+                    };
+                    data.push(attendance);
+                    data.push(workCount);
+                }
+
+                resolve(data); // 프로미스 해결
+            })
+            .catch(error => {
+                console.error('Error processing response:', error);
+                reject(error);
+            });
+
     });
 }
+
+
+
+function eventsDataTest(data,current) {
+    data = [];
+    let endDate = moment().endOf('month');
+    if (current !== null) {
+        endDate = current.endOf('month');
+    }
+    endDate = endDate.clone().format('YYYY-MM-DD');
+
+    const xhr = new XMLHttpRequest();
+
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState !== XMLHttpRequest.DONE) {
+            return;
+        }
+        if (xhr.status < 200 || xhr.status >= 300) {
+            console.log('알 수 없는 오류가 발생했습니다.');
+            reject(new Error('알 수 없는 오류가 발생했습니다.'));
+            return;
+        }
+
+        const responseObject = JSON.parse(xhr.responseText);
+        const list = responseObject['list'];
+        console.log(list);
+        for (let i = 0; i < list.length; i++) {
+            const attendance = {
+                eventName: '출석',
+                calendar: '출석',
+                color: 'orange',
+                date: moment(list[i].date),
+                eventDate: list[i].date
+            };
+            const workCount = {
+                eventName: list[i].count,
+                calendar: '작업량',
+                color: 'blue',
+                date: moment(list[i].date),
+                eventDate: list[i].date
+            };
+            data.push(attendance);
+            data.push(workCount);
+        }
+
+    };
+    xhr.open('GET', `./attendance?endDate=${endDate}`);
+    xhr.send();
+}
+
 
 
 function createCalendar() {
@@ -397,6 +462,7 @@ function createEvent(data) {
     var calendar = new Calendar('#calendar', data);
 
 }
+
 
 eventsData(null).then(updatedData => {
     createEvent(updatedData)
