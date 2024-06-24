@@ -30,7 +30,7 @@ input {
   padding: 0.625rem 0.8125rem;
 
   position: fixed;
-  z-index: 1;
+  z-index: 9;
 
   align-items: center;
   display: flex;
@@ -121,7 +121,7 @@ input {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  z-index: 2;
+  z-index: 10;
 
   transition: left;
   transition-duration: 0.5s;
@@ -185,10 +185,7 @@ input {
       &::marker {
         display: none
       }
-
-
-
-      > .link {
+      > .link{
         border-radius: 200px;
         width: 11.75rem;
         height: 2rem;
@@ -219,12 +216,73 @@ input {
 
       }
 
+      > .btn-group.dropend {
+        > .dropdown-toggle {
+          border-radius: 200px;
+          width: 11.75rem;
+          height: 2rem;
+          box-sizing: border-box;
+          color: #dbdbdb;
+          font-size: 1.175rem;
+          text-decoration: none;
+          user-select: none;
+          padding: 1.5rem 0.5rem;
+          margin-left: 0.475rem;
+
+          align-items: center;
+          display: flex;
+          flex-direction: row;
+          justify-content: start;
+          gap: 0.625rem;
+
+
+          background-color: transparent;
+          border-color: transparent;
+
+          > .image {
+            margin-top: 0.125rem;
+            margin-left: 0.5rem;
+            width: 1.75rem;
+            height: 1.75rem;
+          }
+
+          > .text {
+            font-family: inherit;
+          }
+
+          &:hover {
+            font-size: 1.175rem;
+            background-color: #d1d1d1;
+            color: #212121;
+          }
+        }
+      }
+
       > .link:hover {
         font-size: 1.175rem;
         background-color: #d1d1d1;
         color: #212121;
       }
 
+      //> .btn-group.dropend {
+      //  border-radius: 200px;
+      //  width: 11.75rem;
+      //  height: 2rem;
+      //  box-sizing: border-box;
+      //  color: #dbdbdb;
+      //  font-size: 1.175rem;
+      //  text-decoration: none;
+      //  user-select: none;
+      //  padding: 1.5rem 0.5rem;
+      //  margin-left: 0.475rem;
+      //
+      //  align-items: center;
+      //  display: flex;
+      //  flex-direction: row;
+      //  justify-content: start;
+      //  gap: 0.625rem;
+      //
+      //}
     }
   }
 }
@@ -233,7 +291,7 @@ input {
   margin-top: $header_height;
   margin-left: $aside-width;
   position: relative;
-
+  height: 100%;
 
   transition: margin-left 0.5s;
   transition-timing-function: ease-in;

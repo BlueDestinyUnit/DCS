@@ -252,7 +252,6 @@ public class UserService {
         List<UserProperty> list = new ArrayList<>();
 
         String fDate = date.substring(0,7);
-        System.out.println(fDate);
         String endDate  = date.split("-")[2];
         String currentDate = null;
         String firstDate = null;
@@ -266,23 +265,18 @@ public class UserService {
             firstDate = currentDate + " 00:00:00";
             secondDate = currentDate + " 23:59:59";
 
-            System.out.println(i+"번쨰");
-            System.out.println(currentDate);
-            System.out.println(firstDate);
-            System.out.println(secondDate);
-
-
             UserProperty dbUserProperty = adminMapper.selectUserProperty(email, currentDate, firstDate, secondDate);
-            System.out.println(dbUserProperty);
             if(dbUserProperty == null){
                 continue;
             }
             if(dbUserProperty.isAttendance() == true){
+                dbUserProperty.setDate(currentDate);
                 list.add(dbUserProperty);
             }
         }
         return list;
     }
+  
     public Result<CommonResult> insertAttendance(UserEntity user){
         AttendanceEntity attendance = new AttendanceEntity();
         attendance.setUserEmail(user.getEmail());

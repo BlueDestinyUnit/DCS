@@ -11,4 +11,5 @@ import lombok.ToString;
 public class UserProperty extends UserEntity {
     private boolean attendance;
     private int count;
+    private String date;
 }

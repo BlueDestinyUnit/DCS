@@ -21,6 +21,13 @@
         VALUES (#{userEmail}, #{date})
     </insert>
 
+    <delete id="deleteIndex">
+        DELETE
+        FROM `dcs`.`submit_images`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </delete>
+
 
     <!--w.`user_email` = #{email} AND-->
     <select id="mosaicImages" resultType="int">
@@ -130,7 +137,8 @@
                `date`                   AS `date`,
                COUNT(1)                 AS `workDays`,
                `work_type`              AS `workType`,
-               (COUNT(1) * `p`.`price`) AS `payment`
+               (COUNT(1) * `p`.`price`) AS `payment`,
+               `u`.`is_insurance`       AS `isInsurance`
         FROM `dcs`.`work`
                  LEFT JOIN dcs.user u on work.user_email = u.email
                  LEFT JOIN dcs.payment p on u.work_type = p.uwork_type
@@ -147,7 +155,8 @@
         `date` AS `date`,
         COUNT(1) AS `workDays`,
         `work_type` AS `workType`,
-        (COUNT(1) * `p`.`price`) AS `payment`
+        (COUNT(1) * `p`.`price`) AS `payment`,
+        `u`.`is_insurance`       AS `isInsurance`
         FROM `dcs`.`work`
         LEFT JOIN dcs.user u on work.user_email = u.email
         LEFT JOIN dcs.payment p on u.work_type = p.uwork_type

@@ -33,16 +33,16 @@ public class AdminService {
 
     public List<UserProperty> getUserProperty(String date) {
         UserEntity[] users = this.userMapper.selectUsers();
-        System.out.println(Arrays.toString(users));
+//        System.out.println(Arrays.toString(users));
 
         List<UserProperty> userPropertyList = new ArrayList<>();
 
         String firstDate = date + " 00:00:00";
         String secondDate = date + " 23:59:59";
-        System.out.println(firstDate);
-        System.out.println(secondDate);
+//        System.out.println(firstDate);
+//        System.out.println(secondDate);
         for (UserEntity user : users) {
-            System.out.println(user.getEmail());
+//            System.out.println(user.getEmail());
             UserProperty dbUser = this.adminMapper.selectUserProperty(user.getEmail(), date, firstDate, secondDate);
             if (dbUser == null) {
                 UserProperty newUser = new UserProperty();
@@ -67,9 +67,9 @@ public class AdminService {
                 Object comment = listItem.get("comment");
                 Object index = listItem.get("index");
                 SubmitImageEntity dbSubmitImage = this.workMapper.selectSubmitImage(Integer.parseInt((String) index));
-                System.out.println(dbSubmitImage);
+//                System.out.println(dbSubmitImage);
                 dbSubmitImage.setComment((String) comment);
-                System.out.println(3);
+//                System.out.println(3);
                 dbSubmitImage.setSign(true);
 
                 this.workMapper.updateImage(dbSubmitImage);
@@ -85,16 +85,16 @@ public class AdminService {
     }
 
     public PaymentVo[] selectWorkVo(String date) {
-        System.out.println("초기화면임");
+//        System.out.println("초기화면임");
         return this.workMapper.selectUserAndWorkDaysByDate(date);
     }
 
     public PaymentVo[] selectWorkVoByOption(String date, String option) {
-        System.out.println(option + " 이 선택됨");
+//        System.out.println(option + " 이 선택됨");
         if (option.equals("year")) {
             date = date.substring(0, 4);
         }
-        System.out.println(date);
+//        System.out.println(date);
         return this.workMapper.selectUserAndWorkDaysByDateAndOption(date, option);
     }
 }
