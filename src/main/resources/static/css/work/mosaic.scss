@@ -23,6 +23,15 @@ body {
     justify-content: center;
     gap: 5rem;
 
+
+    >.box {
+
+      position: absolute;
+      left: 50px;
+      width: 250px;
+
+    }
+
     > #main-mosaic {
       bottom: 50px;
 
@@ -31,19 +40,14 @@ body {
       background: lightblue;
       width: 600px;
       height: 600px;
-      //top: 50%;
-      //left: 50%;
       position: relative;
-      //transform: translate(-50%,-50%);
 
       > .image-box {
         background: #ececec;
         width: 600px;
         height: 600px;
-        //top: 50%;
-        //left: 50%;
         position: absolute;
-        //transform: translate(-50%,-50%);
+
       }
 
       > .imageContainer {
@@ -103,15 +107,6 @@ body {
               color: #424242;
               cursor: pointer;
               padding: 0.375rem 1rem;
-
-
-
-
-              //align-items: center;
-              //display: flex;
-              //flex-direction: row;
-              //gap: 0.375rem;
-              //justify-content: center;
 
               &:hover {
                 background-color: darken(#ffffff, 2.5%);
@@ -176,15 +171,13 @@ body {
           position: absolute;
 
           > .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
             list-style-type: none;
-            display: grid;
             width: 300px;
             height: 587px;
-
-            gap: 2px;
-
-
-
 
             > .item {
               margin-left: -3px;
@@ -216,23 +209,7 @@ body {
     margin-left: -165px;
     margin-top: -20px;
   }
-
-
 }
-
-
-
-
-
-
-//.imageCount {
-//  width: 50%;
-//}
-//
-//#completeButton {
-//  transform: translate(695px);
-//}
-
 
 
 

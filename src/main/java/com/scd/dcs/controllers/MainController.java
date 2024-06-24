@@ -43,7 +43,10 @@ public class MainController {
                 modelAndView.addObject("attendance", AttendanceResult.ATTENDANCE_IS_EXIST);
             }
         }
+
+
         ArticleEntity article = this.articleService.mainNoticeArticle();
+        System.out.println(article);
         modelAndView.addObject("article", article);
         modelAndView.setViewName("main");
         return modelAndView;

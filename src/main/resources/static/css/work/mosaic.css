@@ -109,6 +109,11 @@ body {
   justify-content: center;
   gap: 5rem;
 }
+#mainSection > .main-container > .box {
+  position: absolute;
+  left: 50px;
+  width: 250px;
+}
 #mainSection > .main-container > #main-mosaic {
   bottom: 50px;
   margin-top: 7rem;
@@ -207,11 +212,12 @@ body {
   position: absolute;
 }
 #mainSection > .main-container > .list-container #workListAside > .menuBox > .menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   list-style-type: none;
-  display: grid;
   width: 300px;
   height: 587px;
-  gap: 2px;
 }
 #mainSection > .main-container > .list-container #workListAside > .menuBox > .menu-list > .item {
   margin-left: -3px;
