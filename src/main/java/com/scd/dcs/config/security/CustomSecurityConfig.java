@@ -79,7 +79,6 @@ public class CustomSecurityConfig {
                         .requestMatchers("/article/image").permitAll()
                         .requestMatchers("/user/attendance").authenticated()
                         .requestMatchers("/user/*").permitAll()
-                        .requestMatchers("/user/login/").permitAll()
                         .requestMatchers("/addWork").authenticated()
                         .requestMatchers("/work").authenticated()
                         .requestMatchers("/work/").authenticated()

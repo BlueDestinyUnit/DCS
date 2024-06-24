@@ -101,9 +101,9 @@
                     <span class="text">게시판</span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" th:href="@{/board/list}">공지 사항</a></li>
+                    <li><a class="dropdown-item" th:href="@{/board/list (code=notice)}">공지 사항</a></li>
                     <li><a class="dropdown-item" th:href="@{/board/list}">자유 게시판</a></li>
-                    <li><a class="dropdown-item" th:href="@{/board/list}">Q&A</a></li>
+                    <li><a class="dropdown-item" th:href="@{/board/list (code=qna)}">Q&A</a></li>
                 </ul>
             </div>
         </li>
