@@ -8,8 +8,9 @@ import com.scd.dcs.results.CommonResult;
 import com.scd.dcs.results.Result;
 import com.scd.dcs.services.UserService;
 import jakarta.mail.MessagingException;
-import jakarta.servlet.http.HttpSession;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -19,11 +20,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
     @Autowired
@@ -155,12 +156,14 @@ public class UserController {
     @RequestMapping(value = "/attendance", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String getCalendar(Authentication authentication, String endDate){
-        System.out.println(endDate);
+        if(authentication == null) {
+            return "null";
+        }
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
         UserEntity user = securityUser.getUserEntity();
         List<UserProperty> dbList = this.userService.getAttendance(user.getEmail(), endDate);
-
-
+//        List<AttendaceEventDto> dbList = this.userService.getAttendance(user.getEmail(), endDate);
+        System.out.println(dbList);
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("list",dbList);

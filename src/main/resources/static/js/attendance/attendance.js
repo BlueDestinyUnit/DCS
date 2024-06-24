@@ -1,50 +1,114 @@
-/*
- 1. 모든 날짜 불러오기 events() 첫날짜랑 끝날짜만 보내면됨
- 2. 날짜마다 해당 출석여부 AdminMapper의 selectUserProperty 에서 attendance 참고
- 3. 작업량 가져오기 (XHR)
- 4. 서비스에서 반복문으로 하나씩 처리하기
- 5. Calendar.prototype.drawMonth 쪽 ev를 적절히 넣기
- */
+function eventsData(current) {
+    return new Promise((resolve, reject) => {
+        let endDate = moment().endOf('month');
+        if (current !== null) {
+            endDate = current.endOf('month');
+        }
+        endDate = endDate.clone().format('YYYY-MM-DD');
 
-createCalendar();
 
-function events() {
-    var startDate = moment().startOf('month'); // 이번 달의 첫째 날
-    var endDate = moment().endOf('month'); // 이번 달의 마지막 날
-    endDate = endDate.clone().format(('YYYY-MM-DD'));
-    console.log(endDate);
+        fetch(`./attendance?endDate=${endDate}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(responseObject => {
+                const list = responseObject['list'];
+                const listLength = list.length;
+                let data = [];
+                for (let i = 0; i < listLength; i++) {
+                    let attendanceDate = list[i].date;
+                    let momentDate = moment(attendanceDate);
+                    let dateCount = list[i].count;
+                    let attendance = {
+                        eventName: '출석',
+                        calendar: '출석',
+                        color: 'orange',
+                        date: momentDate,
+                        eventDate: attendanceDate
+                    };
+                    let workCount = {
+                        eventName: dateCount,
+                        calendar: '작업량',
+                        color: 'blue',
+                        date: momentDate,
+                        eventDate: attendanceDate
+                    };
+                    data.push(attendance);
+                    data.push(workCount);
+                }
 
+                resolve(data); // 프로미스 해결
+            })
+            .catch(error => {
+                console.error('Error processing response:', error);
+                reject(error);
+            });
+
+    });
+}
+
+
+
+function eventsDataTest(data,current) {
+    data = [];
+    let endDate = moment().endOf('month');
+    if (current !== null) {
+        endDate = current.endOf('month');
+    }
+    endDate = endDate.clone().format('YYYY-MM-DD');
 
     const xhr = new XMLHttpRequest();
-    const formData = new FormData();
-    formData.append('endDate', endDate);
+
+
     xhr.onreadystatechange = function () {
         if (xhr.readyState !== XMLHttpRequest.DONE) {
             return;
         }
         if (xhr.status < 200 || xhr.status >= 300) {
-            alert("알 수없는 오류가 발생했습니다.");
-        }
+            console.log('알 수 없는 오류가 발생했습니다.');
+            reject(new Error('알 수 없는 오류가 발생했습니다.'));
             return;
+        }
+
         const responseObject = JSON.parse(xhr.responseText);
-        console.log(responseObject);
-        // 작업 완료후 data.push(responseObject)
-    }
-    xhr.open('GET', `./attendance?endDate=${endDate}`); // 본인 ?email=${유저이메일}&date=${dates[i]} 일단 현재 date는 String 문자열로 넘길것
+        const list = responseObject['list'];
+        console.log(list);
+        for (let i = 0; i < list.length; i++) {
+            const attendance = {
+                eventName: '출석',
+                calendar: '출석',
+                color: 'orange',
+                date: moment(list[i].date),
+                eventDate: list[i].date
+            };
+            const workCount = {
+                eventName: list[i].count,
+                calendar: '작업량',
+                color: 'blue',
+                date: moment(list[i].date),
+                eventDate: list[i].date
+            };
+            data.push(attendance);
+            data.push(workCount);
+        }
+
+    };
+    xhr.open('GET', `./attendance?endDate=${endDate}`);
     xhr.send();
 }
 
-events();
+
 
 function createCalendar() {
-
-
-
-
     var today = moment();
+    events = [];
+
+
     function Calendar(selector, events) {
         this.el = document.querySelector(selector);
-        console.log(events)
         this.events = events;
         this.current = moment().date(1);
         this.draw();
@@ -94,24 +158,33 @@ function createCalendar() {
 
     Calendar.prototype.drawMonth = function() {
         var self = this;
-
         this.events.forEach(function(ev) {
+            var eventDate = ev.eventDate.split('-');
 
-            ev.date = self.current.clone().date(Math.random() * (29 - 1) + 1);
-            console.log(ev)
+            ev.date = self.current.clone().date(eventDate[2]);
         });
 
 
         if(this.month) {
+            this.current = this.current.startOf('month')
             this.oldMonth = this.month;
             this.oldMonth.className = 'month out ' + (self.next ? 'next' : 'prev');
             this.oldMonth.addEventListener('webkitAnimationEnd', function() {
+                const legend = self.el.querySelector('.legend');
+
+
                 self.oldMonth.parentNode.removeChild(self.oldMonth);
                 self.month = createElement('div', 'month');
                 self.backFill();
                 self.currentMonth();
                 self.fowardFill();
                 self.el.appendChild(self.month);
+                if (legend){
+                    self.el.removeChild(legend);
+                    self.el.appendChild(legend);
+                }
+
+
                 window.setTimeout(function() {
                     self.month.className = 'month in ' + (self.next ? 'next' : 'prev');
                 }, 16);
@@ -124,16 +197,14 @@ function createCalendar() {
             this.fowardFill();
             this.month.className = 'month new';
         }
+
     }
 
     Calendar.prototype.backFill = function() {
         var clone = this.current.clone();
         var dayOfWeek = clone.day();
-
         if(!dayOfWeek) { return; }
-
         clone.subtract('days', dayOfWeek+1);
-
         for(var i = dayOfWeek; i > 0 ; i--) {
             this.drawDay(clone.add('days', 1));
         }
@@ -151,6 +222,7 @@ function createCalendar() {
     }
 
     Calendar.prototype.currentMonth = function() {
+
         var clone = this.current.clone();
 
         while(clone.month() === this.current.month()) {
@@ -191,13 +263,11 @@ function createCalendar() {
         outer.appendChild(number);
         outer.appendChild(events);
         this.week.appendChild(outer);
-        console.log("날짜:", day.format('YYYY-MM-DD'));
     }
 
     Calendar.prototype.drawEvents = function(day, element) {
-
         if(day.month() === this.current.month()) {
-            var todaysEvents = this.events.reduce(function(memo, ev) {
+            var todaysEvents = Array.from(this.events).reduce(function(memo, ev) {
                 if(ev.date.isSame(day, 'day')) {
                     memo.push(ev);
                 }
@@ -259,7 +329,7 @@ function createCalendar() {
 
             //Create the event wrapper
 
-            console.log("오늘 날짜의 이벤트:", day.format('YYYY-MM-DD'), todaysEvents);
+            // console.log("오늘 날짜의 이벤트:", day.format('YYYY-MM-DD'), todaysEvents);
 
 
             details.appendChild(arrow);
@@ -279,7 +349,8 @@ function createCalendar() {
     }
 
     Calendar.prototype.renderEvents = function(events, ele) {
-        console.log(events)
+        // console.log(13)
+
         //Remove any events in the current details element
         var currentWrapper = ele.querySelector('.events');
         var wrapper = createElement('div', 'events in' + (currentWrapper ? ' new' : ''));
@@ -326,6 +397,7 @@ function createCalendar() {
     }
 
     Calendar.prototype.drawLegend = function() {
+        // console.log(14)
         var legend = createElement('div', 'legend');
         var calendars = this.events.map(function(e) {
             return e.calendar + '|' + e.color;
@@ -344,49 +416,56 @@ function createCalendar() {
 
     Calendar.prototype.nextMonth = function() {
         this.current.add('months', 1);
-        this.next = true;
-        this.draw();
+        const legend = this.el.querySelector('.legend');
+        this.el.removeChild(legend)
+        eventsData(this.current).then(updatedData => {
+            this.events = updatedData;
+            this.next = false;
+            this.draw();
+        }).catch(error => {
+            console.error(error);
+        });
     }
 
     Calendar.prototype.prevMonth = function() {
         this.current.subtract('months', 1);
-        this.next = false;
-        this.draw();
+        const legend = this.el.querySelector('.legend');
+        this.el.removeChild(legend)
+        eventsData(this.current).then(updatedData => {
+            this.events = updatedData;
+            this.next = false;
+            this.draw();
+        }).catch(error => {
+            console.error(error);
+        });
     }
 
     window.Calendar = Calendar;
 
     function createElement(tagName, className, innerText) {
+        // console.log(17 + " 엘리멘트 요소 생성")
+
         var ele = document.createElement(tagName);
         if(className) {
             ele.className = className;
         }
         if(innerText) {
+
             ele.innderText = ele.textContent = innerText;
         }
         return ele;
     }
 };
 
-!function() {
-    var data = [
-        // {date: 2024-06-01 , attendance: true,work : 123123}
-        // {date: 2024-06-02 , attendance: true,work : 123123}
-
-        // {eventName: '출석',calendar: 'Work', color: 'orange', date: '2024-06-19'}
-        // {eventName: '작업량',calendar: 'Work', color: 'red', date: '2024-06-19'}
-
-        // 출석 여부{ eventName: 'Lunch Meeting w/ Mark', calendar: 'Work', color: 'orange', date: '2024-06-07' },
-        // 작업량{ eventName: 'Interview - Jr. Web Developer', calendar: 'Work', color: 'orange' }
-
-    ];
-
-
-
-    function addDate(ev) {
-
-    }
-
+function createEvent(data) {
+    createCalendar();
     var calendar = new Calendar('#calendar', data);
 
-}();
+}
+
+
+eventsData(null).then(updatedData => {
+    createEvent(updatedData)
+}).catch(error => {
+    console.error(error);
+});

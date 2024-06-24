@@ -186,6 +186,39 @@ input {
 #asideFrame > .menu > .item > .link > .text {
   font-family: inherit;
 }
+#asideFrame > .menu > .item > .btn-group.dropend > .dropdown-toggle {
+  border-radius: 200px;
+  width: 11.75rem;
+  height: 2rem;
+  box-sizing: border-box;
+  color: #dbdbdb;
+  font-size: 1.175rem;
+  text-decoration: none;
+  user-select: none;
+  padding: 1.5rem 0.5rem;
+  margin-left: 0.475rem;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  gap: 0.625rem;
+  background-color: transparent;
+  border-color: transparent;
+}
+#asideFrame > .menu > .item > .btn-group.dropend > .dropdown-toggle > .image {
+  margin-top: 0.125rem;
+  margin-left: 0.5rem;
+  width: 1.75rem;
+  height: 1.75rem;
+}
+#asideFrame > .menu > .item > .btn-group.dropend > .dropdown-toggle > .text {
+  font-family: inherit;
+}
+#asideFrame > .menu > .item > .btn-group.dropend > .dropdown-toggle:hover {
+  font-size: 1.175rem;
+  background-color: #d1d1d1;
+  color: #212121;
+}
 #asideFrame > .menu > .item > .link:hover {
   font-size: 1.175rem;
   background-color: #d1d1d1;
@@ -196,6 +229,7 @@ input {
   margin-top: 5.25rem;
   margin-left: 20rem;
   position: relative;
+  height: 100%;
   transition: margin-left 0.5s;
   transition-timing-function: ease-in;
 }
