@@ -28,7 +28,7 @@ menuList.forEach(item => {
                 if(admin === 'true'){
                     location.href = `/admin/salary`
                 }else {
-
+                    location.href = `/user/salary`
                 }
             })
             break;

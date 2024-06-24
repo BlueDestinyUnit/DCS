@@ -3,6 +3,7 @@ package com.scd.dcs.controllers;
 import com.scd.dcs.config.security.domains.SecurityUser;
 import com.scd.dcs.domains.entities.EmailAuthEntity;
 import com.scd.dcs.domains.entities.UserEntity;
+import com.scd.dcs.domains.vos.PaymentVo;
 import com.scd.dcs.domains.vos.UserProperty;
 import com.scd.dcs.results.CommonResult;
 import com.scd.dcs.results.Result;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -173,5 +176,17 @@ public class UserController {
     @RequestMapping(value = "/myPage", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getMyPage(){
         return new ModelAndView("user/myPage");
+    }
+
+    @RequestMapping(value = "/salary", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getSalary(@RequestParam(value = "date", required = false) String date) {
+        if (date == null || date.isEmpty()) {
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
+            date = currentDate.format(formatter);
+        }
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("user/salary");
+        return modelAndView;
     }
 }
