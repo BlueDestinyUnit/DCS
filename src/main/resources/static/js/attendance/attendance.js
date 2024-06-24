@@ -38,9 +38,6 @@ events();
 
 function createCalendar() {
 
-
-
-
     var today = moment();
     function Calendar(selector, events) {
         this.el = document.querySelector(selector);
