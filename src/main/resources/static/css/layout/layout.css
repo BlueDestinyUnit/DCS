@@ -25,7 +25,7 @@ input {
   border-bottom: 0.1rem solid #d1d1d1;
   padding: 0.625rem 0.8125rem;
   position: fixed;
-  z-index: 1;
+  z-index: 9;
   align-items: center;
   display: flex;
   flex-direction: row;
@@ -103,7 +103,7 @@ input {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  z-index: 2;
+  z-index: 10;
   transition: left;
   transition-duration: 0.5s;
   transition-timing-function: ease-in;

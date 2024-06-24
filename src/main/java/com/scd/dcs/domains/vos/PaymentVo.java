@@ -13,4 +13,5 @@ public class PaymentVo extends WorkEntity {
     private double payment;
     private String workType;
     private String userName;
+    private boolean isInsurance;
 }

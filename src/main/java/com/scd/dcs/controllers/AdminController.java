@@ -41,17 +41,6 @@ public class AdminController {
         this.userService = userService;
     }
 
-
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getSelectDate() {
-        return new ModelAndView("admin/selectDate");
-    }
-
-    @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
-    public String postSelectDate() {
-        return null;
-    }
-
     @RequestMapping(value = "/attendance", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getAttendance(@RequestParam(value = "date", required = false) String date) {
         ModelAndView modelAndView = new ModelAndView();
@@ -62,11 +51,13 @@ public class AdminController {
         }
         List<UserProperty> userProperties = this.adminService.getUserProperty(date);
         modelAndView.addObject("Users", userProperties);
+        System.out.println(date);
+        System.out.println(userProperties);
         modelAndView.addObject("date", date);
 
         // 1, user 서비스로 모든 유저를 들고온다.
-        // 2. admin 서비스로 해당 date에 적합한 유저들을 검색한다.
-        modelAndView.setViewName("admin/attendance");
+        // 2. admin 서비스로 해당 date 에 적합한 유저들을 검색한다.
+        modelAndView.setViewName("admin/attendance2");
         return modelAndView;
     }
 
@@ -79,7 +70,7 @@ public class AdminController {
         modelAndView.addObject("imageList", imageList);
         modelAndView.addObject("user", user.getName());
         modelAndView.addObject("date", date);
-        modelAndView.setViewName("admin/workList");
+        modelAndView.setViewName("admin/workList2");
         return modelAndView;
     }
 
@@ -93,25 +84,6 @@ public class AdminController {
         jsonObject.put("result", result.name().toLowerCase());
         return jsonObject.toString();
     }
-
-//    @RequestMapping(value = "/salary", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-//    public ModelAndView getSalary(@RequestParam(value = "date", required = false) String date,
-//                                  @RequestParam(value = "option", required = false) String option,
-//                                  PaymentRadioButtonVo radioButton) {
-////        System.out.println(date);
-////        System.out.println(option);
-//        if (date == null || date.isEmpty()) {
-//            LocalDate currentDate = LocalDate.now().minusMonths(1);
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
-//            date = currentDate.format(formatter);
-//        }
-////        radioButton.setBy(option);
-//        ModelAndView modelAndView = new ModelAndView("admin/salary");
-//
-//        PaymentVo[] paymentList = this.adminService.selectWorkVo(date, option);
-//        modelAndView.addObject("paymentList",paymentList);
-//        return modelAndView;
-//    }
 
     @RequestMapping(value = "/salary", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getSalary(@RequestParam(value = "date", required = false) String date,
