@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Arrays;
 
 @Service
 public class WorkService {
@@ -25,6 +26,8 @@ public class WorkService {
     public WorkService(WorkMapper workMapper) {
         this.workMapper = workMapper;
     }
+
+
 
 
 
@@ -74,11 +77,15 @@ public class WorkService {
     }
 
 
-//    public int countNonMosaicImages(String date) {
-//
-//        return workMapper.mosaicImages(date);
-//    }
-
-
-
+    @Transactional
+    public Result<?> delete(int[] indexArray) {
+        try {
+            for(int index : indexArray){
+                this.workMapper.deleteIndex(index);
+            }
+        }catch (Exception e){
+            return CommonResult.FAILURE;
+        }
+        return CommonResult.SUCCESS;
+    }
 }

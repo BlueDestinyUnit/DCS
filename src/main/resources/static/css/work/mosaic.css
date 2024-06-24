@@ -109,6 +109,11 @@ body {
   justify-content: center;
   gap: 5rem;
 }
+#mainSection > .main-container > .box {
+  position: absolute;
+  left: 50px;
+  width: 250px;
+}
 #mainSection > .main-container > #main-mosaic {
   bottom: 50px;
   margin-top: 7rem;
@@ -179,6 +184,25 @@ body {
 #mainSection > .main-container > .list-container #photoAddButton > .photoAddButtonForm > .item > .button > .file {
   display: none;
 }
+#mainSection > .main-container > .list-container > .deletedButtonForm {
+  background-color: white;
+}
+#mainSection > .main-container > .list-container > .deletedButtonForm > .deleted {
+  background-color: white;
+  border: none;
+  padding: 0.375rem 1rem;
+  position: absolute;
+  right: 194px;
+  margin-top: -37px;
+}
+#mainSection > .main-container > .list-container > .deletedButtonForm > .deleted:hover {
+  background-color: #f9f9f9;
+  color: #353535;
+}
+#mainSection > .main-container > .list-container > .deletedButtonForm > .deleted:active {
+  background-color: #f2f2f2;
+  color: #292929;
+}
 #mainSection > .main-container > .list-container #workListAside {
   clear: both;
 }
@@ -188,8 +212,20 @@ body {
   position: absolute;
 }
 #mainSection > .main-container > .list-container #workListAside > .menuBox > .menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   list-style-type: none;
+  width: 300px;
   height: 587px;
+}
+#mainSection > .main-container > .list-container #workListAside > .menuBox > .menu-list > .item {
+  margin-left: -3px;
+  display: flex;
+  align-items: center;
+}
+#mainSection > .main-container > .list-container #workListAside > .menuBox > .menu-list > .item > .checkbox {
+  margin-right: 5px;
 }
 #mainSection > .bottom-container {
   text-align: center;

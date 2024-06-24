@@ -276,7 +276,7 @@ public class UserService {
         }
         return list;
     }
-
+  
     public Result<CommonResult> insertAttendance(UserEntity user){
         AttendanceEntity attendance = new AttendanceEntity();
         attendance.setUserEmail(user.getEmail());

@@ -16,9 +16,7 @@ public interface WorkMapper{
 
     int insertWork(WorkEntity workEntity);
 
-    int countNonMosaicImages(@Param("email") String email, @Param("date") String date);
-
-    int mosaicImages(@Param("date") String date);
+    int deleteIndex(@Param("index")int index);
 
 
     SubmitImageEntity selectSubmitImage(@Param("index")int index);
@@ -27,7 +25,11 @@ public interface WorkMapper{
 
     WorkEntity findWorkByDateAndUser(@Param("date") LocalDate date, @Param("userEmail") String userEmail);
 
-    SubmitImageEntity[] findSubmitImageByWorkIndex(@Param("index") int index);
+//    int countNonMosaicImages(@Param("email") String email, @Param("date") String date);
+//
+//    int mosaicImages(@Param("date") String date);
+//
+//    SubmitImageEntity[] findSubmitImageByWorkIndex(@Param("index") int index);
     int updateImage(SubmitImageEntity submitImageEntity);
 
 
