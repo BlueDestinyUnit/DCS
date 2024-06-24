@@ -169,4 +169,9 @@ public class UserController {
         jsonObject.put("list",dbList);
         return jsonObject.toString();
     }
+
+    @RequestMapping(value = "/myPage", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getMyPage(){
+        return new ModelAndView("user/myPage");
+    }
 }

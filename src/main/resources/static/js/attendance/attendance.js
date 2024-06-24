@@ -101,11 +101,9 @@ function eventsDataTest(data,current) {
 }
 
 
-
 function createCalendar() {
     var today = moment();
     events = [];
-
 
     function Calendar(selector, events) {
         this.el = document.querySelector(selector);

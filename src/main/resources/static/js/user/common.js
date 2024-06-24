@@ -160,5 +160,7 @@ HTMLTextAreaElement.prototype.tests = function () {
 }
 
 const moveLogin = () => {
+
     location.href = "./login";
+
 }
