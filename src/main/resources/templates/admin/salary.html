@@ -49,6 +49,7 @@
                 <tr>
                     <th class="fix" scope="col">이름</th>
                     <th class="fix" scope="col">정규직</th>
+                    <th class="fix" scope="col">보험</th>
                     <th class="fix" scope="col">작업일</th>
                     <th class="fix" scope="col">급여</th>
                 </tr>
@@ -58,6 +59,7 @@
                 <tr th:each="payment : ${paymentList}">
                     <td th:text="${payment.getUserName()}"></td>
                     <td th:text="${payment.getWorkType() == 'full' ? 'O' : 'X'}"></td>
+                    <td th:text="${payment.isInsurance() ? 'O' : 'X'}">보험</td>
                     <td th:text="${payment.getWorkDays()}"></td>
                     <td th:text="${payment.getPayment() + ' ₩'}" rel="payments"></td>
                 </tr>

@@ -70,7 +70,7 @@ public class AdminController {
         modelAndView.addObject("imageList", imageList);
         modelAndView.addObject("user", user.getName());
         modelAndView.addObject("date", date);
-        modelAndView.setViewName("admin/workList");
+        modelAndView.setViewName("admin/workList2");
         return modelAndView;
     }
 
