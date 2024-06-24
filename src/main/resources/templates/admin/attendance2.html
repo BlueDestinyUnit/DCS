@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <!-- 부트스트랩 및 jQuery JS 파일 포함 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ko.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/admin/attendance2.css}">
+    <script defer type="text/javascript" th:src="@{/js/admin/attendance2.js}"></script>
+</head>
+
+<body th:if="${Users.size() > 0}">
+<section layout:fragment="content">
+    <section id="demo">
+        <div class="board-container">
+            <div class="container mt-5">
+                <div class="spring"></div>
+                <div class="selectedDate">
+                    <h1 class="date-value" id="dateValue" th:data-date="${date}"  th:text="${#strings.substring(date, 0, 4)} + '년 ' + ${#strings.substring(date, 5, 7)} + '월 ' + ${#strings.substring(date, 8, 10)} + '일'"></h1>
+                </div>
+                <div class="form-group">
+                    <label class="text" for="datepicker">날짜 선택</label>
+                    <div class="input-group">
+                        <label class="label">
+                            <input type="text" class="form-control datepicker" id="datepicker" placeholder="YYYY/MM/DD">
+                            <button id="saveBtn" class="blue" rel="dateButton">선택</button>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <table id="table" class="table">
+                <caption class="a11y-hidden">Table Caption</caption>
+                <thead>
+                <tr>
+                    <th class="fix" scope="col" data-th="Name">이름</th>
+                    <th class="fix" scope="col" data-th="Email">출석 현황</th>
+                    <th class="fix" scope="col" data-th="Status">작업량</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="spacer"></tr> <!-- 간격을 위한 빈 행 -->
+                <tr class="user-list" th:each="user : ${Users}" th:data-email="${user.getEmail()}">
+                    <td class="td" th:text="${user.getName()}"></td>
+                    <td class="td" th:text="${user.isAttendance() ? 'O' : 'X'}"></td>
+                    <td class="td"><a class="link" th:if="${user.getCount() > 0}" th:href="@{/admin/workList(date=${date}, email=${user.getEmail()})}" th:text="${user.getCount()}"></a>
+                        <span th:unless="${user.getCount() > 0}" th:text="0"></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</section>
+</body>
+
+
+</html>

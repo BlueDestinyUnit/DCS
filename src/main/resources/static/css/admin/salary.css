@@ -1,8 +1,13 @@
 @charset "UTF-8";
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+body {
+  font-family: "Pretendard Variable", "Pretendard", -apple-system, "BlinkMacSystemFont", "system-ui", "Roboto", "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+
 #demo {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 8rem;
 }
 #demo .board-container {
   width: 90%;
@@ -14,24 +19,64 @@
   gap: 1rem;
 }
 
+th, td {
+  width: 25%; /* 각 셀의 너비를 25%로 설정 (4개의 열이 있다면 각 열은 동일한 너비를 가짐) */
+  border-bottom: 1px solid #dfdfdf; /* 테두리 설정 */
+  word-wrap: break-word; /* 긴 텍스트 줄 바꿈 설정 */
+  vertical-align: middle; /* 원하는 정렬 방식으로 설정 (middle, top, bottom 등) */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+#table {
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards; /* 페이드 인 애니메이션 적용 */
+}
+
 .table {
+  position: relative;
+  right: 1.5rem;
   text-align: center;
   width: 90%;
-  border-collapse: collapse;
+  border-collapse: separate;
   border-spacing: 0;
-  table-layout: auto;
+  table-layout: fixed;
 }
 .table thead {
-  border-bottom: 0.1rem solid #acacac;
+  font-size: 1.375rem;
 }
 .table thead > tr {
-  height: 2.5rem;
+  height: 2.75rem;
+}
+.table thead > tr > .fix {
+  border-bottom: 0.1235rem solid #797979 !important;
+  position: sticky;
+  top: 84px;
+  z-index: 1;
 }
 .table thead > tr > th {
   border: none;
 }
+.table > tbody {
+  font-size: 1.15rem;
+}
 .table > tbody > tr {
-  height: 3rem;
+  height: 4.5rem;
+}
+.table > tbody > tr > td {
+  transition: font-size 0.1s ease-in-out;
+}
+.table > tbody > tr:hover > td {
+  border-bottom: 1px solid rgba(170, 170, 170, 0.6549019608);
+}
+.table > tbody > tr:hover > td:first-child {
+  font-size: 1.4rem;
 }
 
 .spacer {
@@ -51,23 +96,44 @@
   margin-right: 1rem;
 }
 
-.btn.btn-primary {
-  width: 5rem;
+button.blue {
+  width: 7rem;
   height: 2.3rem;
+  color: white;
+  background: #4C8FFB;
+  border: 1px #3079ED solid;
+  border-radius: 0.3rem;
+  box-shadow: inset 0 1px 0 #80B0FB;
 }
 
-.form-group {
-  width: 3rem;
-  flex-grow: 1;
+button.blue:hover {
+  border: 1px #2F5BB7 solid;
+  box-shadow: 0 1px 1px #EAEAEA, inset 0 1px 0 #5A94F1;
+  background: #3F83F1;
+}
+
+button.blue:active {
+  box-shadow: inset 0 2px 5px #2370FE;
+}
+
+.container.mt-5 {
+  position: relative;
+  top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 2개의 컬럼을 동일한 비율로 설정 */
+  gap: 20px; /* 그리드 간격 설정 */
 }
 
 .selectedDate {
-  flex-grow: 1;
+  position: relative;
+  top: 1rem;
   text-align: center;
 }
 
-.spring {
-  flex-grow: 1;
+.form-group {
+  position: relative;
+  top: 6rem;
+  left: 5rem;
 }
 
 .mt-5 {
@@ -80,13 +146,15 @@
 
 /* datepicker z-index 설정 */
 .datepicker {
-  z-index: 1000 !important;
+  z-index: 3;
   background-color: #fff; /* 배경색을 하얀색으로 설정 */
   color: #000; /* 글자색을 검은색으로 설정 */
   border-color: #ccc; /* 테두리 색상 설정 */
 }
 
 .text {
+  position: relative;
+  left: 0.25rem;
   margin-bottom: 0.5rem;
 }
 
