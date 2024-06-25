@@ -3,6 +3,7 @@ package com.scd.dcs.services;
 import com.scd.dcs.domains.entities.AttendanceEntity;
 import com.scd.dcs.domains.entities.EmailAuthEntity;
 import com.scd.dcs.domains.entities.UserEntity;
+import com.scd.dcs.domains.vos.UserPaymentVo;
 import com.scd.dcs.domains.vos.UserProperty;
 import com.scd.dcs.mappers.AdminMapper;
 import com.scd.dcs.mappers.AttendanceMapper;
@@ -59,7 +60,7 @@ public class UserService {
     private final AttendanceMapper attendanceMapper;
 
     @Autowired
-    public UserService(UserMapper userMapper, JavaMailSender mailSender, SpringTemplateEngine templateEngine, AdminMapper adminMapper, AttendanceMapper attendanceMapper){
+    public UserService(UserMapper userMapper, JavaMailSender mailSender, SpringTemplateEngine templateEngine, AdminMapper adminMapper, AttendanceMapper attendanceMapper) {
         this.userMapper = userMapper;
         this.mailSender = mailSender;
         this.templateEngine = templateEngine;
@@ -88,28 +89,28 @@ public class UserService {
 
     @Transactional
     public Result<?> register(EmailAuthEntity emailAuth,
-                              UserEntity user){
-        if (user == null || !EmailAuthRegex.email.tests(emailAuth.getEmail()) || !EmailAuthRegex.code.tests(emailAuth.getCode()) || !EmailAuthRegex.salt.tests(emailAuth.getSalt()) || !UserRegex.email.tests(user.getEmail()) || !UserRegex.password.tests(user.getPassword()) || !UserRegex.nickname.tests(user.getNickname())){
+                              UserEntity user) {
+        if (user == null || !EmailAuthRegex.email.tests(emailAuth.getEmail()) || !EmailAuthRegex.code.tests(emailAuth.getCode()) || !EmailAuthRegex.salt.tests(emailAuth.getSalt()) || !UserRegex.email.tests(user.getEmail()) || !UserRegex.password.tests(user.getPassword()) || !UserRegex.nickname.tests(user.getNickname())) {
             return CommonResult.FAILURE;
         }
         EmailAuthEntity dbEmailAuth = this.userMapper.selectEmailAuthByEmailCodeSalt(
                 emailAuth.getEmail(),
                 emailAuth.getCode(),
                 emailAuth.getSalt());
-        if (dbEmailAuth == null || dbEmailAuth.isExpired() || !dbEmailAuth.isVerified() || dbEmailAuth.isUsed()){
+        if (dbEmailAuth == null || dbEmailAuth.isExpired() || !dbEmailAuth.isVerified() || dbEmailAuth.isUsed()) {
             System.out.println(dbEmailAuth);
             return CommonResult.FAILURE;
         }
-        if(this.userMapper.selectUserByEmail(user.getEmail()) != null){
+        if (this.userMapper.selectUserByEmail(user.getEmail()) != null) {
             return RegisterResult.FAILURE_DUPLICATE_EMAIL;
         }
-        if(this.userMapper.selectUserByName(user.getName()) != null){
+        if (this.userMapper.selectUserByName(user.getName()) != null) {
             return RegisterResult.FAILURE_DUPLICATE_NAME;
         }
-        if(this.userMapper.selectUserByNickname(user.getNickname()) != null) {
+        if (this.userMapper.selectUserByNickname(user.getNickname()) != null) {
             return RegisterResult.FAILURE_DUPLICATE_NICKNAME;
         }
-        if(this.userMapper.selectUserByTel(user.getTel()) != null){
+        if (this.userMapper.selectUserByTel(user.getTel()) != null) {
             return RegisterResult.FAILURE_DUPLICATE_TEL;
         }
         dbEmailAuth.setUsed(true);
@@ -121,12 +122,12 @@ public class UserService {
     }
 
 
-    public Result<?> findEmail(UserEntity findEmailUser){
+    public Result<?> findEmail(UserEntity findEmailUser) {
         UserEntity dbUser = this.userMapper.selectUserByNickname(findEmailUser.getNickname());
-        if(dbUser == null){
+        if (dbUser == null) {
             return CommonResult.FAILURE;
         }
-        if(!dbUser.getNickname().equals(findEmailUser.getNickname())){
+        if (!dbUser.getNickname().equals(findEmailUser.getNickname())) {
             return CommonResult.FAILURE;
         }
         findEmailUser.setEmail(dbUser.getEmail());
@@ -135,14 +136,14 @@ public class UserService {
 
     @Transactional
     public Result<?> sendRegisterEmail(EmailAuthEntity emailAuth) throws NoSuchAlgorithmException, MessagingException {
-        if(emailAuth == null || !EmailAuthRegex.email.tests(emailAuth.getEmail())){
+        if (emailAuth == null || !EmailAuthRegex.email.tests(emailAuth.getEmail())) {
             return CommonResult.FAILURE;
         }
-        if(this.userMapper.selectUserByEmail(emailAuth.getEmail()) != null){
+        if (this.userMapper.selectUserByEmail(emailAuth.getEmail()) != null) {
             return SendRegisterEmailResult.FAILURE_DUPLICATE_EMAIL;
         }
         prepareEmailAuth(emailAuth);
-        if(this.userMapper.insertEmailAuth(emailAuth) != 1){
+        if (this.userMapper.insertEmailAuth(emailAuth) != 1) {
             return CommonResult.FAILURE;
         }
         Context context = new Context();
@@ -156,18 +157,18 @@ public class UserService {
         return CommonResult.SUCCESS;
     }
 
-    public Result<?> verifyEmailAuth(EmailAuthEntity emailAuth){
-        if(emailAuth == null || !EmailAuthRegex.email.tests(emailAuth.getEmail()) || !EmailAuthRegex.code.tests(emailAuth.getCode()) || !EmailAuthRegex.salt.tests(emailAuth.getSalt())){
+    public Result<?> verifyEmailAuth(EmailAuthEntity emailAuth) {
+        if (emailAuth == null || !EmailAuthRegex.email.tests(emailAuth.getEmail()) || !EmailAuthRegex.code.tests(emailAuth.getCode()) || !EmailAuthRegex.salt.tests(emailAuth.getSalt())) {
             return CommonResult.FAILURE;
         }
         EmailAuthEntity dbEmailAuth = this.userMapper.selectEmailAuthByEmailCodeSalt(
                 emailAuth.getEmail(),
                 emailAuth.getCode(),
                 emailAuth.getSalt());
-        if(dbEmailAuth == null){
+        if (dbEmailAuth == null) {
             return CommonResult.FAILURE;
         }
-        if(dbEmailAuth.getExpiresAt().isBefore(LocalDateTime.now()) || dbEmailAuth.isExpired()|| dbEmailAuth.isVerified() || dbEmailAuth.isUsed()){
+        if (dbEmailAuth.getExpiresAt().isBefore(LocalDateTime.now()) || dbEmailAuth.isExpired() || dbEmailAuth.isVerified() || dbEmailAuth.isUsed()) {
             return VerifyResult.FAILURE_EXPIRED;
         }
         dbEmailAuth.setVerified(true);
@@ -177,15 +178,15 @@ public class UserService {
     }
 
     @Transactional
-    public Result<?> sendResetPasswordEmail(EmailAuthEntity emailAuth) throws NoSuchAlgorithmException, MessagingException{
-        if(emailAuth == null || !EmailAuthRegex.email.tests(emailAuth.getEmail())){
+    public Result<?> sendResetPasswordEmail(EmailAuthEntity emailAuth) throws NoSuchAlgorithmException, MessagingException {
+        if (emailAuth == null || !EmailAuthRegex.email.tests(emailAuth.getEmail())) {
             return CommonResult.FAILURE;
         }
-        if(this.userMapper.selectUserByEmail(emailAuth.getEmail()) == null){
+        if (this.userMapper.selectUserByEmail(emailAuth.getEmail()) == null) {
             return CommonResult.FAILURE;
         }
         prepareEmailAuth(emailAuth);
-        if(this.userMapper.insertEmailAuth(emailAuth) != 1){
+        if (this.userMapper.insertEmailAuth(emailAuth) != 1) {
             return CommonResult.FAILURE;
         }
         Context context = new Context();
@@ -201,14 +202,14 @@ public class UserService {
 
     @Transactional
     public Result<?> resetPassword(EmailAuthEntity emailAuth,
-                                UserEntity user){
+                                   UserEntity user) {
         System.out.println(emailAuth);
         System.out.println(user);
-        if(emailAuth == null || user == null ||
+        if (emailAuth == null || user == null ||
                 !EmailAuthRegex.email.tests(emailAuth.getEmail()) ||
                 !EmailAuthRegex.code.tests(emailAuth.getCode()) ||
                 !EmailAuthRegex.salt.tests(emailAuth.getSalt()) ||
-                !UserRegex.password.tests(user.getPassword())){
+                !UserRegex.password.tests(user.getPassword())) {
             System.out.println(1);
             return CommonResult.FAILURE;
         }
@@ -216,12 +217,12 @@ public class UserService {
                 emailAuth.getEmail(),
                 emailAuth.getCode(),
                 emailAuth.getSalt());
-        if(dbEmailAuth == null || !dbEmailAuth.isVerified() || dbEmailAuth.isUsed()){
+        if (dbEmailAuth == null || !dbEmailAuth.isVerified() || dbEmailAuth.isUsed()) {
             System.out.println(2);
             return CommonResult.FAILURE;
         }
         UserEntity dbUser = this.userMapper.selectUserByEmail(emailAuth.getEmail());
-        if(dbUser == null){ // 필요 시 isDeleted 구문에 해당하는 엔티티 + 항목 만들기
+        if (dbUser == null) { // 필요 시 isDeleted 구문에 해당하는 엔티티 + 항목 만들기
             System.out.println(3);
             return CommonResult.FAILURE;
         }
@@ -233,13 +234,13 @@ public class UserService {
         return CommonResult.SUCCESS;
     }
 
-    public Result<?> recoverEmail(UserEntity user){
-        if(user == null ||
+    public Result<?> recoverEmail(UserEntity user) {
+        if (user == null ||
                 !UserRegex.nickname.tests(user.getNickname())) {
             return CommonResult.FAILURE;
         }
         UserEntity dbUser = this.userMapper.selectUserByNickname(user.getNickname());
-        if(dbUser == null){ // 필요 시 isDeleted 구문에 해당하는 엔티티 + 항목 만들기
+        if (dbUser == null) { // 필요 시 isDeleted 구문에 해당하는 엔티티 + 항목 만들기
             return CommonResult.FAILURE;
         }
         user.setEmail(dbUser.getEmail());
@@ -247,37 +248,37 @@ public class UserService {
     }
 
     public List<UserProperty> getAttendance(String email,
-                                   String date){
+                                            String date) {
         System.out.println(email);
         List<UserProperty> list = new ArrayList<>();
 
-        String fDate = date.substring(0,7);
-        String endDate  = date.split("-")[2];
+        String fDate = date.substring(0, 7);
+        String endDate = date.split("-")[2];
         String currentDate = null;
         String firstDate = null;
         String secondDate = null;
         for (int i = 1; i < Integer.parseInt(endDate); i++) {
-            if (i <10){
-                currentDate = String.format(fDate + "-0"+"%d",i);
-            }else{
-                currentDate = String.format(fDate + "-"+"%d",i);
+            if (i < 10) {
+                currentDate = String.format(fDate + "-0" + "%d", i);
+            } else {
+                currentDate = String.format(fDate + "-" + "%d", i);
             }
             firstDate = currentDate + " 00:00:00";
             secondDate = currentDate + " 23:59:59";
 
             UserProperty dbUserProperty = adminMapper.selectUserProperty(email, currentDate, firstDate, secondDate);
-            if(dbUserProperty == null){
+            if (dbUserProperty == null) {
                 continue;
             }
-            if(dbUserProperty.isAttendance() == true){
+            if (dbUserProperty.isAttendance() == true) {
                 dbUserProperty.setDate(currentDate);
                 list.add(dbUserProperty);
             }
         }
         return list;
     }
-  
-    public Result<CommonResult> insertAttendance(UserEntity user){
+
+    public Result<CommonResult> insertAttendance(UserEntity user) {
         AttendanceEntity attendance = new AttendanceEntity();
         attendance.setUserEmail(user.getEmail());
         attendance.setCheckIn(LocalDateTime.now());
@@ -287,11 +288,22 @@ public class UserService {
     }
 
 
-    public AttendanceEntity selectAttendance(String email){
+    public AttendanceEntity selectAttendance(String email) {
         String currentDate = LocalDate.now().toString();
         String firstTime = currentDate + " 00:00:00";
         String endTime = currentDate + " 23:59:59";
         return this.attendanceMapper.selectAttendanceByDates(email, firstTime, endTime);
+    }
+
+    public UserPaymentVo[] selectUserPayment(String email, String date) {
+        String currentDate;
+        UserPaymentVo[] userPayment = new UserPaymentVo[12];
+        ;
+        for (int i = 1; i <= 12; i++) {
+            currentDate = date + '-' + String.format("%02d", i);
+            userPayment[i - 1] = this.userMapper.selectUserPayment(email, currentDate);
+        }
+        return userPayment;
     }
 
 }

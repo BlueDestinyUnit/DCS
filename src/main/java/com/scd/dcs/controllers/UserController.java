@@ -4,6 +4,7 @@ import com.scd.dcs.config.security.domains.SecurityUser;
 import com.scd.dcs.domains.entities.EmailAuthEntity;
 import com.scd.dcs.domains.entities.UserEntity;
 import com.scd.dcs.domains.vos.PaymentVo;
+import com.scd.dcs.domains.vos.UserPaymentVo;
 import com.scd.dcs.domains.vos.UserProperty;
 import com.scd.dcs.results.CommonResult;
 import com.scd.dcs.results.Result;
@@ -31,20 +32,20 @@ public class UserController {
     private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET,produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getLogin(){
+    @RequestMapping(value = "/login", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getLogin() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/login");
         return modelAndView;
     }
 
 
-    @RequestMapping(value = "register", method= RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getRegister(){
+    @RequestMapping(value = "register", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getRegister() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/register");
         return modelAndView;
@@ -53,7 +54,7 @@ public class UserController {
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String postRegister(EmailAuthEntity emailAuth,
-            UserEntity user){
+                               UserEntity user) {
         System.out.println(1);
         Result<?> result = this.userService.register(emailAuth, user);
         JSONObject responseObject = new JSONObject();
@@ -63,7 +64,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/findEmail", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getFindEmail(){
+    public ModelAndView getFindEmail() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/findEmail");
         return modelAndView;
@@ -71,11 +72,11 @@ public class UserController {
 
     @RequestMapping(value = "/findEmail", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String postFindEmail(UserEntity findEmailUser){
+    public String postFindEmail(UserEntity findEmailUser) {
         Result<?> result = this.userService.findEmail(findEmailUser);
         JSONObject responseObject = new JSONObject();
         responseObject.put("result", result.name().toLowerCase());
-        if(result == CommonResult.SUCCESS){
+        if (result == CommonResult.SUCCESS) {
             responseObject.put("email", findEmailUser.getEmail());
         }
         return responseObject.toString();
@@ -83,7 +84,7 @@ public class UserController {
 
     @RequestMapping(value = "/registerEmail", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String patchRegisterEmail(EmailAuthEntity emailAuth){
+    public String patchRegisterEmail(EmailAuthEntity emailAuth) {
         Result<?> result = this.userService.verifyEmailAuth(emailAuth);
         JSONObject responseObject = new JSONObject();
         responseObject.put("result", result.name().toLowerCase());
@@ -96,21 +97,21 @@ public class UserController {
         Result<?> result = this.userService.sendRegisterEmail(emailAuth);
         JSONObject responseObject = new JSONObject();
         responseObject.put("result", result.name().toLowerCase());
-        if(result == CommonResult.SUCCESS){
+        if (result == CommonResult.SUCCESS) {
             responseObject.put("salt", emailAuth.getSalt());
         }
         return responseObject.toString();
     }
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getResetPassword(){
+    public ModelAndView getResetPassword() {
         return new ModelAndView("user/resetPassword");
     }
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String postResetPassword(EmailAuthEntity emailAuth,
-                                      UserEntity user){
+                                    UserEntity user) {
         System.out.println(user);
         Result<?> result = this.userService.resetPassword(emailAuth, user);
         JSONObject responseObject = new JSONObject();
@@ -120,7 +121,7 @@ public class UserController {
 
     @RequestMapping(value = "/resetPasswordEmail", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String patchResetPasswordEmail(EmailAuthEntity emailAuth){
+    public String patchResetPasswordEmail(EmailAuthEntity emailAuth) {
         Result<?> result = this.userService.verifyEmailAuth(emailAuth);
         JSONObject responseObject = new JSONObject();
         responseObject.put("result", result.name().toLowerCase());
@@ -133,7 +134,7 @@ public class UserController {
         Result<?> result = this.userService.sendResetPasswordEmail(emailAuth);
         JSONObject responseObject = new JSONObject();
         responseObject.put("result", result.name().toLowerCase());
-        if(result == CommonResult.SUCCESS){
+        if (result == CommonResult.SUCCESS) {
             responseObject.put("salt", emailAuth.getSalt());
         }
         return responseObject.toString();
@@ -141,25 +142,25 @@ public class UserController {
 
     @RequestMapping(value = "/email", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String getEmail(UserEntity user){
+    public String getEmail(UserEntity user) {
         Result<?> result = this.userService.recoverEmail(user);
         JSONObject responseObject = new JSONObject();
         responseObject.put("result", result.name().toLowerCase());
-        if(result == CommonResult.SUCCESS){
+        if (result == CommonResult.SUCCESS) {
             responseObject.put("email", user.getEmail());
         }
         return responseObject.toString();
     }
 
     @RequestMapping(value = "/attendance", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getAttendance(){
+    public ModelAndView getAttendance() {
         return new ModelAndView("user/attendance");
     }
 
     @RequestMapping(value = "/attendance", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String getCalendar(Authentication authentication, String endDate){
-        if(authentication == null) {
+    public String getCalendar(Authentication authentication, String endDate) {
+        if (authentication == null) {
             return "null";
         }
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
@@ -169,23 +170,30 @@ public class UserController {
         System.out.println(dbList);
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("list",dbList);
+        jsonObject.put("list", dbList);
         return jsonObject.toString();
     }
 
     @RequestMapping(value = "/myPage", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getMyPage(){
+    public ModelAndView getMyPage() {
         return new ModelAndView("user/myPage");
     }
 
     @RequestMapping(value = "/salary", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getSalary(@RequestParam(value = "date", required = false) String date) {
+    public ModelAndView getSalary(@RequestParam(value = "date", required = false) String date, Authentication authentication) {
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
+
+        System.out.println(user.getEmail());
         if (date == null || date.isEmpty()) {
             LocalDate currentDate = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
             date = currentDate.format(formatter);
         }
+        UserPaymentVo[] paymentList = this.userService.selectUserPayment(user.getEmail(), date);
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("selectDate", date);
+        modelAndView.addObject("paymentList", paymentList);
         modelAndView.setViewName("user/salary");
         return modelAndView;
     }
