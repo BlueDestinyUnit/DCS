@@ -13,9 +13,10 @@
 }
 
 .board-container {
-  margin-left: 464px;
   width: 500px;
   text-align: center;
+  margin: auto;
+  transform: translate(-17%);
 
   > .form-group {
     > .text-center {
