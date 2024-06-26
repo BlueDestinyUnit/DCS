@@ -8,6 +8,7 @@ import com.scd.dcs.domains.vos.UserPaymentVo;
 import com.scd.dcs.domains.vos.UserProperty;
 import com.scd.dcs.results.CommonResult;
 import com.scd.dcs.results.Result;
+import com.scd.dcs.services.AdminService;
 import com.scd.dcs.services.UserService;
 import jakarta.mail.MessagingException;
 import org.json.JSONObject;
@@ -30,10 +31,12 @@ import java.util.List;
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
+    private final AdminService adminService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AdminService adminService) {
         this.userService = userService;
+        this.adminService = adminService;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
@@ -192,6 +195,7 @@ public class UserController {
         }
         UserPaymentVo[] paymentList = this.userService.selectUserPayment(user.getEmail(), date);
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", this.adminService.selectUser(user.getEmail()));
         modelAndView.addObject("selectDate", date);
         modelAndView.addObject("paymentList", paymentList);
         modelAndView.setViewName("user/salary");

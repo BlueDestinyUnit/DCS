@@ -11,7 +11,7 @@
                `user`.`tel`                         AS `tel`,
                `user`.`address`                     AS `address`,
                `user`.`role`                        AS `role`,
-               `user`.`is_state`                    AS `isState`,
+               `user`.`work_type`                    AS `workType`,
                `user`.`is_insurance`                AS `isInsurance`,
                IF(
                        (SELECT COUNT(*)

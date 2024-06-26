@@ -9,8 +9,8 @@
     </insert>
 
     <insert id="insertUser" parameterType="UserEntity">
-        INSERT INTO `dcs`.`user`(`email`, `password`, `name`, `nickname`, `tel`, `address`, `role`, `is_state`, `is_insurance`)
-        VALUES (#{email},  #{password}, #{name}, #{nickname}, #{tel}, #{address}, #{role}, #{isState}, #{isInsurance})
+        INSERT INTO `dcs`.`user`(`email`, `password`, `name`, `nickname`, `tel`, `address`, `role`, `work_type`, `is_insurance`)
+        VALUES (#{email},  #{password}, #{name}, #{nickname}, #{tel}, #{address}, #{role}, #{workType}, #{isInsurance})
     </insert>
 
     <select id="selectUsers" resultType="UserEntity">
@@ -21,7 +21,7 @@
                `tel`          AS `tel`,
                `address`      AS `address`,
                `role`         AS `role`,
-               `is_state`     AS `isState`,
+               `work_type`     AS `workType`,
                `is_insurance` AS `isInsurance`
         FROM `dcs`.`user`
         WHERE BINARY `user`.`role` = 'USER'
@@ -35,7 +35,7 @@
                `tel`          AS `tel`,
                `address`      AS `address`,
                `role`         AS `role`,
-               `is_state`     AS `isState`,
+               `work_type`     AS `workType`,
                `is_insurance` AS `isInsurance`
         FROM `dcs`.`user`
         WHERE BINARY `email` = #{email}
@@ -50,7 +50,7 @@
                `tel`          AS `tel`,
                `address`      AS `address`,
                `role`         AS `role`,
-               `is_state`     AS `isState`,
+               `work_type`     AS `workType`,
                `is_insurance` AS `isInsurance`
         FROM `dcs`.`user`
         WHERE BINARY `name` = #{name}
@@ -65,7 +65,7 @@
                `tel`          AS `tel`,
                `address`      AS `address`,
                `role`         AS `role`,
-               `is_state`     AS `isState`,
+               `work_type`     AS `workType`,
                `is_insurance` AS `isInsurance`
         FROM `dcs`.`user`
         WHERE BINARY `nickname` = #{nickname}
@@ -80,7 +80,7 @@
                `tel`          AS `tel`,
                `address`      AS `address`,
                `role`         AS `role`,
-               `is_state`     AS `isState`,
+               `work_type`     AS `workType`,
                `is_insurance` AS `isInsurance`
         FROM `dcs`.`user`
         WHERE BINARY `tel` = #{tel}
@@ -111,7 +111,6 @@
                `tel`                                                 AS `tel`,
                `address`                                             AS `address`,
                `role`                                                AS `role`,
-               `is_state`                                            AS `isState`,
                `is_insurance`                                        AS `isInsurance`,
                `work_type`                                           AS `workType`,
                COUNT(1)                                              AS `workDays`,
@@ -150,7 +149,7 @@
             `tel`          = #{tel},
             `address`      = #{address},
             `role`         = #{role},
-            `is_state`     = #{isState},
+            `work_type`     = #{workType},
             `is_insurance` = #{isInsurance}
         WHERE BINARY `email` = #{email}
         LIMIT 1

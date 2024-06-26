@@ -23,7 +23,7 @@
             <div class="container mt-5">
                 <div class="spring"></div>
                 <div class="selectedDate">
-                    <h1 th:text="${selectDate} + ' 년'"></h1>
+                    <h1 th:text="${selectDate} + '년'"></h1>
                 </div>
                 <div class="form-group">
                     <label class="text" for="datepicker">날짜 선택</label>
@@ -34,6 +34,11 @@
                             <button class="blue" rel="dateButton">선택</button>
                         </label>
                     </div>
+                </div>
+                <div class="workType">
+                    <h6 class="text" th:text="'보험: ' + ${user.isInsurance() ? '가입' : '미가입'}"></h6>
+                    <h6 class="text" th:text="'구분: ' + ${user.getWorkType() == 'part' ? '비정규직' : '정규직'}"></h6>
+                    <img  alt="" class="image" th:src="@{/assets/images/iButton.png}">
                 </div>
             </div>
         </div>
@@ -52,7 +57,7 @@
                 <tbody>
                 <tr class="spacer"></tr> <!-- 간격을 위한 빈 행 -->
                 <tr th:each="payment, iterStat : ${paymentList}">
-                    <td th:text="${iterStat.index + 1} + '월'"></td>
+                    <td class="first-td" th:text="${iterStat.index + 1} + '월'"></td>
                     <td th:text="${payment.getWorkDays()}" class="workDays"></td>
                     <td th:text="${payment.getWorkCount()}" class="workCount">보험</td>
                     <td th:text="${payment.getPayment()}" class="payment" rel="payments"></td>
@@ -67,9 +72,7 @@
                 </tbody>
             </table>
         </div>
-
     </form>
-
 </section>
 </body>
 </html>
