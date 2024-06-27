@@ -7,7 +7,7 @@ body {
 #demo {
   display: flex;
   flex-direction: column;
-  gap: 8rem;
+  gap: 10rem;
 }
 #demo .board-container {
   width: 90%;
@@ -118,10 +118,22 @@ button.blue:active {
 
 .container.mt-5 {
   position: relative;
-  top: 1rem;
+  top: 4rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 2개의 컬럼을 동일한 비율로 설정 */
   gap: 20px; /* 그리드 간격 설정 */
+}
+.container.mt-5 .workType {
+  font-weight: 500;
+  width: 120%;
+  position: relative;
+  top: 6rem;
+  left: 2rem;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: row;
+  gap: 2rem;
 }
 
 .selectedDate {
@@ -134,6 +146,11 @@ button.blue:active {
   position: relative;
   top: 6rem;
   left: 5rem;
+}
+.form-group .text {
+  position: relative;
+  left: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
 .mt-5 {
@@ -150,12 +167,6 @@ button.blue:active {
   background-color: #fff; /* 배경색을 하얀색으로 설정 */
   color: #000; /* 글자색을 검은색으로 설정 */
   border-color: #ccc; /* 테두리 색상 설정 */
-}
-
-.text {
-  position: relative;
-  left: 0.25rem;
-  margin-bottom: 0.5rem;
 }
 
 .datepicker-dropdown {

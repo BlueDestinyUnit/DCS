@@ -52,6 +52,16 @@ menuList.forEach(item => {
         //         location.href = '../board/list'
         //     })
         //     break;
+        case 'chat':
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                if(admin === 'true'){
+                    location.href = `/chat/list`
+                }else {
+                    location.href = `/chat/list`
+                }
+            })
+            break;
         default:
             console.log('알 수 없는 메뉴입니다.');
 

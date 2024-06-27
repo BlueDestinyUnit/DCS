@@ -150,24 +150,78 @@ button.blue:active {
 }
 
 .workType {
+  font-weight: 550;
   position: relative;
   top: 6.25rem;
   left: 3rem;
   display: flex;
-  align-items: end;
+  align-items: center;
   flex-direction: row;
   justify-content: start;
-  gap: 1.25rem;
+  gap: 2rem;
+  /* info container */
+  /* info text */
+  /* info arrow */
+  /* Show the info text when you mouse over the info container */
 }
 .workType > .text {
   font-size: 1.1rem;
 }
-.workType > .image {
+.workType .info-container {
   position: relative;
-  bottom: 0.45rem;
+  top: 0.1rem;
+  right: 0.7rem;
+  display: inline-block;
+}
+.workType .info-container > .image {
+  position: relative;
+  cursor: pointer;
+  bottom: 0.5rem;
   right: 0.45rem;
   width: 1.4rem;
   height: 1.4rem;
+}
+.workType .info-container .info-text {
+  visibility: hidden;
+  width: 18rem;
+  height: 4.25rem;
+  background-color: #ffffff;
+  color: #000000;
+  border: #39576C solid 0.12rem;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: -93px; /* Position the info below the image */
+  left: -480%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.workType .info-container .info-text > .info-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* Center text horizontally */
+}
+.workType .info-container .info-text > .info-text > .text {
+  position: relative;
+  height: 50%;
+}
+.workType .info-container .info-text::after {
+  content: "";
+  position: absolute;
+  top: -14px; /* Position the arrow at the bottom of the info */
+  left: 89%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #39576C transparent;
+}
+.workType .info-container:hover .info-text {
+  visibility: visible;
+  opacity: 1;
 }
 
 /* datepicker z-index 설정 */
