@@ -147,6 +147,8 @@ input {
   background-color: #515151;
 }
 #asideFrame > .menu {
+  position: relative;
+  top: 3.5rem;
   align-items: stretch;
   display: flex;
   flex-direction: column;
@@ -161,6 +163,7 @@ input {
   display: none;
 }
 #asideFrame > .menu > .item > .link {
+  position: relative;
   border-radius: 200px;
   width: 11.75rem;
   height: 2rem;
@@ -169,7 +172,7 @@ input {
   font-size: 1.175rem;
   text-decoration: none;
   user-select: none;
-  padding: 1.5rem 0.5rem;
+  padding: 1.7rem 0.5rem;
   margin-left: 0.475rem;
   align-items: center;
   display: flex;

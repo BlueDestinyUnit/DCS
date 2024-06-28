@@ -9,6 +9,10 @@ body {
  * 데모
  * -----------------------------
  */
+#main {
+  height: auto;
+}
+
 #demo {
   display: flex;
   flex-direction: column;
