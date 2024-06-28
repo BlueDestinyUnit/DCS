@@ -2,7 +2,6 @@ package com.scd.dcs.controllers;
 
 import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.UserEntity;
-import com.scd.dcs.domains.vos.PaymentRadioButtonVo;
 import com.scd.dcs.domains.vos.UserProperty;
 import com.scd.dcs.domains.vos.WorkListRequest;
 import com.scd.dcs.domains.vos.PaymentVo;
@@ -19,10 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 @Controller

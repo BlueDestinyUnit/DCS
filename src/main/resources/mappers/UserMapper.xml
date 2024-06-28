@@ -9,8 +9,8 @@
     </insert>
 
     <insert id="insertUser" parameterType="UserEntity">
-        INSERT INTO `dcs`.`user`(`email`, `password`, `name`, `nickname`, `tel`, `address`, `role`, `is_state`, `is_insurance`)
-        VALUES (#{email},  #{password}, #{name}, #{nickname}, #{tel}, #{address}, #{role}, #{isState}, #{isInsurance})
+        INSERT INTO `dcs`.`user`(`email`, `password`, `name`, `nickname`, `tel`, `address`, `role`, `work_type`, `is_insurance`)
+        VALUES (#{email},  #{password}, #{name}, #{nickname}, #{tel}, #{address}, #{role}, #{workType}, #{isInsurance})
     </insert>
 
     <select id="selectUsers" resultType="UserEntity">
@@ -21,7 +21,7 @@
                `tel`          AS `tel`,
                `address`      AS `address`,
                `role`         AS `role`,
-               `is_state`     AS `isState`,
+               `work_type`     AS `workType`,
                `is_insurance` AS `isInsurance`
         FROM `dcs`.`user`
         WHERE BINARY `user`.`role` = 'USER'
@@ -35,7 +35,7 @@
                `tel`          AS `tel`,
                `address`      AS `address`,
                `role`         AS `role`,
-               `is_state`     AS `isState`,
+               `work_type`     AS `workType`,
                `is_insurance` AS `isInsurance`
         FROM `dcs`.`user`
         WHERE BINARY `email` = #{email}
@@ -50,7 +50,7 @@
                `tel`          AS `tel`,
                `address`      AS `address`,
                `role`         AS `role`,
-               `is_state`     AS `isState`,
+               `work_type`     AS `workType`,
                `is_insurance` AS `isInsurance`
         FROM `dcs`.`user`
         WHERE BINARY `name` = #{name}
@@ -65,7 +65,7 @@
                `tel`          AS `tel`,
                `address`      AS `address`,
                `role`         AS `role`,
-               `is_state`     AS `isState`,
+               `work_type`     AS `workType`,
                `is_insurance` AS `isInsurance`
         FROM `dcs`.`user`
         WHERE BINARY `nickname` = #{nickname}
@@ -80,7 +80,7 @@
                `tel`          AS `tel`,
                `address`      AS `address`,
                `role`         AS `role`,
-               `is_state`     AS `isState`,
+               `work_type`     AS `workType`,
                `is_insurance` AS `isInsurance`
         FROM `dcs`.`user`
         WHERE BINARY `tel` = #{tel}
@@ -101,6 +101,31 @@
           AND BINARY `code` = #{code}
           AND BINARY `salt` = #{salt}
         LIMIT 1
+    </select>
+    
+    <select id="selectUserPayment" resultType="UserPaymentVo">
+        SELECT `email`                                               AS `email`,
+               `password`                                            AS `password`,
+               `name`                                                AS `name`,
+               `nickname`                                            AS `nickname`,
+               `tel`                                                 AS `tel`,
+               `address`                                             AS `address`,
+               `role`                                                AS `role`,
+               `is_insurance`                                        AS `isInsurance`,
+               `work_type`                                           AS `workType`,
+               COUNT(1)                                              AS `workDays`,
+               (COUNT(1) * `p`.`price`)                              AS `payment`,
+               (SELECT COUNT(*)
+                FROM `dcs`.`submit_images` AS `images`
+                         LEFT JOIN `dcs`.`work` AS `work` on `work`.`index` = `images`.`work_index`
+                WHERE `user_email` = #{email}
+                  AND DATE_FORMAT(`work`.`date`, '%Y-%m') = #{date}) AS `workCount`
+        FROM `dcs`.`user`
+                 LEFT JOIN `dcs`.`work` w ON `user`.email = w.user_email
+                 LEFT JOIN dcs.payment p on `user`.work_type = p.uwork_type
+        WHERE BINARY DATE_FORMAT(`w`.`date`, '%Y-%m') = #{date}
+          AND BINARY `email` = #{email}
+          AND BINARY `user`.`role` = 'USER'
     </select>
 
     <update id="updateEmailAuth" parameterType="EmailAuthEntity">
@@ -124,7 +149,7 @@
             `tel`          = #{tel},
             `address`      = #{address},
             `role`         = #{role},
-            `is_state`     = #{isState},
+            `work_type`     = #{workType},
             `is_insurance` = #{isInsurance}
         WHERE BINARY `email` = #{email}
         LIMIT 1

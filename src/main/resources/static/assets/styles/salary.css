@@ -1,13 +1,12 @@
 @charset "UTF-8";
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
-body {
-  font-family: "Pretendard Variable", "Pretendard", -apple-system, "BlinkMacSystemFont", "system-ui", "Roboto", "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+#main {
+  height: auto;
 }
 
 #demo {
   display: flex;
   flex-direction: column;
-  gap: 10rem;
+  gap: 8rem;
 }
 #demo .board-container {
   width: 90%;
@@ -78,6 +77,16 @@ th, td {
 .table > tbody > tr:hover > td:first-child {
   font-size: 1.4rem;
 }
+.table > tbody .totalRow > td {
+  padding: 1.5rem 0;
+  background-color: rgb(226, 239, 218);
+  font-size: 1.325rem !important;
+  border: none;
+}
+.table > tbody .totalRow:hover > td {
+  font-size: 1.325rem !important;
+  border: none;
+}
 
 .spacer {
   height: 2.5rem !important; /* 간격 설정 */
@@ -90,10 +99,6 @@ th, td {
   flex-direction: row;
   gap: 0.325rem;
   justify-content: center;
-}
-
-.gap {
-  margin-right: 1rem;
 }
 
 button.blue {
@@ -118,22 +123,10 @@ button.blue:active {
 
 .container.mt-5 {
   position: relative;
-  top: 4rem;
+  top: 1rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 2개의 컬럼을 동일한 비율로 설정 */
   gap: 20px; /* 그리드 간격 설정 */
-}
-.container.mt-5 .workType {
-  font-weight: 500;
-  width: 120%;
-  position: relative;
-  top: 6rem;
-  left: 2rem;
-  display: flex;
-  align-items: start;
-  justify-content: center;
-  flex-direction: row;
-  gap: 2rem;
 }
 
 .selectedDate {
@@ -147,11 +140,6 @@ button.blue:active {
   top: 6rem;
   left: 5rem;
 }
-.form-group .text {
-  position: relative;
-  left: 0.25rem;
-  margin-bottom: 0.5rem;
-}
 
 .mt-5 {
   display: flex;
@@ -161,12 +149,94 @@ button.blue:active {
   margin-top: -0.5rem !important;
 }
 
+.workType {
+  font-weight: 550;
+  position: relative;
+  top: 6.25rem;
+  left: 3rem;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: start;
+  gap: 2rem;
+  /* info container */
+  /* info text */
+  /* info arrow */
+  /* Show the info text when you mouse over the info container */
+}
+.workType > .text {
+  font-size: 1.1rem;
+}
+.workType .info-container {
+  position: relative;
+  top: 0.1rem;
+  right: 0.7rem;
+  display: inline-block;
+}
+.workType .info-container > .image {
+  position: relative;
+  cursor: pointer;
+  bottom: 0.5rem;
+  right: 0.45rem;
+  width: 1.4rem;
+  height: 1.4rem;
+}
+.workType .info-container .info-text {
+  visibility: hidden;
+  width: 18rem;
+  height: 4.25rem;
+  background-color: #ffffff;
+  color: #000000;
+  border: #39576C solid 0.12rem;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: -93px; /* Position the info below the image */
+  left: -480%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.workType .info-container .info-text > .info-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* Center text horizontally */
+}
+.workType .info-container .info-text > .info-text > .text {
+  position: relative;
+  height: 50%;
+}
+.workType .info-container .info-text::after {
+  content: "";
+  position: absolute;
+  top: -14px; /* Position the arrow at the bottom of the info */
+  left: 89%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #39576C transparent;
+}
+.workType .info-container:hover .info-text {
+  visibility: visible;
+  opacity: 1;
+}
+
 /* datepicker z-index 설정 */
 .datepicker {
+  width: 60%;
   z-index: 3;
   background-color: #fff; /* 배경색을 하얀색으로 설정 */
   color: #000; /* 글자색을 검은색으로 설정 */
   border-color: #ccc; /* 테두리 색상 설정 */
+}
+
+.text {
+  position: relative;
+  left: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
 .datepicker-dropdown {
