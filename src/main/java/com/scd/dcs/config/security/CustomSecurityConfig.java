@@ -89,6 +89,7 @@ public class CustomSecurityConfig {
                         .requestMatchers("/assets/**").permitAll()
                         .requestMatchers("/libraries/**").permitAll()
                         .requestMatchers("/delete").permitAll()
+                        .requestMatchers("/chat/*").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

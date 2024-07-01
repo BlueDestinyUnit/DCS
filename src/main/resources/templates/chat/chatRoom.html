@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/chat/chatRoom.css}">
+    <script defer th:src="@{/js/chat/chatRoom.js}"></script>
+    <script defer th:inline="javascript">
+        let userName = [[${user.getEmail()}]];
+        let roomIndex = [[${index}]];
+    </script>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div id="container" class="container">
+        <h1 th:text="${chatRoom.getRoomName()}">SDevLog Chat</h1>
+        <input type="hidden" id="sessionId" value="">
+
+        <div id="chating" class="chating">
+        </div>
+
+        <div id="yourName">
+            <table class="inputTable">
+                <tr>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           <th>닉네임</th>
+                    <th><input type="text" name="userName" id="userName"></th>
+                    <th><button onclick="chatName()" id="startBtn">채팅 참가</button></th>
+                </tr>
+            </table>
+        </div>
+        <div id="yourMsg">
+                <label for="chatting" class="visually">
+                    <input type="text" class="form-control" id="chatting" placeholder="보내실 메시지를 입력하세요.">
+                </label>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary mb-3" onclick="send()" id="sendBtn">보내기</button>
+                </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

@@ -75,3 +75,26 @@ CREATE TABLE `payment`
     `work_type` VARCHAR(20) PRIMARY KEY ,
     `price` DOUBLE UNSIGNED NOT NULL
 );
+
+CREATE TABLE chat_room
+(
+    `index`      INT AUTO_INCREMENT PRIMARY KEY,
+    `room_name`  VARCHAR(255) NOT NULL,
+    `is_secret`  TINYINT               DEFAULT FALSE,
+    `creator` VARCHAR(50) NOT NULL,
+    `created_at` DATETIME     NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (`creator`) REFERENCES `user` (`email`) ON DELETE CASCADE ON UPDATE CASCADE
+
+);
+
+
+CREATE TABLE chat_message
+(
+    `index`           INT AUTO_INCREMENT PRIMARY KEY,
+    `chat_room_index` INT         NOT NULL,
+    `sender`          VARCHAR(50) NOT NULL,
+    `message`         TEXT        NOT NULL,
+    `created_at`      DATETIME    NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (`chat_room_index`) REFERENCES `chat_room` (`index`) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (`sender`) REFERENCES `user` (`email`) ON DELETE CASCADE ON UPDATE CASCADE
+);

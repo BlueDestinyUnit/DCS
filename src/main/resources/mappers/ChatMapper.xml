@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scd.dcs.mappers.ChatMapper">
+    <insert id="insertMessage"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="ChatMessage">
+        INSERT INTO `dcs`.`chat_message` (`chat_room_index`, `sender`, `message`, `created_at`)
+        VALUES (#{chatRoomIndex}, #{sender}, #{message},#{createdAt})
+    </insert>
+
+    <insert id="insertChatRoom"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="ChatRoom">
+        INSERT INTO `dcs`.`chat_room` (`room_name`, `is_secret`,`creator`, `created_at`)
+        VALUES (#{roomName},#{isSecret},#{creator},#{createdAt})
+    </insert>
+
+    <select id="selectChatRooms" resultType="ChatRoom">
+        SELECT
+            `index` AS `index`,
+            `room_name` AS `roomName`,
+            `is_secret` AS `isSecret`,
+            `creator` AS `creator`,
+            `created_at` AS `createdAt`
+        FROM `dcs`.`chat_room`
+    </select>
+
+    <select id="selectChatRoomByIndex" resultType="ChatRoom">
+        SELECT
+            `index` AS `index`,
+            `room_name` AS `roomName`,
+            `is_secret` AS `isSecret`,
+            `creator` AS `creator`,
+            `created_at` AS `createdAt`
+        FROM `dcs`.`chat_room`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </select>
+    <select id="selectChatRoomByName" resultType="ChatRoom">
+        SELECT
+            `index` AS `index`,
+            `room_name` AS `roomName`,
+            `is_secret` AS `isSecret`,
+            `creator` AS `creator`,
+            `created_at` AS `createdAt`
+        FROM `dcs`.`chat_room`
+        WHERE `room_name` = #{roomName}
+        LIMIT 1
+    </select>
+
+    <delete id="deleteChatRoomByIndex">
+        DELETE FROM `dcs`.`chat_room`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </delete>
+
+</mapper>
