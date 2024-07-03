@@ -151,7 +151,7 @@ button.blue:active {
   gap: 20px; /* 그리드 간격 설정 */
 
   .workType {
-    font-weight: 500;
+    font-weight: 550;
     width: 120%;
     position: relative;
     top: 6rem;
@@ -168,6 +168,11 @@ button.blue:active {
   position: relative;
   top: 1rem;
   text-align: center;
+  color: rgb(57, 87, 108);
+  font-size: 2.8rem;
+  font-weight: 800;
+  text-shadow: 0 1px 2px rgb(57, 87, 108);
+  letter-spacing: 3px;
 }
 
 .form-group {

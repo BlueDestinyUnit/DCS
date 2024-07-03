@@ -130,6 +130,34 @@
         FROM `dcs`.`submit_images`
     </select>
 
+    <select id="countSubmitImage" resultType="Progress">
+        SELECT count(1) AS `count`,
+               (SELECT COUNT(1)
+                FROM `dcs`.`submit_images`
+                WHERE `is_sign`) AS `signCount`
+        FROM `dcs`.`submit_images`
+    </select>
+
+    <select id="countSubmitImageOfYear" resultType="Progress">
+        SELECT count(1)                                        AS `count`,
+               (SELECT COUNT(1)
+                FROM `dcs`.`submit_images`
+                         LEFT JOIN `dcs`.`work` w ON `submit_images`.work_index = w.`index`
+                WHERE `is_sign`
+                  AND DATE_FORMAT(`w`.`date`, '%Y') = #{year}) AS `signCount`
+        FROM `dcs`.`submit_images`
+                 LEFT JOIN `dcs`.`work` w ON `submit_images`.work_index = w.`index`
+        WHERE DATE_FORMAT(`w`.`date`, '%Y') = #{year}
+    </select>
+
+    <select id="countSubmitImageOfDay" resultType="Progress">
+        SELECT count(1) AS `count`
+        FROM `dcs`.`work`
+                 LEFT JOIN `dcs`.`submit_images` s ON `work`.`index` = s.`work_index`
+        WHERE `date` = #{day}
+        GROUP BY `s`.`work_index`
+    </select>
+
     <select id="selectUserAndWorkDaysByDate" resultType="PaymentVo">
         SELECT `index`                  AS `index`,
                `user_email`             AS `userEmail`,

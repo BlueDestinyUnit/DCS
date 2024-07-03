@@ -4,6 +4,7 @@ package com.scd.dcs.mappers;
 import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.WorkEntity;
 import com.scd.dcs.domains.vos.PaymentVo;
+import com.scd.dcs.domains.vos.Progress;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,6 +19,11 @@ public interface WorkMapper{
 
     int deleteIndex(@Param("index")int index);
 
+    Progress countSubmitImage();
+
+    Progress countSubmitImageOfYear(@Param("year") String year);
+
+    Progress countSubmitImageOfDay(@Param("day") String day);
 
     SubmitImageEntity selectSubmitImage(@Param("index")int index);
 

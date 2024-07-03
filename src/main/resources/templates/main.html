@@ -15,11 +15,12 @@
 </head>
 <body sec:authorize="isAuthenticated()">
 <section id="mainSection" layout:fragment="content">
-    <section>
+    <section class="demo">
         <div class="accordion" id="accordionExample">
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                         공지사항
                     </button>
                 </h2>
@@ -29,8 +30,51 @@
                 </div>
             </div>
         </div>
+        <div class="progress-container">
+            <div class="progress-box">
+                <div class="text-container">
+                    <div class="text-box">
+                        <p class="text-title">확인량/작업량</p>
+                        <p th:text="${progress.getCount() == 0 ? '0 / 0' : progress.getSignCount() + ' / ' + progress.getCount()}" class="text-workload"></p>
+                    </div>
+                    <div class="spring"></div>
+                    <p th:text="${progress.getCount() == 0 ? '0%' : (progress.getSignCount() * 100 / progress.getCount()) + '%'}" class="text-percent"></p>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" id="myProgressBar"></div>
+                </div>
+            </div>
+
+            <div class="progress-box">
+                <div class="text-container">
+                    <div class="text-box">
+                        <p class="text-title">확인량/작업량 (년)</p>
+                        <p th:text="${progressOfYear.getCount() == 0 ? '0 / 0' : progressOfYear.getSignCount() + ' / ' + progressOfYear.getCount()}" class="text-workload"></p>
+                    </div>
+                    <div class="spring"></div>
+                    <p th:text="${progressOfYear.getCount() == 0 ? '0%' : (progressOfYear.getSignCount() * 100 / progressOfYear.getCount()) + '%'}" class="text-percentOfYear"></p>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" id="myProgressBarOfYear"></div>
+                </div>
+            </div>
+
+            <div class="progress-box">
+                <div class="text-container">
+                    <div class="text-box">
+                        <p class="text-title">일 평균 작업량</p>
+                        <p class="text-workload">100/1000</p>
+                    </div>
+                    <div class="spring"></div>
+                    <p class="text-percent">72%</p>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+            </div>
+        </div>
     </section>
-  
+
     <section>
 
     </section>

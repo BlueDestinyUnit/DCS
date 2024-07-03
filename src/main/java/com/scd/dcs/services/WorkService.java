@@ -4,6 +4,7 @@ package com.scd.dcs.services;
 import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.UserEntity;
 import com.scd.dcs.domains.entities.WorkEntity;
+import com.scd.dcs.domains.vos.Progress;
 import com.scd.dcs.mappers.WorkMapper;
 import com.scd.dcs.results.CommonResult;
 import com.scd.dcs.results.Result;
@@ -69,6 +70,17 @@ public class WorkService {
     public SubmitImageEntity getImage(int index) {
 //        if (index < 1) return null;
         return this.workMapper.selectSubmitImage(index);
+    }
+
+    public Progress countSubmitImage() {
+        return this.workMapper.countSubmitImage();
+    }
+
+    public Progress countSubmitImage(String date, boolean b) {
+        if (b) {
+            return this.workMapper.countSubmitImageOfDay(date);
+        }
+        return this.workMapper.countSubmitImageOfYear(date);
     }
 
     @Transactional
