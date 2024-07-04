@@ -1,4 +1,17 @@
 @charset "UTF-8";
+@media (max-width: 1500px) {
+  #asideFrame {
+    max-width: 13rem !important;
+  }
+  #asideFrame > .aside {
+    max-width: 13rem !important;
+  }
+  .demo {
+    width: 60rem;
+    position: relative;
+    right: 8rem !important;
+  }
+}
 #mainSection {
   margin: 0 auto;
   width: 80%;
@@ -17,8 +30,8 @@
   flex-direction: row;
   gap: 2%;
 }
-.demo .progress-container > .progress-box {
-  width: 32%;
+.demo .progress-container > .progress-box:not(:last-child) {
+  width: 36%;
   height: 7.5rem;
   padding: 1rem 1.3rem;
   background-color: rgb(33, 60, 91);
@@ -29,43 +42,43 @@
   flex-direction: column;
   box-shadow: 0 0 0.2rem 0.0625rem rgb(33, 60, 91);
 }
-.demo .progress-container > .progress-box > .text-container {
+.demo .progress-container > .progress-box:not(:last-child) > .text-container {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row;
 }
-.demo .progress-container > .progress-box > .text-container > .text-box {
+.demo .progress-container > .progress-box:not(:last-child) > .text-container > .text-box {
   justify-content: start;
   align-items: center;
   flex-direction: column;
 }
-.demo .progress-container > .progress-box > .text-container > .text-box > .text-title {
+.demo .progress-container > .progress-box:not(:last-child) > .text-container > .text-box > .text-title {
   color: #ffffff;
   font-size: 1.5rem;
   font-weight: 500;
   margin-bottom: 0.3rem;
   letter-spacing: 0.1rem;
 }
-.demo .progress-container > .progress-box > .text-container > .text-box > .text-workload {
+.demo .progress-container > .progress-box:not(:last-child) > .text-container > .text-box > .text-workload {
   color: #ffffff;
   font-size: 1rem;
   font-weight: 400;
 }
-.demo .progress-container > .progress-box > .text-container > .spring {
+.demo .progress-container > .progress-box:not(:last-child) > .text-container > .spring {
   flex-grow: 1;
 }
-.demo .progress-container > .progress-box > .text-container > .text-percent {
+.demo .progress-container > .progress-box:not(:last-child) > .text-container > .text-percent {
   color: #ffffff;
   font-size: 2rem;
   font-weight: 500;
 }
-.demo .progress-container > .progress-box > .text-container > .text-percentOfYear {
+.demo .progress-container > .progress-box:not(:last-child) > .text-container > .text-percentOfYear {
   color: #ffffff;
   font-size: 2rem;
   font-weight: 500;
 }
-.demo .progress-container > .progress-box > .progress-bar {
+.demo .progress-container > .progress-box:not(:last-child) > .progress-bar {
   position: relative;
   width: 100%;
   height: 30px;
@@ -74,7 +87,7 @@
   font-weight: 600;
   font-size: 0.8rem;
 }
-.demo .progress-container > .progress-box > .progress-bar .progress {
+.demo .progress-container > .progress-box:not(:last-child) > .progress-bar .progress {
   width: 0%;
   height: 30px;
   padding: 0;
@@ -83,6 +96,33 @@
   background-color: rgb(110, 180, 229);
   transition: width 1s ease; /* 넓이 변경을 부드럽게 애니메이션화합니다. */
   color: #111;
+}
+.demo .progress-container > .progress-box:last-child {
+  width: 24%;
+  height: 8.925rem;
+  padding: 1rem 1.3rem;
+  background-color: rgb(33, 60, 91);
+  border-radius: 1rem;
+  display: inline-table;
+  justify-content: start;
+  align-items: start;
+  flex-direction: row;
+  gap: 4rem;
+  box-shadow: 0 0 0.2rem 0.0625rem rgb(33, 60, 91);
+}
+.demo .progress-container > .progress-box:last-child > .text-title {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.1rem;
+}
+.demo .progress-container > .progress-box:last-child > .text-workload {
+  position: relative;
+  top: 3.7rem;
+  color: #dedede;
+  font-size: 1.8rem;
+  font-weight: 400;
 }
 
 /*# sourceMappingURL=main.css.map */

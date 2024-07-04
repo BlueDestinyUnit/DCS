@@ -35,10 +35,12 @@
                 <div class="text-container">
                     <div class="text-box">
                         <p class="text-title">확인량/작업량</p>
-                        <p th:text="${progress.getCount() == 0 ? '0 / 0' : progress.getSignCount() + ' / ' + progress.getCount()}" class="text-workload"></p>
+                        <p th:text="${progress.getCount() == 0 ? '0 / 0' : progress.getSignCount() + ' / ' + progress.getCount()}"
+                           class="text-workload"></p>
                     </div>
                     <div class="spring"></div>
-                    <p th:text="${progress.getCount() == 0 ? '0%' : (progress.getSignCount() * 100 / progress.getCount()) + '%'}" class="text-percent"></p>
+                    <p th:text="${progress.getCount() == 0 ? '0%' : (progress.getSignCount() * 100 / progress.getCount()) + '%'}"
+                       class="text-percent"></p>
                 </div>
                 <div class="progress-bar">
                     <div class="progress" id="myProgressBar"></div>
@@ -49,10 +51,12 @@
                 <div class="text-container">
                     <div class="text-box">
                         <p class="text-title">확인량/작업량 (년)</p>
-                        <p th:text="${progressOfYear.getCount() == 0 ? '0 / 0' : progressOfYear.getSignCount() + ' / ' + progressOfYear.getCount()}" class="text-workload"></p>
+                        <p th:text="${progressOfYear.getCount() == 0 ? '0 / 0' : progressOfYear.getSignCount() + ' / ' + progressOfYear.getCount()}"
+                           class="text-workload"></p>
                     </div>
                     <div class="spring"></div>
-                    <p th:text="${progressOfYear.getCount() == 0 ? '0%' : (progressOfYear.getSignCount() * 100 / progressOfYear.getCount()) + '%'}" class="text-percentOfYear"></p>
+                    <p th:text="${progressOfYear.getCount() == 0 ? '0%' : (progressOfYear.getSignCount() * 100 / progressOfYear.getCount()) + '%'}"
+                       class="text-percentOfYear"></p>
                 </div>
                 <div class="progress-bar">
                     <div class="progress" id="myProgressBarOfYear"></div>
@@ -60,17 +64,8 @@
             </div>
 
             <div class="progress-box">
-                <div class="text-container">
-                    <div class="text-box">
-                        <p class="text-title">일 평균 작업량</p>
-                        <p class="text-workload">100/1000</p>
-                    </div>
-                    <div class="spring"></div>
-                    <p class="text-percent">72%</p>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress"></div>
-                </div>
+                <p class="text-title">일 평균 작업량</p>
+                <p th:text="${averageSubmitImage}" class="text-workload"></p>
             </div>
         </div>
     </section>

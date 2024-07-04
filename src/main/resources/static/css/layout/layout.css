@@ -1,3 +1,25 @@
+@media (max-width: 1500px) {
+  #asideFrame {
+    max-width: 13rem !important;
+  }
+  #asideFrame > .aside {
+    max-width: 13rem !important;
+  }
+  .item {
+    position: relative;
+    top: 1rem;
+  }
+  .link {
+    width: 9rem !important;
+    height: 1rem !important;
+  }
+  .btn-group {
+    width: 9rem !important;
+  }
+  .menu-wrapper {
+    display: none !important;
+  }
+}
 body {
   background-color: #ffffff;
   color: #212121;

@@ -1,3 +1,28 @@
+@media (max-width: 1500px) {
+  #asideFrame {
+    max-width: 13rem !important;
+
+    > .aside {
+      max-width: 13rem !important;
+
+    }
+  }
+  .item {
+    position: relative;
+    top: 1rem;
+  }
+  .link {
+    width: 9rem !important;
+    height: 1rem !important;
+  }
+  .btn-group {
+    width: 9rem !important;
+  }
+  .menu-wrapper {
+    display: none !important;
+  }
+}
+
 $header_height: 5.25rem;
 $aside-width: 20rem;
 
