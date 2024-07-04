@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.json.JSONParser;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -52,7 +53,8 @@ public class DevLogWebSocketHandler extends TextWebSocketHandler {
         }
         chatRoom.setUserName(userName);
         chatRoom.setRoomSessions(chatRoomMap);
-
+        int roomCount = chatRoomMap.get(Integer.parseInt(roomIndex)).size();
+        System.out.println(roomCount);
         String content = (String) obj.get("msg");
         userMap.put(session.getId(), userName);
         JSONObject response = new JSONObject();
@@ -65,7 +67,9 @@ public class DevLogWebSocketHandler extends TextWebSocketHandler {
             System.out.println("테스트:"+ obj.get("userName"));
             response.put("msg", obj.get("msg"));
             response.put("roomIndex", roomIndex);
-            chatRoom.handleMessage(session, message);
+            response.put("roomCount",roomCount);
+            TextMessage textMessage = new TextMessage(response.toString());
+            chatRoom.handleMessage(session, textMessage);
         } else if (obj.get("type").equals("message")) {
             System.out.println("message");
             chatRoomService.insertMessage(chatRoom, content);
@@ -77,6 +81,7 @@ public class DevLogWebSocketHandler extends TextWebSocketHandler {
             response.put("userName", obj.get("userName"));
             response.put("msg", obj.get("msg"));
             response.put("roomIndex", roomIndex);
+            response.put("roomCount",roomCount);
         } else {
             log.warn("Chat room with roomId {} not found.", roomIndex);
         }
@@ -87,17 +92,17 @@ public class DevLogWebSocketHandler extends TextWebSocketHandler {
         log.info("{} 연결되었습니다.", session.getId());
         String roomIndex = session.getUri().getPath().substring(9);
         userMap.put(session.getId(),session.getPrincipal().getName() );
+        List<WebSocketSession> webSocketSessionList;
         if(chatRoomMap.containsKey(Integer.parseInt(roomIndex))){
-            List<WebSocketSession> webSocketSessionList = chatRoomMap.get(Integer.parseInt(roomIndex));
+            webSocketSessionList = chatRoomMap.get(Integer.parseInt(roomIndex));
             webSocketSessionList.add(session);
             chatRoomMap.put(Integer.parseInt(roomIndex), webSocketSessionList);
         }else {
-            List<WebSocketSession> webSocketSessionList = new ArrayList<>();
+            webSocketSessionList = new ArrayList<>();
             webSocketSessionList.add(session);
             chatRoomMap.put(Integer.parseInt(roomIndex), webSocketSessionList);
         }
-
-
+        int roomCount = webSocketSessionList.size();
         ChatRoom chatRoom = chatRoomService.findRoomByIndex(roomIndex);
         chatRoom.setUserName(session.getPrincipal().getName());
 
@@ -107,6 +112,7 @@ public class DevLogWebSocketHandler extends TextWebSocketHandler {
         obj.put("sessionId", session.getId());
         obj.put("roomIndex", roomIndex);
         obj.put("userName",session.getPrincipal().getName());
+        obj.put("roomCount",roomCount);
         log.info(obj.toString());
         session.sendMessage(new TextMessage(obj.toString()));
 
@@ -120,12 +126,13 @@ public class DevLogWebSocketHandler extends TextWebSocketHandler {
         // 세션 맵에서 종료된 세션 제거
         List<WebSocketSession> webSocketSessionList = chatRoomMap.get(Integer.parseInt(roomIndex));
         webSocketSessionList.remove(session);
-
+        int roomCount = webSocketSessionList.size();
         // 남아 있는 모든 클라이언트에게 종료된 세션을 알리는 메시지 보내기
         JSONObject response = new JSONObject();
         response.put("type", "close");
         response.put("sessionId", session.getId());
         response.put("userName", userMap.get(session.getId())); // 종료된 사용자 이름
+        response.put("roomCount",roomCount);
         userMap.remove(session.getId());
 
         TextMessage textMessage = new TextMessage(response.toString());

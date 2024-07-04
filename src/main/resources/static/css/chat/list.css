@@ -19,7 +19,7 @@
   margin-bottom: 4rem;
 }
 #demo > .form-container > .form-control {
-  width: 50%;
+  width: 20%;
 }
 #demo > .form-container > .produce-button {
   top: 2rem;
@@ -43,10 +43,14 @@
   gap: 3rem;
 }
 #demo > .menu-container > .list-wrapper > .chat-list {
-  width: 60rem;
+  width: 30rem;
   height: 7rem;
   border-radius: 1rem;
   background-color: #9e9e9e;
+  text-align: center;
+  align-content: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
 }
 #demo > .menu-container > .list-wrapper > .button-wrapper {
   display: flex;

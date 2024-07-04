@@ -21,8 +21,12 @@ function wsEvt(roomIndex) {
         if (msg != null && msg.trim() !== '') {
             var d = JSON.parse(msg);
             console.log(d)
+            var roomCount = d.roomCount;
             if (d.type === "getId") {
                 var si = d.sessionId !== null ? d.sessionId : "";
+
+                document.querySelector('.room-count').innerText = `인원 : ${roomCount}`;
+
                 if (si !== '') {
                     $("#sessionId").val(si);
 
@@ -43,6 +47,7 @@ function wsEvt(roomIndex) {
                     $("#chating").append("<p class='others'>" + d.userName + " : " + d.msg + "</p>");
                 }
             } else if (d.type == "open") {
+                document.querySelector('.room-count').innerText = `인원 : ${roomCount}`;
                 console.log(3)
                 if (d.sessionId == $("#sessionId").val()) {
                     console.log(4)
@@ -52,6 +57,7 @@ function wsEvt(roomIndex) {
                     $("#chating").append("<p class='start'>[" + d.userName + "]님이 입장하였습니다.</p>");
                 }
             } else if (d.type == "close") {
+                document.querySelector('.room-count').innerText = `인원 : ${roomCount}`;
                 $("#chating").append("<p class='exit'>[" + d.userName + "]님이 퇴장하였습니다.</p>");
             } else {
                 console.warn("unknown type!")
