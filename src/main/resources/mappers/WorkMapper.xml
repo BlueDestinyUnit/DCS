@@ -136,12 +136,30 @@
                 FROM `dcs`.`submit_images`
                          LEFT JOIN `dcs`.`work` w ON submit_images.work_index = w.`index`
                          LEFT JOIN `dcs`.`user` u ON w.user_email = u.email
-                WHERE `is_sign`
+                WHERE `is_sign` = 0
                   AND `u`.`role` = 'USER') AS `signCount`
         FROM `dcs`.`submit_images`
                  LEFT JOIN `dcs`.`work` w ON submit_images.work_index = w.`index`
                  LEFT JOIN `dcs`.`user` u ON w.user_email = u.email
         WHERE `u`.`role` = 'USER'
+    </select>
+
+    <select id="countSubmitImageOfDay" resultType="Progress">
+        SELECT count(1) AS `count`,
+               (SELECT COUNT(1)
+                FROM `dcs`.`submit_images`
+                         LEFT JOIN `dcs`.`work` w ON submit_images.work_index = w.`index`
+                         LEFT JOIN `dcs`.`user` u ON w.user_email = u.email
+                WHERE `is_sign`
+                  AND `u`.`email` = #{email}
+                  AND `w`.`date` = #{day}
+                  AND `u`.`role` = 'USER') AS `signCount`
+        FROM `dcs`.`submit_images`
+                 LEFT JOIN `dcs`.`work` w ON submit_images.work_index = w.`index`
+                 LEFT JOIN `dcs`.`user` u ON w.user_email = u.email
+        WHERE `u`.`role` = 'USER'
+        AND `u`.`email` = #{email}
+        AND `w`.`date` = #{day}
     </select>
 
     <select id="countSubmitImageOfYear" resultType="Progress">
@@ -150,7 +168,7 @@
                 FROM `dcs`.`submit_images`
                          LEFT JOIN `dcs`.`work` w ON `submit_images`.work_index = w.`index`
                          LEFT JOIN `dcs`.`user` u ON w.user_email = u.email
-                WHERE `is_sign`
+                WHERE `is_sign` = 0
                   AND DATE_FORMAT(`w`.`date`, '%Y') = #{year}
                   AND `u`.`role` = 'USER') AS `signCount`
         FROM `dcs`.`submit_images`
@@ -160,7 +178,7 @@
           AND `u`.`role` = 'USER'
     </select>
 
-    <select id="countSubmitImageOfDay" resultType="Progress">
+    <select id="countSubmitImageOfDayList" resultType="Progress">
         SELECT count(1) AS `count`
         FROM `dcs`.`work`
                  LEFT JOIN `dcs`.`submit_images` s ON `work`.`index` = s.`work_index`

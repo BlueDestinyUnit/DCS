@@ -3,13 +3,14 @@ package com.scd.dcs.controllers;
 import com.scd.dcs.config.security.domains.SecurityUser;
 import com.scd.dcs.domains.entities.EmailAuthEntity;
 import com.scd.dcs.domains.entities.UserEntity;
-import com.scd.dcs.domains.vos.PaymentVo;
+import com.scd.dcs.domains.vos.Progress;
 import com.scd.dcs.domains.vos.UserPaymentVo;
 import com.scd.dcs.domains.vos.UserProperty;
 import com.scd.dcs.results.CommonResult;
 import com.scd.dcs.results.Result;
 import com.scd.dcs.services.AdminService;
 import com.scd.dcs.services.UserService;
+import com.scd.dcs.services.WorkService;
 import jakarta.mail.MessagingException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -32,11 +33,13 @@ public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
     private final AdminService adminService;
+    private final WorkService workService;
 
     @Autowired
-    public UserController(UserService userService, AdminService adminService) {
+    public UserController(UserService userService, AdminService adminService, WorkService workService) {
         this.userService = userService;
         this.adminService = adminService;
+        this.workService = workService;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
@@ -181,11 +184,11 @@ public class UserController {
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
         UserEntity user = securityUser.getUserEntity();
         ModelAndView modelAndView = new ModelAndView("user/myPage");
-        modelAndView.addObject( "user", user);
+        modelAndView.addObject("user", user);
         return modelAndView;
     }
 
-    @RequestMapping(value ="/myPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/myPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String modifyMyPage(Authentication authentication, UserEntity user) {
         UserEntity sessionUser = ((SecurityUser) authentication.getPrincipal()).getUserEntity();
@@ -221,7 +224,21 @@ public class UserController {
         return modelAndView;
     }
 
-
+    @RequestMapping(value = "/feedbackList", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getFeedback(@RequestParam(value = "date", required = false) String date, Authentication authentication) {
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
+        if (date == null || date.isEmpty()) {
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+            date = currentDate.format(formatter);
+        }
+        Progress[] progressList = this.workService.countSubmitImageOfDay(date, user);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("progressList", progressList);
+        modelAndView.setViewName("user/feedbackList");
+        return modelAndView;
+    }
 
 
 }

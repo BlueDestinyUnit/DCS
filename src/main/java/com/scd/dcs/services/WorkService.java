@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.Arrays;
 
 @Service
@@ -77,7 +78,7 @@ public class WorkService {
     }
 
     public int averageSubmitImage(String date) {
-        Progress[] progressList = this.workMapper.countSubmitImageOfDay(date);
+        Progress[] progressList = this.workMapper.countSubmitImageOfDayList(date);
         if (progressList.length == 0) {
             return 0;
         } else {
@@ -88,6 +89,25 @@ public class WorkService {
             }
             return sum / progressList.length;
         }
+    }
+
+    public Progress[] countSubmitImageOfDay(String date, UserEntity user) {
+        String[] parts = date.split("-");
+        int year = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+        YearMonth yearMonth = YearMonth.of(year, month);
+        int lastDayOfMonth = yearMonth.lengthOfMonth();
+        Progress[] progressList = new Progress[lastDayOfMonth];
+
+        // 각 날짜별로 처리
+        for (int day = 1; day <= lastDayOfMonth; day++) {
+            // 날짜 포맷을 "yyyy-MM-dd"로 지정하여 문자열 생성
+            String dateString = String.format("%04d-%02d-%02d", year, month, day);
+            // 해당 날짜로 작업 처리
+            progressList[day - 1] = this.workMapper.countSubmitImageOfDay(dateString, user.getEmail());
+            System.out.println(progressList[day - 1].getSignCount());
+        }
+        return progressList;
     }
 
     @Transactional
