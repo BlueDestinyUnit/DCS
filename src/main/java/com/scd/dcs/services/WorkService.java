@@ -4,6 +4,7 @@ package com.scd.dcs.services;
 import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.UserEntity;
 import com.scd.dcs.domains.entities.WorkEntity;
+import com.scd.dcs.domains.vos.Progress;
 import com.scd.dcs.mappers.WorkMapper;
 import com.scd.dcs.results.CommonResult;
 import com.scd.dcs.results.Result;
@@ -21,18 +22,14 @@ public class WorkService {
     private final WorkMapper workMapper;
 
 
-
     @Autowired
     public WorkService(WorkMapper workMapper) {
         this.workMapper = workMapper;
     }
 
 
-
-
-
     @Transactional
-    public String saveImage(UserEntity user, MultipartFile[] images,String date) throws IOException {
+    public String saveImage(UserEntity user, MultipartFile[] images, String date) throws IOException {
 
         // 작업 엔티티 생성 및 저장
         WorkEntity workEntity = workMapper.findWorkByDateAndUser(LocalDate.parse(date), user.getEmail());
@@ -63,12 +60,34 @@ public class WorkService {
 
 
     public SubmitImageEntity[] imageList(String email, String date) {
-        return this.workMapper.selectSubmitImages(email,date);
+        return this.workMapper.selectSubmitImages(email, date);
     }
 
     public SubmitImageEntity getImage(int index) {
 //        if (index < 1) return null;
         return this.workMapper.selectSubmitImage(index);
+    }
+
+    public Progress countSubmitImage() {
+        return this.workMapper.countSubmitImage();
+    }
+
+    public Progress countSubmitImage(String date) {
+        return this.workMapper.countSubmitImageOfYear(date);
+    }
+
+    public int averageSubmitImage(String date) {
+        Progress[] progressList = this.workMapper.countSubmitImageOfDay(date);
+        if (progressList.length == 0) {
+            return 0;
+        } else {
+            int sum = 0;
+            for (int i = 0; i < progressList.length; i++) {
+                Progress progress = progressList[i];
+                sum += progress.getCount();
+            }
+            return sum / progressList.length;
+        }
     }
 
     @Transactional
@@ -80,10 +99,10 @@ public class WorkService {
     @Transactional
     public Result<?> delete(int[] indexArray) {
         try {
-            for(int index : indexArray){
+            for (int index : indexArray) {
                 this.workMapper.deleteIndex(index);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return CommonResult.FAILURE;
         }
         return CommonResult.SUCCESS;

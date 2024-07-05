@@ -26,6 +26,6 @@
         <typeAlias alias="UserPaymentVo" type="com.scd.dcs.domains.vos.UserPaymentVo"/>
         <typeAlias alias="ChatMessage" type="com.scd.dcs.config.websocket.domains.ChatMessage"/>
         <typeAlias alias="ChatRoom" type="com.scd.dcs.config.websocket.domains.ChatRoom"/>
-
+        <typeAlias alias="Progress" type="com.scd.dcs.domains.vos.Progress"/>
     </typeAliases>
 </configuration>

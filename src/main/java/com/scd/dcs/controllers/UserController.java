@@ -169,7 +169,6 @@ public class UserController {
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
         UserEntity user = securityUser.getUserEntity();
         List<UserProperty> dbList = this.userService.getAttendance(user.getEmail(), endDate);
-//        List<AttendaceEventDto> dbList = this.userService.getAttendance(user.getEmail(), endDate);
         System.out.println(dbList);
         JSONObject jsonObject = new JSONObject();
 
@@ -178,8 +177,28 @@ public class UserController {
     }
 
     @RequestMapping(value = "/myPage", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getMyPage() {
-        return new ModelAndView("user/myPage");
+    public ModelAndView getMyPage(Authentication authentication) {
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
+        ModelAndView modelAndView = new ModelAndView("user/myPage");
+        modelAndView.addObject( "user", user);
+        return modelAndView;
+    }
+
+    @RequestMapping(value ="/myPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String modifyMyPage(Authentication authentication, UserEntity user) {
+        UserEntity sessionUser = ((SecurityUser) authentication.getPrincipal()).getUserEntity();
+        Result<?> result = this.userService.modifyInfo(user);
+        if (result == CommonResult.SUCCESS) {
+            sessionUser.setNickname(user.getNickname());
+            sessionUser.setName(user.getName());
+            sessionUser.setTel(user.getTel());
+            sessionUser.setAddress(user.getAddress());
+        }
+        JSONObject responseObject = new JSONObject();
+        responseObject.put("result", result.name().toLowerCase());
+        return responseObject.toString();
     }
 
     @RequestMapping(value = "/salary", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
@@ -201,4 +220,8 @@ public class UserController {
         modelAndView.setViewName("user/salary");
         return modelAndView;
     }
+
+
+
+
 }

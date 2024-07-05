@@ -40,3 +40,8 @@ AI에게 학습하기위한 이미지들을 정제(모자이크)하기 위한 �
 
 ### DB
 <img src="https://img.shields.io/badge/mariaDB-003545?style=for-the-badge&logo=mariaDB&logoColor=white"> 
+
+
+## ERD
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/dcs_erd.png)
+

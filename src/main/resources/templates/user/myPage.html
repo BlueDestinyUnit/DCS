@@ -20,23 +20,28 @@
     <form novalidate class="dialog" id="infoForm">
         <label class="_obj-label label" rel="myEmailLabel">
             <span class="__text">내 이메일</span>
-            <span class="myEmail">gyust941326@gmail.com</span>
+            <input disabled class="myEmail" value="gyust941326@gmail.com" name="email">
         </label>
         <label class="_obj-label label" rel="myNameLabel">
             <span class="__text">내 이름</span>
-            <span class="myName">김*혁</span>
+            <input class="myName" th:value="${user.getName()}" name="name">
         </label>
         <label class="_obj-label label" rel="myNicknameLabel">
             <span class="__text">내 닉네임</span>
-            <span class="myNickname">dqsdh</span>
+            <input class="myNickname" th:value ="${user.getNickname()}" name="nickname">
+        </label>
+        <label class="_obj-label label" rel="myPasswordLabel">
+            <span class="__text">내 비밀번호</span>
+            <input class="myPassword" value="*******" name="password">
+            <a class="link" th:href="@{/user/resetPassword}">비밀번호 수정</a>
         </label>
         <label class="_obj-label label" rel="myTelLabel">
             <span class="__text">내 연락처</span>
-            <span class="myTel">010-6585-4922</span>
+            <input class="myTel" th:value ="${user.getTel()}" name="tel">
         </label>
         <label class="_obj-label label" rel="myAddressLabel">
             <span class="__text">내 주소</span>
-            <span class="myAddress">???</span>
+            <input class="myAddress" th:value ="${user.getAddress()}" name="address">
         </label>
         <button class="_obj-button" rel="modifyButton" type="button">
             <i class="__icon"></i>
