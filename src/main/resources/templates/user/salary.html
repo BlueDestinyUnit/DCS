@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ko.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/styles/salary.css}">
+    <script defer type="text/javascript" th:src="@{/js/user/salary.js}"></script>
+</head>
+<body>
+<section layout:fragment="content">
+    <form id="demo">
+        <div class="board-container">
+            <div class="container mt-5">
+                <div class="spring"></div>
+                <div class="selectedDate">
+                    <h1 th:text="${selectDate} + '년'"></h1>
+                </div>
+                <div class="form-group">
+                    <label class="text" for="datepicker">날짜 선택</label>
+                    <div class="input-group">
+                        <label class="label">
+                            <input type="text" class="form-control datepicker" id="datepicker"
+                                   placeholder="YYYY">
+                            <button class="blue" rel="dateButton">선택</button>
+                        </label>
+                    </div>
+                </div>
+                <div class="workType">
+                    <p class="text" th:text="'보험: ' + ${user.isInsurance() ? '가입' : '미가입'}"></p>
+                    <p class="text" th:text="'구분: ' + ${user.getWorkType() == 'part' ? '비정규직' : '정규직'}"></p>
+                    <div class="info-container">
+                        <img  alt="" class="image" th:src="@{/assets/images/info.png}">
+                        <div class="info-text">
+                            <p class="text">비정규직 : 작업일 X 100,000 ₩</p>
+                            <p class="text">정규직 : 작업일 X 150,000 ₩</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <table id="table" class="table">
+                <caption class="a11y-hidden">Table Caption</caption>
+                <thead>
+                <tr>
+                    <th class="fix" scope="col">(月)</th>
+                    <th class="fix" scope="col">작업일</th>
+                    <th class="fix" scope="col">작업량</th>
+                    <th class="fix" scope="col">급여</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="spacer"></tr> <!-- 간격을 위한 빈 행 -->
+                <tr th:each="payment, iterStat : ${paymentList}">
+                    <td class="first-td" th:text="${iterStat.index + 1} + '월'"></td>
+                    <td th:text="${payment.getWorkDays()}" class="workDays"></td>
+                    <td th:text="${payment.getWorkCount()}" class="workCount">보험</td>
+                    <td th:text="${payment.getPayment()}" class="payment" rel="payments"></td>
+                </tr>
+<!--                <tr class="second-spacer"></tr>-->
+                <tr class="totalRow">
+                    <td th:text="${selectDate} + '년'"></td>
+                    <td id="totalWorkDays"></td>
+                    <td id="totalWorkCount"></td>
+                    <td id="totalPayment" rel="payments"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</section>
+</body>
+</html>

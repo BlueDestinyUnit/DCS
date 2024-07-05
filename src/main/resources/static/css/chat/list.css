@@ -1,0 +1,58 @@
+#main {
+  height: auto;
+}
+
+#demo {
+  display: flex;
+  flex-direction: column;
+  gap: 15rem;
+}
+#demo > .board-container {
+  position: relative;
+  top: 8rem;
+  width: 90%;
+  height: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 4rem;
+}
+#demo > .board-container > .produce-button {
+  position: relative;
+  top: 2rem;
+  right: 40%;
+  width: 6rem;
+  height: 2.5rem;
+}
+#demo > .menu-container {
+  position: relative;
+  right: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 5rem;
+}
+#demo > .menu-container > .list-wrapper {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: row;
+  gap: 3rem;
+}
+#demo > .menu-container > .list-wrapper > .chat-list {
+  width: 60rem;
+  height: 7rem;
+  border-radius: 1rem;
+  background-color: #9e9e9e;
+}
+#demo > .menu-container > .list-wrapper > .button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+/*# sourceMappingURL=list.css.map */
