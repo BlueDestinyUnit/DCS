@@ -45,6 +45,12 @@ menuList.forEach(item => {
         case 'my':
             console.log('Contact 메뉴입니다.');
             // Contact 메뉴에 대한 작업
+
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                    location.href = `/user/myPage`;
+            })
+
             break;
         // case 'board':
         //     item.addEventListener('click', (e) => {

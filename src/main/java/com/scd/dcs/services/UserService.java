@@ -281,7 +281,6 @@ public class UserService {
         AttendanceEntity attendance = new AttendanceEntity();
         attendance.setUserEmail(user.getEmail());
         attendance.setCheckIn(LocalDateTime.now());
-
         attendanceMapper.insertAttendance(attendance);
         return CommonResult.SUCCESS;
     }
@@ -294,4 +293,19 @@ public class UserService {
         return this.attendanceMapper.selectAttendanceByDates(email, firstTime, endTime);
     }
 
+    public Result<?> modifyInfo(UserEntity user){
+        UserEntity dbUser = this.userMapper.selectUserByEmail(user.getEmail());
+        if(dbUser == null){
+            return CommonResult.FAILURE;
+        }
+        dbUser.setNickname(user.getNickname());
+        dbUser.setName(user.getName());
+        dbUser.setAddress(user.getAddress());
+        dbUser.setTel(user.getTel());
+        System.out.println(user.getTel());
+        System.out.println(dbUser.getTel());
+        return this.userMapper.updateUser(dbUser) > 0
+                ? CommonResult.SUCCESS
+                : CommonResult.FAILURE;
+    }
 }
