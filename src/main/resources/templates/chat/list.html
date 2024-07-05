@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layouts/layout}">
+      layout:decorate="~{/layouts/layout}"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -13,42 +14,22 @@
 </head>
 <body>
 <section layout:fragment="content">
-    <form id="demo">
-        <div class="board-container">
-            <h1>채팅방</h1>
-            <button class="produce-button">생성</button>
-        </div>
-        <div class="menu-container">
+    <div id="demo">
+        <h1>채팅방</h1>
+        <form class="form-container" id="chatCreateForm">
+            <input name="roomName" class="form-control" type="text">
+            <button class="btn btn-primary produce-button" type="submit">생성</button>
+        </form>
+        <div class="menu-container" th:each="room : ${rooms}">
             <div class="list-wrapper">
-                <div class="chat-list">채팅방1</div>
+                <div class="chat-list" th:text="${room.getRoomName()}">채팅방1</div>
                 <div class="button-wrapper">
-                    <button>입장</button>
-                    <button>삭제</button>
-                </div>
-            </div>
-            <div class="list-wrapper">
-                <div class="chat-list">채팅방2</div>
-                <div class="button-wrapper">
-                    <button>입장</button>
-                    <button>삭제</button>
-                </div>
-            </div>
-            <div class="list-wrapper">
-                <div class="chat-list">채팅방3</div>
-                <div class="button-wrapper">
-                    <button>입장</button>
-                    <button>삭제</button>
-                </div>
-            </div>
-            <div class="list-wrapper">
-                <div class="chat-list">채팅방4</div>
-                <div class="button-wrapper">
-                    <button>입장</button>
-                    <button>삭제</button>
+                    <button class="btn btn-primary" th:value="${room.getIndex()}" rel="joinButton" type="button">입장</button>
+                    <button th:if="${#authentication.name == room.getCreator() || #authentication.getPrincipal().getUserEntity().getRole() == 'ADMIN'}" class="btn btn-danger" th:value="${room.getIndex()}" rel="deleteButton" type="button">삭제</button>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 </section>
 </body>
 </html>
