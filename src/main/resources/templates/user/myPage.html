@@ -20,29 +20,33 @@
     <form novalidate class="dialog" id="infoForm">
         <label class="_obj-label label" rel="myEmailLabel">
             <span class="__text">내 이메일</span>
-            <input disabled class="myEmail" value="gyust941326@gmail.com" name="email">
+            <input disabled class="form-control" value="gyust941326@gmail.com" name="email">
         </label>
         <label class="_obj-label label" rel="myNameLabel">
             <span class="__text">내 이름</span>
-            <input class="myName" th:value="${user.getName()}" name="name">
+            <input class="form-control" th:value="${user.getName()}" name="name">
         </label>
         <label class="_obj-label label" rel="myNicknameLabel">
             <span class="__text">내 닉네임</span>
-            <input class="myNickname" th:value ="${user.getNickname()}" name="nickname">
+            <input class="form-control" th:value ="${user.getNickname()}" name="nickname">
         </label>
-        <label class="_obj-label label" rel="myPasswordLabel">
-            <span class="__text">내 비밀번호</span>
-            <input class="myPassword" value="*******" name="password">
-            <a class="link" th:href="@{/user/resetPassword}">비밀번호 수정</a>
-        </label>
+<!--        <label class="_obj-label label" rel="myPasswordLabel">-->
+<!--            <span class="__text">내 비밀번호</span>-->
+<!--            <input class="myPassword" value="*******" name="password">-->
+<!--            <a class="link" th:href="@{/user/resetPassword}">비밀번호 수정</a>-->
+<!--        </label>-->
         <label class="_obj-label label" rel="myTelLabel">
             <span class="__text">내 연락처</span>
-            <input class="myTel" th:value ="${user.getTel()}" name="tel">
+            <input class="form-control" th:value ="${user.getTel()}" name="tel">
         </label>
         <label class="_obj-label label" rel="myAddressLabel">
             <span class="__text">내 주소</span>
-            <input class="myAddress" th:value ="${user.getAddress()}" name="address">
+            <input class="form-control" th:value ="${user.getAddress()}" name="address">
         </label>
+        <button class="_obj-button" rel="modifyButton" type="button">
+            <i class="__icon"></i>
+            <span class="__text">비밀번호 수정하기</span>
+        </button>
         <button class="_obj-button" rel="modifyButton" type="button">
             <i class="__icon"></i>
             <span class="__text">수정하기</span>
