@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script defer th:src="@{/js/layout/layout.logout.js}" ></script>
     <script defer th:src="@{/js/layout/layout.menu.js}" ></script>
+    <script defer th:src="@{/js/layout/layout.dropdown.js}" ></script>
 </head>
 <body>
 <!-- 헤더를 포함하려면 layout:fragment="header"를 사용할 수 있습니다. -->
@@ -39,7 +40,13 @@
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">자유게시판</a></li>
                 <li><a class="dropdown-item" href="#">Action two</a></li>
-                <li><a class="dropdown-item" href="#">Action three</a></li>
+                <!--<a class="dropdown-item" href="#">Action three</a>-->
+                <li>
+                    <form class="dropdown-item" method="get" action="">
+                        <input id="fileInput" hidden type="file">
+                        <a id="uploadLink">프로필 사진</a>
+                    </form>
+                </li>
             </ul>
         </div>
     </div>
