@@ -1,6 +1,152 @@
-#mainSection{
-  margin:0 auto;
-  width:80%;
+@media (max-width: 1500px) {
+  #asideFrame {
+    max-width: 13rem !important;
+
+    > .aside {
+      max-width: 13rem !important;
+
+    }
+  }
+  .demo {
+    width: 60rem;
+    position: relative;
+    right: 8rem !important;
+  }
+}
+
+#mainSection {
+  margin: 0 auto;
+  width: 80%;
 
   padding-top: 1rem;
+}
+
+.demo {
+  position: relative;
+  right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .progress-container {
+    display: flex;
+    flex-direction: row;
+    gap: 2%;
+
+    > .progress-box:not(:last-child) {
+      width: 36%;
+      height: 7.5rem;
+      padding: 1rem 1.3rem;
+      background-color: rgb(33, 60, 91);
+      border-radius: 1rem;
+      display: inline-table;
+      justify-content: start;
+      align-items: start;
+      flex-direction: column;
+      box-shadow: 0 0 0.2rem 0.0625rem rgb(33, 60, 91);
+
+      > .text-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+
+        > .text-box {
+          justify-content: start;
+          align-items: center;
+          flex-direction: column;
+
+          > .text-title {
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.1rem;
+          }
+
+          > .text-workload {
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 400;
+          }
+        }
+
+        > .spring {
+          flex-grow: 1;
+        }
+
+        > .text-percent {
+          color: #ffffff;
+          font-size: 2rem;
+          font-weight: 500;
+        }
+
+        > .text-percentOfYear {
+          color: #ffffff;
+          font-size: 2rem;
+          font-weight: 500;
+        }
+      }
+
+
+      > .progress-bar {
+        position: relative;
+        width: 100%;
+        height: 30px;
+        border-radius: 999px;
+        background-color: #dedede;
+        font-weight: 600;
+        font-size: .8rem;
+      }
+
+      > .progress-bar .progress {
+        width: 0%; // 나타내고자 하는 퍼센트 값을 넣으면 됩니다.
+        height: 30px;
+        padding: 0;
+        text-align: center;
+        border-radius: 999px;
+        background-color: rgb(110, 180, 229);
+        transition: width 1s ease; /* 넓이 변경을 부드럽게 애니메이션화합니다. */
+        color: #111;
+      }
+    }
+
+    > .progress-box:last-child {
+      width: 24%;
+      height: 8.925rem;
+      padding: 1rem 1.3rem;
+      background-color: rgb(33, 60, 91);
+      border-radius: 1rem;
+      display: flex;
+      justify-content: start;
+      align-items: start;
+      flex-direction: row;
+      gap: 4rem;
+      box-shadow: 0 0 0.2rem 0.0625rem rgb(33, 60, 91);
+
+      > .text-title {
+        color: #ffffff;
+        font-size: 1.5rem;
+        font-weight: 500;
+        margin-bottom: 0.3rem;
+        letter-spacing: 0.1rem;
+      }
+
+
+
+      > .text-workload {
+        position: relative;
+        top: 3.7rem;
+        //right: 0.6rem;
+        color: #dedede;
+        font-size: 1.8rem;
+        font-weight: 400;
+      }
+
+
+    }
+
+  }
+
+
 }

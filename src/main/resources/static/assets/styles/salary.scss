@@ -1,8 +1,29 @@
+@media (max-width: 1500px) {
+  #asideFrame {
+    max-width: 13rem !important;
+
+    > .aside {
+      max-width: 13rem !important;
+
+    }
+  }
+  #demo {
+    width: 68rem;
+    position: relative;
+    right: 1rem !important;
+  }
+
+}
+
+
+
 #main {
   height: auto;
 }
 
 #demo {
+  position: relative;
+  top: 3.325rem;
   display: flex;
   flex-direction: column;
   gap: 8rem; // 통일
@@ -156,7 +177,15 @@ button.blue:active {
   position: relative;
   top: 1rem;
   text-align: center;
+  color: rgb(57, 87, 108);
+  font-size: 3.1rem;
+  font-weight: 800;
+  text-shadow: 0 1px 2px rgb(57, 87, 108);
+  letter-spacing: 3px;
 }
+
+
+
 
 .form-group {
   position: relative;
@@ -197,7 +226,7 @@ button.blue:active {
     > .image {
       position: relative;
       cursor: pointer;
-      bottom: 0.5rem;
+      bottom: 0.52rem;
       right: 0.45rem;
       width: 1.4rem;
       height: 1.4rem;

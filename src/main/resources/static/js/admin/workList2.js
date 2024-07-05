@@ -73,8 +73,13 @@ function handleCheckboxChange() {
 handleCheckboxChange();
 
 
-backButton.onclick = () => {
-    history.back();
+backButton.onclick = (event) => {
+    if (!confirm(`작성한 내용이나 변경한 내용이 있을 경우 내용이 삭제됩니다.
+계속하시겠습니까?`)) {
+        event.preventDefault();
+    } else {
+        history.back();
+    }
 }
 
 
@@ -91,13 +96,13 @@ function closeModal() {
 }
 
 // 모달 바깥 영역 클릭 시 모달 닫기
-window.onclick = function(event) {
+window.onclick = function (event) {
     let modal = document.getElementById('myModal');
     if (event.target === modal) {
         modal.style.display = 'none';
     }
 }
-document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') {
         // ESC 키가 눌렸을 때 실행할 동작을 여기에 추가합니다.
         console.log('ESC 키가 눌렸습니다.');
