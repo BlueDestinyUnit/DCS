@@ -28,7 +28,7 @@ menuList.forEach(item => {
                 if(admin === 'true'){
                     location.href = `/admin/salary`
                 }else {
-
+                    location.href = `/user/salary`
                 }
             })
             break;
@@ -45,6 +45,12 @@ menuList.forEach(item => {
         case 'my':
             console.log('Contact 메뉴입니다.');
             // Contact 메뉴에 대한 작업
+
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                    location.href = `/user/myPage`;
+            })
+
             break;
         // case 'board':
         //     item.addEventListener('click', (e) => {
@@ -52,6 +58,16 @@ menuList.forEach(item => {
         //         location.href = '../board/list'
         //     })
         //     break;
+        case 'chat':
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                if(admin === 'true'){
+                    location.href = `/chat/list`
+                }else {
+                    location.href = `/chat/list`
+                }
+            })
+            break;
         default:
             console.log('알 수 없는 메뉴입니다.');
 

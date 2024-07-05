@@ -164,3 +164,9 @@ const moveLogin = () => {
     location.href = "./login";
 
 }
+
+const moveMyPage = () => {
+
+    location.href = "./myPage";
+
+}

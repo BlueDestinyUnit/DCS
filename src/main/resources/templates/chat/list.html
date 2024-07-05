@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/chat/list.css}">
+    <script defer type="text/javascript" th:src="@{/js/chat/list.js}"></script>
+</head>
+<body>
+<section layout:fragment="content">
+    <form id="demo">
+        <div class="board-container">
+            <h1>채팅방</h1>
+            <button class="produce-button">생성</button>
+        </div>
+        <div class="menu-container">
+            <div class="list-wrapper">
+                <div class="chat-list">채팅방1</div>
+                <div class="button-wrapper">
+                    <button>입장</button>
+                    <button>삭제</button>
+                </div>
+            </div>
+            <div class="list-wrapper">
+                <div class="chat-list">채팅방2</div>
+                <div class="button-wrapper">
+                    <button>입장</button>
+                    <button>삭제</button>
+                </div>
+            </div>
+            <div class="list-wrapper">
+                <div class="chat-list">채팅방3</div>
+                <div class="button-wrapper">
+                    <button>입장</button>
+                    <button>삭제</button>
+                </div>
+            </div>
+            <div class="list-wrapper">
+                <div class="chat-list">채팅방4</div>
+                <div class="button-wrapper">
+                    <button>입장</button>
+                    <button>삭제</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+</body>
+</html>

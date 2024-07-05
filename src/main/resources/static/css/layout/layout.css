@@ -109,7 +109,7 @@ input {
   transition-timing-function: ease-in;
 }
 #asideFrame > .aside {
-  background-color: #212121;
+  background-color: rgb(56, 55, 62);
   top: 0;
   left: 0;
   width: 18rem;
@@ -235,12 +235,23 @@ input {
 }
 
 #footer {
-  min-height: 10px;
+  min-height: 11rem;
 }
 #footer > .footer-section {
+  background-color: rgb(247, 247, 247);
+  border: #d1d1d1 solid 0.1rem;
+  position: relative;
+  top: 7.5rem;
   width: 100%;
+  height: 100%;
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
   align-items: center;
+}
+#footer > .footer-section > .footer-container {
+  font-size: 0.75rem;
 }
 
 /*# sourceMappingURL=layout.css.map */
