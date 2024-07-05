@@ -61,7 +61,6 @@ public class WorkController {
 //        user.setEmail("lsg9134@gmail.com");
 
 
-//         서비스에서 전체 목록 들고오기
         return workService.imageList(user.getEmail(),date);
     }
 
@@ -94,7 +93,7 @@ public class WorkController {
         responseObject.put("result", "success");
         return responseObject.toString();
     }
-    // 24-05-29 재 수정
+
 
     @RequestMapping(value = "/subImage", method = RequestMethod.GET)
     @ResponseBody

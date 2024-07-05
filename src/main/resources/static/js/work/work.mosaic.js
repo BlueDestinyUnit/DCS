@@ -30,22 +30,6 @@ function startDragging(event) {
     startY = event.offsetY;
 }
 
-// window.addEventListener('DOMContentLoaded', function() {
-//     let imageCount = document.querySelectorAll('.imageList').length;
-//     let imageCountDisplay = document.getElementById('imageCount');
-//     imageCountDisplay.textContent = "저장된 파일의 총 개수: " + imageCount
-//     console.log('rr')
-// });
-
-// document.getElementById('file').addEventListener('change', function() {
-//     let imageCount = document.querySelectorAll('.imageList').length;
-//     let imageCountDisplay = document.getElementById('imageCount');
-//     imageCountDisplay.textContent = "저장된 파일의 총 개수: " + imageCount
-//
-// });
-
-
-
 
 function drag(event) {
 
@@ -57,10 +41,7 @@ function drag(event) {
 
         ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-        // 이전 모자이크 영역을 다시 그립니다. ( 모자이크 증폭 원인 나중에 사용 할 수도 있으니 남겨놈 )
-        // mosaicAreas.forEach(area => {
-        //     applyMosaic(area.startX, area.startY, area.endX, area.endY, area.size);
-        // });
+
 
         // 현재 드래그 영역을 시각적으로 표시
         ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
@@ -197,7 +178,6 @@ document.getElementById('photoButton').addEventListener('click', function() {
 });
 
 
-// addimage 부분
 
 const workListAside = document.getElementById('workListAside');
 const photoAddButton = document.getElementById('photoAddButton');

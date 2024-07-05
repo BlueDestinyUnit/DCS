@@ -174,4 +174,8 @@ public class UserController {
     public ModelAndView getMyPage(){
         return new ModelAndView("user/myPage");
     }
+
+
+
+
 }
