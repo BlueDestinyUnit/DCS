@@ -19,8 +19,9 @@ AI에게 학습하기위한 이미지들을 정제(모자이크)하기 위한 �
 |회원|회원가입, 회원정보 수정, 로그인, 로그아웃 |UserService|
 |모자이크 API|사진 저장, 삭제, 모자이크 처리| WorkService|
 |게시판|게시판 글쓰기, 삭제, 댓글 작성|ArticleService|
-|출석(달력) API|관리자 기능|WorkService|
+|출석(달력) API|출석 확인 및 작업량 확인|WorkService|
 |채팅|실시간 채팅 구현|ChatService|
+|관리자|작업량 통계, 출석율|AdminService|
 
 
 
