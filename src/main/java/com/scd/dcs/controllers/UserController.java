@@ -2,7 +2,9 @@ package com.scd.dcs.controllers;
 
 import com.scd.dcs.config.security.domains.SecurityUser;
 import com.scd.dcs.domains.entities.EmailAuthEntity;
+import com.scd.dcs.domains.entities.UserThumbnailEntity;
 import com.scd.dcs.domains.entities.UserEntity;
+import com.scd.dcs.domains.entities.UserThumbnailEntity;
 import com.scd.dcs.domains.vos.PaymentVo;
 import com.scd.dcs.domains.vos.UserPaymentVo;
 import com.scd.dcs.domains.vos.UserProperty;
@@ -16,11 +18,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -221,6 +226,56 @@ public class UserController {
         return modelAndView;
     }
 
+
+    @RequestMapping(value = "/thumbnail", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<byte[]> getImage(@RequestParam("index") int index) {
+        UserThumbnailEntity image = this.userService.getImage(index);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(image.getContentType()))
+                .contentLength(image.getImageData().length)
+                .body(image.getImageData());
+    }
+
+//    @RequestMapping(value = "/saveThumbnail", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseBody
+//    public String postIndex(Authentication authentication,
+//                            @RequestParam("images") MultipartFile[] images
+//    ) throws IOException {
+//        UserThumbnailEntity[] userThumbnailEntities = new UserThumbnailEntity[images.length];
+////        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+////        UserEntity user = securityUser.getUserEntity();
+//        userService.saveThumbnail(images);
+//
+//
+//        for (int i = 0; i < images.length; i++) {
+//            userThumbnailEntities[i] = new UserThumbnailEntity();
+//            userThumbnailEntities[i].setImageData(images[i].getBytes());
+//            userThumbnailEntities[i].setContentType(images[i].getContentType());
+//        }
+//        System.out.println();
+//        JSONObject responseObject = new JSONObject();
+//        responseObject.put("result", "success");
+//        return responseObject.toString();
+//    }
+
+    @RequestMapping(value = "/saveThumbnail", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String postIndex(Authentication authentication,
+                            @RequestParam("images") MultipartFile[] images
+    ) throws IOException {
+
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
+
+
+        userService.saveThumbnail(user, images);
+
+        JSONObject responseObject = new JSONObject();
+        responseObject.put("result", "success");
+        return responseObject.toString();
+    }
 
 
 

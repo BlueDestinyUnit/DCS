@@ -1,8 +1,6 @@
 package com.scd.dcs.services;
 
-import com.scd.dcs.domains.entities.AttendanceEntity;
-import com.scd.dcs.domains.entities.EmailAuthEntity;
-import com.scd.dcs.domains.entities.UserEntity;
+import com.scd.dcs.domains.entities.*;
 import com.scd.dcs.domains.vos.UserPaymentVo;
 import com.scd.dcs.domains.vos.UserProperty;
 import com.scd.dcs.mappers.AdminMapper;
@@ -25,9 +23,11 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.LocalDate;
@@ -320,4 +320,41 @@ public class UserService {
         return userPayment;
     }
 
+
+
+//    @Transactional
+//    public String saveThumbnail(MultipartFile[] images) throws IOException{
+////        UserThumbnailEntity userThumbnailEntity = userMapper.findWorkByDateAndUser(user.getEmail());
+////        if (userThumbnailEntity == null) {
+////            userThumbnailEntity = new UserThumbnailEntity();
+////            userThumbnailEntity.setUserEmail(user.getEmail());
+////            userMapper.insertUserThumbnail(userThumbnailEntity);
+////        }
+//
+//        for (MultipartFile image : images) {
+//            UserThumbnailEntity userThumbnailEntity = new UserThumbnailEntity();
+//            userThumbnailEntity.setContentType(image.getContentType());
+//            userThumbnailEntity.setImageData(image.getBytes());
+//            userThumbnailEntity.setImageName(image.getOriginalFilename());
+//            userMapper.insertUserThumbnail(userThumbnailEntity);
+//        }
+//        return "{\"result\": \"success\"}";
+//
+//    }
+
+    @Transactional
+    public void saveThumbnail(UserEntity user, MultipartFile[] images) throws IOException {
+        for (MultipartFile image : images) {
+            UserThumbnailEntity userThumbnailEntity = new UserThumbnailEntity();
+            userThumbnailEntity.setUserEmail(user.getEmail());
+            userThumbnailEntity.setContentType(image.getContentType());
+            userThumbnailEntity.setImageData(image.getBytes());
+            userThumbnailEntity.setImageName(image.getOriginalFilename());
+            userMapper.insertUserThumbnail(userThumbnailEntity);
+        }
+    }
+
+    public UserThumbnailEntity getImage(int index) {
+        return this.userMapper.selectThumbnail(index);
+    }
 }

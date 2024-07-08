@@ -2,10 +2,13 @@ package com.scd.dcs.mappers;
 
 import com.scd.dcs.domains.entities.EmailAuthEntity;
 import com.scd.dcs.domains.entities.UserEntity;
+import com.scd.dcs.domains.entities.UserThumbnailEntity;
+import com.scd.dcs.domains.entities.WorkEntity;
 import com.scd.dcs.domains.vos.UserPaymentVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.security.core.parameters.P;
+
+import java.time.LocalDate;
 
 @Mapper
 public interface UserMapper {
@@ -33,4 +36,10 @@ public interface UserMapper {
 
     UserPaymentVo selectUserPayment(@Param("email") String email,
                                       @Param("date") String date);
+
+    int insertUserThumbnail(UserThumbnailEntity userThumbnail);
+
+    UserThumbnailEntity selectThumbnail(@Param("index")int index);
+
+    UserThumbnailEntity findWorkByDateAndUser(@Param("userEmail") String userEmail);
 }
