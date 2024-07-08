@@ -21,9 +21,7 @@ AI에게 학습하기위한 이미지들을 정제(모자이크)하기 위한 �
 |게시판|게시판 글쓰기, 삭제, 댓글 작성|ArticleService|
 |출석(달력) API|출석 확인 및 작업량 확인|WorkService|
 |채팅|실시간 채팅 구현|ChatService|
-|관리자|작업량 통계, 출석율|AdminService|
-
-
+|관리자|작업량 통계, 출석률|AdminService|
 
 ## 일지
 |주차|내용|비고|
