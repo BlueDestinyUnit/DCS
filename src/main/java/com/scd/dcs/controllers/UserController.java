@@ -2,6 +2,7 @@ package com.scd.dcs.controllers;
 
 import com.scd.dcs.config.security.domains.SecurityUser;
 import com.scd.dcs.domains.entities.EmailAuthEntity;
+import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.UserEntity;
 import com.scd.dcs.domains.vos.Progress;
 import com.scd.dcs.domains.vos.UserPaymentVo;
@@ -225,7 +226,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/feedbackList", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getFeedback(@RequestParam(value = "date", required = false) String date, Authentication authentication) {
+    public ModelAndView getFeedbackList(@RequestParam(value = "date", required = false) String date, Authentication authentication) {
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
         UserEntity user = securityUser.getUserEntity();
         if (date == null || date.isEmpty()) {
@@ -235,8 +236,22 @@ public class UserController {
         }
         Progress[] progressList = this.workService.countSubmitImageOfDay(date, user);
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("date", date);
         modelAndView.addObject("progressList", progressList);
         modelAndView.setViewName("user/feedbackList");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/feedback", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getFeedback(@RequestParam(value = "date", required = false) String date, Authentication authentication) {
+        System.out.println(date);
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
+        SubmitImageEntity[] images = this.workService.imageList(user.getEmail(), date);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("date", date);
+        modelAndView.addObject("imageList", images);
+        modelAndView.setViewName("user/feedback");
         return modelAndView;
     }
 
