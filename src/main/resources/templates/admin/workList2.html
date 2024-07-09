@@ -21,7 +21,7 @@
                 <h2 class="dateValue" id="dateValue" th:text="${#strings.substring(date, 0, 4)} + '년 ' + ${#strings.substring(date, 5, 7)} + '월 ' + ${#strings.substring(date, 8, 10)} + '일'"></h2>
             </div>
             <div class="userBoard">
-                <h2 id="userValue" th:text="${user} + ' 님'"></h2>
+                <h2 id="userValue" th:text="${user}"></h2>
             </div>
         </div>
         <div class="container">

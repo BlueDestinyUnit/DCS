@@ -49,21 +49,22 @@ nextButtons.forEach(button => {
         const month = parts[1];
         const day = parts[2];
         const nextDay = String(parseInt(day) + 1).padStart(2, '0');
-        if (nextDay > 0) {  // 그 달 최대일보다 작다면으로 수정
+        const daysInMonth = new Date(year, month, 0).getDate();
+
+        if (nextDay <= daysInMonth) {
             const nextDate = year + '-' + month + '-' + nextDay;
             window.location.href = `/user/feedback?date=${nextDate}`;
         } else {
-            const intNextMonth = parseInt(month) - 1;
-            const daysInMonth = new Date(year, intNextMonth, 0).getDate();
+            const intNextMonth = parseInt(month) + 1;
             const nextMonth = String(intNextMonth).padStart(2, '0');
-            const nextDate = year + '-' + nextMonth + '-' + daysInMonth;
+            const nextDate = year + '-' + nextMonth + '-' + '01';
             window.location.href = `/user/feedback?date=${nextDate}`;
 
-            if (nextMonth > 0) {
+            if (nextMonth <= 12) {
                 return;
             } else {
-                const nextYear = String( parseInt(year) - 1);
-                const nextDate = nextYear + '-' + 12 + '-' + 31;
+                const nextYear = String( parseInt(year) + 1);
+                const nextDate = nextYear + '-' + '01' + '-' + '01';
                 window.location.href = `/user/feedback?date=${nextDate}`;
             }
         }

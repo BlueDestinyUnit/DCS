@@ -35,7 +35,8 @@ $(document).ready(function () {
 
     const month = demo.querySelector('.date-value').value;
     const table = demo.querySelector('#table');
-    const rows = table.querySelectorAll('tr');
+    const tbody = demo.querySelector('#tbody');
+    const rows = tbody.querySelectorAll('tr');
     rows.forEach(row => {
         row.addEventListener('click', function () {
                 const day = this.getAttribute('data-index');

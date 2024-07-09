@@ -46,12 +46,12 @@
                 <caption class="a11y-hidden">Table Caption</caption>
                 <thead>
                 <tr>
-                    <th class="fix" scope="col">날짜</th>
+                    <th class="fix" scope="col">(日)</th>
                     <th class="fix" scope="col">작업량</th>
                     <th class="fix" scope="col">불용</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="tbody">
                 <tr class="spacer"></tr> <!-- 간격을 위한 빈 행 -->
                 <tr th:each="progress, iterStat : ${progressList}" th:attr="data-index=${iterStat.index}">
                     <td class="first-td" th:text="${iterStat.index + 1} + '일'"></td>
