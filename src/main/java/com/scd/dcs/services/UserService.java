@@ -1,8 +1,6 @@
 package com.scd.dcs.services;
 
-import com.scd.dcs.domains.entities.AttendanceEntity;
-import com.scd.dcs.domains.entities.EmailAuthEntity;
-import com.scd.dcs.domains.entities.UserEntity;
+import com.scd.dcs.domains.entities.*;
 import com.scd.dcs.domains.vos.UserPaymentVo;
 import com.scd.dcs.domains.vos.UserProperty;
 import com.scd.dcs.mappers.AdminMapper;
@@ -25,9 +23,11 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.LocalDate;
@@ -320,4 +320,37 @@ public class UserService {
         return userPayment;
     }
 
+
+
+    @Transactional
+    public Result<?> saveThumbnail(UserEntity user,UserThumbnailEntity userThumbnailEntity, MultipartFile[] images) throws IOException {
+        int result = 0;
+        for (MultipartFile image : images) {
+            userThumbnailEntity.setUserEmail(user.getEmail());
+            userThumbnailEntity.setContentType(image.getContentType());
+            userThumbnailEntity.setImageData(image.getBytes());
+            userThumbnailEntity.setImageName(image.getOriginalFilename());
+            result = userMapper.insertUserThumbnail(userThumbnailEntity);
+            System.out.println("method :" + userThumbnailEntity);
+        }
+
+        return result > 0 ? CommonResult.SUCCESS : CommonResult.FAILURE;
+    }
+
+
+    public UserThumbnailEntity getImage(int index) {
+        return this.userMapper.selectThumbnail(index);
+    }
+
+    public UserThumbnailEntity getImage(String email) {
+        return this.userMapper.findThumbnail(email);
+    }
+
+    @Transactional
+    public Result<?> updateImage(UserThumbnailEntity userThumbnailEntity, MultipartFile[] images) throws IOException {
+        userThumbnailEntity.setContentType(images[0].getContentType());
+        userThumbnailEntity.setImageData(images[0].getBytes());
+        userThumbnailEntity.setImageName(images[0].getOriginalFilename());
+        return this.userMapper.updateUserThumbnail(userThumbnailEntity) > 0 ? CommonResult.SUCCESS : CommonResult.FAILURE;
+    }
 }

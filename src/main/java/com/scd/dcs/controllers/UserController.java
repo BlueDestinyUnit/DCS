@@ -2,10 +2,13 @@ package com.scd.dcs.controllers;
 
 import com.scd.dcs.config.security.domains.SecurityUser;
 import com.scd.dcs.domains.entities.EmailAuthEntity;
+import com.scd.dcs.domains.entities.UserThumbnailEntity;
 import com.scd.dcs.domains.entities.UserEntity;
+import com.scd.dcs.domains.entities.UserThumbnailEntity;
 import com.scd.dcs.domains.vos.PaymentVo;
 import com.scd.dcs.domains.vos.UserPaymentVo;
 import com.scd.dcs.domains.vos.UserProperty;
+import com.scd.dcs.mappers.UserMapper;
 import com.scd.dcs.results.CommonResult;
 import com.scd.dcs.results.Result;
 import com.scd.dcs.services.AdminService;
@@ -16,11 +19,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -32,11 +38,13 @@ public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
     private final AdminService adminService;
+    private final UserMapper userMapper;
 
     @Autowired
-    public UserController(UserService userService, AdminService adminService) {
+    public UserController(UserService userService, AdminService adminService, UserMapper userMapper) {
         this.userService = userService;
         this.adminService = adminService;
+        this.userMapper = userMapper;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
@@ -219,6 +227,62 @@ public class UserController {
         modelAndView.addObject("paymentList", paymentList);
         modelAndView.setViewName("user/salary");
         return modelAndView;
+    }
+
+
+
+
+    @RequestMapping(value = "/thumbnail", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<byte[]> getImage(@RequestParam("index") int index) {
+        UserThumbnailEntity image = this.userService.getImage(index);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(image.getContentType()))
+                .contentLength(image.getImageData().length)
+                .body(image.getImageData());
+    }
+
+    @RequestMapping(value = "/saveThumbnail", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String postIndex(Authentication authentication,
+                            @RequestParam("images") MultipartFile[] images
+    ) throws IOException {
+
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
+        UserThumbnailEntity userThumbnailEntity = userService.getImage(user.getEmail());
+        Result<?>  result;
+        if(userThumbnailEntity == null) {
+            userThumbnailEntity = new UserThumbnailEntity();
+            result = userService.saveThumbnail(user,userThumbnailEntity, images);
+            System.out.println(userThumbnailEntity);
+        }else {
+            result = userService.updateImage(userThumbnailEntity,images);
+        }
+        System.out.println("user dfdsaf :" + userThumbnailEntity);
+        JSONObject responseObject = new JSONObject();
+        responseObject.put("result", result.name().toLowerCase());
+        responseObject.put("index",userThumbnailEntity.getIndex());
+        return responseObject.toString();
+    }
+
+
+    @RequestMapping(value = "/findThumbnail", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String findThumbnail(Authentication authentication) {
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        UserEntity user = securityUser.getUserEntity();
+        UserThumbnailEntity userThumbnailEntity = userMapper.findThumbnail(user.getEmail());
+        JSONObject jsonObject = new JSONObject();
+        if(userThumbnailEntity == null) {
+            jsonObject.put("index", 0);
+        }else {
+            jsonObject.put("index", userThumbnailEntity.getIndex());
+        }
+
+
+        return jsonObject.toString();
     }
 
 
