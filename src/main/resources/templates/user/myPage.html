@@ -30,6 +30,11 @@
             <span class="__text">내 닉네임</span>
             <input class="form-control" th:value ="${user.getNickname()}" name="nickname">
         </label>
+<!--        <label class="_obj-label label" rel="myPasswordLabel">-->
+<!--            <span class="__text">내 비밀번호</span>-->
+<!--            <input class="myPassword" value="*******" name="password">-->
+<!--            <a class="link" th:href="@{/user/resetPassword}">비밀번호 수정</a>-->
+<!--        </label>-->
         <label class="_obj-label label" rel="myTelLabel">
             <span class="__text">내 연락처</span>
             <input class="form-control" th:value ="${user.getTel()}" name="tel">
@@ -39,6 +44,10 @@
             <input class="form-control" th:value ="${user.getAddress()}" name="address">
         </label>
         <button class="_obj-button" rel="modifyPasswordButton" type="button">
+            <i class="__icon"></i>
+            <span class="__text">비밀번호 수정하기</span>
+        </button>
+        <button class="_obj-button" rel="modifyButton" type="button">
             <i class="__icon"></i>
             <span class="__text">비밀번호 수정하기</span>
         </button>

@@ -134,8 +134,6 @@ saveForm.onclick = function (e) {
             formData.append('dragCount', dragCount);
             formData.append('images', blob,selectImageName.innerText);
 
-
-
             // 서버로 FormData 전송
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
@@ -147,12 +145,7 @@ saveForm.onclick = function (e) {
                 }
                 const responseObject = JSON.parse(xhr.responseText);
 
-
                 loadWorkList();
-
-
-
-
 
             }
             xhr.open('POST', './updateImage');
@@ -344,23 +337,6 @@ function loadImageListCount(length) {
     // let modifiedCountDisplay = document.getElementById('modifiedCount');
     imageCountDisplay.textContent = "저장된 파일의 총 개수: " + length
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

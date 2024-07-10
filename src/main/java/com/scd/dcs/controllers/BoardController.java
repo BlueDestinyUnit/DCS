@@ -31,7 +31,6 @@ public class BoardController {
 
     @RequestMapping(value = "/list",method = RequestMethod.GET,produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getList(@RequestParam(value = "page", required = false, defaultValue = "1") int page, BoardVo board){
-        System.out.println(1);
         ModelAndView modelAndView = new ModelAndView();
         if(board.getCode() == null){
             board.setCode("free");

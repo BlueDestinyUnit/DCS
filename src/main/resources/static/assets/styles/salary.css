@@ -32,6 +32,11 @@
   flex-direction: column;
   gap: 1rem;
 }
+#demo .text {
+  position: relative;
+  left: 0.25rem;
+  margin-bottom: 0.5rem;
+}
 
 th, td {
   width: 25%; /* 각 셀의 너비를 25%로 설정 (4개의 열이 있다면 각 열은 동일한 너비를 가짐) */
@@ -251,12 +256,6 @@ button.blue:active {
   background-color: #fff; /* 배경색을 하얀색으로 설정 */
   color: #000; /* 글자색을 검은색으로 설정 */
   border-color: #ccc; /* 테두리 색상 설정 */
-}
-
-.text {
-  position: relative;
-  left: 0.25rem;
-  margin-bottom: 0.5rem;
 }
 
 .datepicker-dropdown {

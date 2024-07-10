@@ -22,10 +22,6 @@ class DialogObj {
         });
     }
 
-
-
-
-
     element;
 
     constructor(params) {
