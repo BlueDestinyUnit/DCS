@@ -16,7 +16,7 @@ public class UserEntity {
     private String nickname;
     private String tel;
     private String address;
-    private String role;
-    private String workType; // 정규직인지 비정규직인지
+    private String role = "USER";
+    private String workType = "part"; // 정규직인지 비정규직인지
     private boolean isInsurance; // 보험이 있는 지 없는 지
 }

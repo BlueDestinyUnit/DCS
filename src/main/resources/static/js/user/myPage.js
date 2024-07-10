@@ -7,12 +7,12 @@ infoForm.myTelLabelObj = new LabelObj(infoForm.querySelector('[rel="myTelLabel"]
 infoForm.myAddressLabelObj = new LabelObj(infoForm.querySelector('[rel="myAddressLabel"]'));
 
 function modifyInfo() {
+    alert(1);
     const xhr = new XMLHttpRequest();
     const formData = new FormData();
     formData.append('email', infoForm['email'].value);
     formData.append('name', infoForm['name'].value);
     formData.append('nickname', infoForm['nickname'].value);
-    formData.append('password', infoForm['password'].value);
     formData.append('tel', infoForm['tel'].value);
     formData.append('address', infoForm['address'].value);
     xhr.onreadystatechange = function () {

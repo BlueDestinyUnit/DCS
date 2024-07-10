@@ -124,8 +124,6 @@ registerForm.onsubmit = (e) => {
             failure: ['경고', '알 수 없는 이유로 회원가입에 실패하였습니다. 잠시 후 다시 시도해 주세요.'],
             failure_duplicate_email: ['경고', `입력하신 이메일 <b>${registerForm['email'].value}</b>은 이미 사용 중입니다.`, () => registerForm['email'].focus()],
 
-            failure_duplicate_name: ['경고', `입력하신 이메일 <b>${registerForm['name'].value}</b>은 이미 사용 중입니다.`, () => registerForm['name'].focus()],
-
             failure_duplicate_nickname: ['경고', `입력하신 닉네임 <b>${registerForm['nickname'].value}</b>은 이미 사용 중입니다.`, () => registerForm['nickname'].focus()],
 
             failure_duplicate_tel: ['경고', `입력하신 연락처 <b>${registerForm['tel'].value}</b>은 이미 사용 중입니다.`, () => registerForm['tel'].focus()],

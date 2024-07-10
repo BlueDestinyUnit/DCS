@@ -200,6 +200,8 @@ public class UserController {
     public String modifyMyPage(Authentication authentication, UserEntity user) {
         UserEntity sessionUser = ((SecurityUser) authentication.getPrincipal()).getUserEntity();
         Result<?> result = this.userService.modifyInfo(user);
+        System.out.println("User"+user);
+        System.out.println(result);
         if (result == CommonResult.SUCCESS) {
             sessionUser.setNickname(user.getNickname());
             sessionUser.setName(user.getName());
@@ -303,19 +305,13 @@ public class UserController {
     public String findThumbnail(Authentication authentication) {
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
         UserEntity user = securityUser.getUserEntity();
-        UserThumbnailEntity userThumbnailEntity = userMapper.findThumbnail(user.getEmail());
+        UserThumbnailEntity userThumbnailEntity = this.userService.findThumbnailByEmail(user.getEmail());
         JSONObject jsonObject = new JSONObject();
         if(userThumbnailEntity == null) {
             jsonObject.put("index", 0);
         }else {
             jsonObject.put("index", userThumbnailEntity.getIndex());
         }
-
-
         return jsonObject.toString();
     }
-
-
-
-
 }
