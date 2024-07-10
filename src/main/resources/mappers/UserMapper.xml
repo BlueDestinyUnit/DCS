@@ -13,6 +13,18 @@
         VALUES (#{email},  #{password}, #{name}, #{nickname}, #{tel}, #{address}, #{role}, #{workType}, #{isInsurance})
     </insert>
 
+    <insert id="insertUserThumbnail"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="UserThumbnailEntity">
+        INSERT INTO `dcs`.user_thumbnail(`index`, `user_email`, `content_type`, `image_name`, `image_data`)
+        VALUES (#{index},#{userEmail},#{contentType},#{imageName},#{imageData})
+    </insert>
+
+
+
+
     <select id="selectUsers" resultType="UserEntity">
         SELECT `email`        AS `email`,
                `password`     AS `password`,
@@ -128,6 +140,38 @@
           AND BINARY `user`.`role` = 'USER'
     </select>
 
+    <select id="selectThumbnail" resultType="UserThumbnailEntity">
+        SELECT
+            thumbnaail.`index`                   AS    `index`,
+            thumbnaail.`user_email`              AS    `userEmail`,
+            thumbnaail.`content_type`            AS    `contentType`,
+            thumbnaail.`image_name`              AS    `imageName`,
+            thumbnaail.`image_data`              AS    `imageData`
+        FROM `dcs`.`user_thumbnail` AS `thumbnaail`
+        WHERE `index` = #{index}
+    </select>
+
+    <select id="findThumbnail" resultType="UserThumbnailEntity">
+        SELECT  `index`                   AS    `index`,
+                `user_email`              AS    `userEmail`,
+                `content_type`            AS    `contentType`,
+                `image_name`              AS    `imageName`,
+                `image_data`              AS    `imageData`
+        FROM `dcs`.`user_thumbnail`
+        WHERE `user_email` = #{userEmail}
+        LIMIT 1
+    </select>
+
+    <update id="updateUserThumbnail" parameterType="UserThumbnailEntity">
+        UPDATE `dcs`.`user_thumbnail`
+        SET
+            `content_type`            = #{contentType},
+            `image_name`              = #{imageName},
+            `image_data`              = #{imageData}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+
     <update id="updateEmailAuth" parameterType="EmailAuthEntity">
         UPDATE `dcs`.`email_auths`
         SET `created_at`  = #{createdAt},
@@ -154,6 +198,8 @@
         WHERE BINARY `email` = #{email}
         LIMIT 1
     </update>
+
+
 
 
 </mapper>

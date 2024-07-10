@@ -23,7 +23,9 @@ public interface WorkMapper{
 
     Progress countSubmitImageOfYear(@Param("year") String year);
 
-    Progress[] countSubmitImageOfDay(@Param("day") String day);
+    Progress[] countSubmitImageOfDayList(@Param("day") String day);
+
+    Progress countSubmitImageOfDay(@Param("day") String day, @Param("email") String email);
 
     SubmitImageEntity selectSubmitImage(@Param("index")int index);
 
@@ -31,11 +33,6 @@ public interface WorkMapper{
 
     WorkEntity findWorkByDateAndUser(@Param("date") LocalDate date, @Param("userEmail") String userEmail);
 
-//    int countNonMosaicImages(@Param("email") String email, @Param("date") String date);
-//
-//    int mosaicImages(@Param("date") String date);
-//
-//    SubmitImageEntity[] findSubmitImageByWorkIndex(@Param("index") int index);
     int updateImage(SubmitImageEntity submitImageEntity);
 
 

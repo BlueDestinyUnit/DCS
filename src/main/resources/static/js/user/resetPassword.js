@@ -65,7 +65,7 @@ resetPasswordForm['emailVerify'].onclick = () => {
                 resetPasswordForm['emailCode'].value = '';
                 resetPasswordForm['emailVerify'].disable();
             }],
-            success: ['알림', '이메일 인증이 완료되었습니다. 회원가입을 계속해 주세요.', () => {
+            success: ['알림', '이메일 인증이 완료되었습니다. 비밀번호 수정을 계속해 주세요.', () => {
                 resetPasswordForm['emailCode'].disable();
                 resetPasswordForm['emailVerify'].disable();
                 resetPasswordForm['nickname'].focus();
