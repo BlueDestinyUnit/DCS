@@ -322,39 +322,35 @@ public class UserService {
 
 
 
-//    @Transactional
-//    public String saveThumbnail(MultipartFile[] images) throws IOException{
-////        UserThumbnailEntity userThumbnailEntity = userMapper.findWorkByDateAndUser(user.getEmail());
-////        if (userThumbnailEntity == null) {
-////            userThumbnailEntity = new UserThumbnailEntity();
-////            userThumbnailEntity.setUserEmail(user.getEmail());
-////            userMapper.insertUserThumbnail(userThumbnailEntity);
-////        }
-//
-//        for (MultipartFile image : images) {
-//            UserThumbnailEntity userThumbnailEntity = new UserThumbnailEntity();
-//            userThumbnailEntity.setContentType(image.getContentType());
-//            userThumbnailEntity.setImageData(image.getBytes());
-//            userThumbnailEntity.setImageName(image.getOriginalFilename());
-//            userMapper.insertUserThumbnail(userThumbnailEntity);
-//        }
-//        return "{\"result\": \"success\"}";
-//
-//    }
-
     @Transactional
-    public void saveThumbnail(UserEntity user, MultipartFile[] images) throws IOException {
+    public Result<?> saveThumbnail(UserEntity user,UserThumbnailEntity userThumbnailEntity, MultipartFile[] images) throws IOException {
+        int result = 0;
         for (MultipartFile image : images) {
-            UserThumbnailEntity userThumbnailEntity = new UserThumbnailEntity();
             userThumbnailEntity.setUserEmail(user.getEmail());
             userThumbnailEntity.setContentType(image.getContentType());
             userThumbnailEntity.setImageData(image.getBytes());
             userThumbnailEntity.setImageName(image.getOriginalFilename());
-            userMapper.insertUserThumbnail(userThumbnailEntity);
+            result = userMapper.insertUserThumbnail(userThumbnailEntity);
+            System.out.println("method :" + userThumbnailEntity);
         }
+
+        return result > 0 ? CommonResult.SUCCESS : CommonResult.FAILURE;
     }
+
 
     public UserThumbnailEntity getImage(int index) {
         return this.userMapper.selectThumbnail(index);
+    }
+
+    public UserThumbnailEntity getImage(String email) {
+        return this.userMapper.findThumbnail(email);
+    }
+
+    @Transactional
+    public Result<?> updateImage(UserThumbnailEntity userThumbnailEntity, MultipartFile[] images) throws IOException {
+        userThumbnailEntity.setContentType(images[0].getContentType());
+        userThumbnailEntity.setImageData(images[0].getBytes());
+        userThumbnailEntity.setImageName(images[0].getOriginalFilename());
+        return this.userMapper.updateUserThumbnail(userThumbnailEntity) > 0 ? CommonResult.SUCCESS : CommonResult.FAILURE;
     }
 }

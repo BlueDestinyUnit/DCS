@@ -13,7 +13,11 @@
         VALUES (#{email},  #{password}, #{name}, #{nickname}, #{tel}, #{address}, #{role}, #{workType}, #{isInsurance})
     </insert>
 
-    <insert id="insertUserThumbnail" parameterType="com.scd.dcs.domains.entities.UserThumbnailEntity">
+    <insert id="insertUserThumbnail"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="UserThumbnailEntity">
         INSERT INTO `dcs`.user_thumbnail(`index`, `user_email`, `content_type`, `image_name`, `image_data`)
         VALUES (#{index},#{userEmail},#{contentType},#{imageName},#{imageData})
     </insert>
@@ -136,7 +140,7 @@
           AND BINARY `user`.`role` = 'USER'
     </select>
 
-    <select id="selectThumbnail" resultType="com.scd.dcs.domains.entities.UserThumbnailEntity">
+    <select id="selectThumbnail" resultType="UserThumbnailEntity">
         SELECT
             thumbnaail.`index`                   AS    `index`,
             thumbnaail.`user_email`              AS    `userEmail`,
@@ -144,11 +148,10 @@
             thumbnaail.`image_name`              AS    `imageName`,
             thumbnaail.`image_data`              AS    `imageData`
         FROM `dcs`.`user_thumbnail` AS `thumbnaail`
-            LEFT JOIN `dcs`.user AS `user` on `user`.`email` = `thumbnaail`.`user_email`
-        WHERE `email` = #{email}
+        WHERE `index` = #{index}
     </select>
 
-    <select id="findWorkByDateAndUser" resultType="com.scd.dcs.domains.entities.UserThumbnailEntity">
+    <select id="findThumbnail" resultType="UserThumbnailEntity">
         SELECT  `index`                   AS    `index`,
                 `user_email`              AS    `userEmail`,
                 `content_type`            AS    `contentType`,
@@ -158,6 +161,16 @@
         WHERE `user_email` = #{userEmail}
         LIMIT 1
     </select>
+
+    <update id="updateUserThumbnail" parameterType="UserThumbnailEntity">
+        UPDATE `dcs`.`user_thumbnail`
+        SET
+            `content_type`            = #{contentType},
+            `image_name`              = #{imageName},
+            `image_data`              = #{imageData}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
 
     <update id="updateEmailAuth" parameterType="EmailAuthEntity">
         UPDATE `dcs`.`email_auths`

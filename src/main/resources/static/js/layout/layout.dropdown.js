@@ -1,3 +1,5 @@
+let userThumbnail = document.querySelector('.thumbnail');
+
 document.getElementById("uploadLink").addEventListener("click", function(e) {
     e.preventDefault();
 
@@ -25,10 +27,16 @@ document.getElementById("uploadLink").addEventListener("click", function(e) {
                 alert("업로드 실패");
                 return;
             }
-            alert("업로드 성공");
+            const jsonObject = JSON.parse(xhr.responseText);
+            console.log(jsonObject);
+            if(jsonObject['result'] === 'success') {
+                userThumbnail.src = `/user/thumbnail?index=${jsonObject['index']}`;    
+            }else {
+                alert('실패')
+            }
         };
-
-        xhr.open('POST', './main/saveThumbnail');
+        xhr.open('POST', '/user/saveThumbnail');
         xhr.send(formData);
     });
 });
+

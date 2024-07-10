@@ -41,5 +41,7 @@ public interface UserMapper {
 
     UserThumbnailEntity selectThumbnail(@Param("index")int index);
 
-    UserThumbnailEntity findWorkByDateAndUser(@Param("userEmail") String userEmail);
+    UserThumbnailEntity findThumbnail(@Param("userEmail") String userEmail);
+
+    int updateUserThumbnail(UserThumbnailEntity userThumbnail);
 }
