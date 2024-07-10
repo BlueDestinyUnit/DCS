@@ -104,9 +104,6 @@ public class UserService {
         if (this.userMapper.selectUserByEmail(user.getEmail()) != null) {
             return RegisterResult.FAILURE_DUPLICATE_EMAIL;
         }
-        if (this.userMapper.selectUserByName(user.getName()) != null) {
-            return RegisterResult.FAILURE_DUPLICATE_NAME;
-        }
         if (this.userMapper.selectUserByNickname(user.getNickname()) != null) {
             return RegisterResult.FAILURE_DUPLICATE_NICKNAME;
         }
@@ -297,6 +294,7 @@ public class UserService {
     public Result<?> modifyInfo(UserEntity user){
         UserEntity dbUser = this.userMapper.selectUserByEmail(user.getEmail());
         if(dbUser == null){
+            System.out.println(1);
             return CommonResult.FAILURE;
         }
         dbUser.setNickname(user.getNickname());
@@ -345,6 +343,11 @@ public class UserService {
     public UserThumbnailEntity getImage(String email) {
         return this.userMapper.findThumbnail(email);
     }
+
+    public UserThumbnailEntity findThumbnailByEmail(String email){
+        return this.userMapper.findThumbnail(email);
+    }
+
 
     @Transactional
     public Result<?> updateImage(UserThumbnailEntity userThumbnailEntity, MultipartFile[] images) throws IOException {

@@ -10,9 +10,9 @@
     <title>내 정보</title>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/styles/common.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/assets/styles/myPage.css}">
-    <script th:src="@{/js/user/button2.js}" defer type="text/javascript"></script>
     <script defer type="text/javascript" th:src="@{/js/user/common.js}"></script>
     <script defer type="text/javascript" th:src="@{/js/user/myPage.js}"></script>
+    <script th:src="@{/js/user/modifyButton.js}" defer type="text/javascript"></script>
 </head>
 <body>
 <section id="myPageSection" layout:fragment="content">
@@ -20,15 +20,15 @@
     <form novalidate class="dialog" id="infoForm">
         <label class="_obj-label label" rel="myEmailLabel">
             <span class="__text">내 이메일</span>
-            <input disabled class="form-control" value="gyust941326@gmail.com" name="email">
+            <input disabled class="form-control" th:value="${#authentication.getPrincipal().getUserEntity().getEmail()}" name="email">
         </label>
         <label class="_obj-label label" rel="myNameLabel">
             <span class="__text">내 이름</span>
-            <input class="form-control" th:value="${user.getName()}" name="name">
+            <input class="form-control" th:value="${#authentication.getPrincipal().getUserEntity().getName()}" name="name">
         </label>
         <label class="_obj-label label" rel="myNicknameLabel">
             <span class="__text">내 닉네임</span>
-            <input class="form-control" th:value ="${user.getNickname()}" name="nickname">
+            <input class="form-control" th:value ="${#authentication.getPrincipal().getUserEntity().getNickname()}" name="nickname">
         </label>
 <!--        <label class="_obj-label label" rel="myPasswordLabel">-->
 <!--            <span class="__text">내 비밀번호</span>-->
@@ -37,17 +37,13 @@
 <!--        </label>-->
         <label class="_obj-label label" rel="myTelLabel">
             <span class="__text">내 연락처</span>
-            <input class="form-control" th:value ="${user.getTel()}" name="tel">
+            <input class="form-control" th:value ="${#authentication.getPrincipal().getUserEntity().getTel()}" name="tel">
         </label>
         <label class="_obj-label label" rel="myAddressLabel">
             <span class="__text">내 주소</span>
-            <input class="form-control" th:value ="${user.getAddress()}" name="address">
+            <input class="form-control" th:value ="${#authentication.getPrincipal().getUserEntity().getAddress()}" name="address">
         </label>
         <button class="_obj-button" rel="modifyPasswordButton" type="button">
-            <i class="__icon"></i>
-            <span class="__text">비밀번호 수정하기</span>
-        </button>
-        <button class="_obj-button" rel="modifyButton" type="button">
             <i class="__icon"></i>
             <span class="__text">비밀번호 수정하기</span>
         </button>

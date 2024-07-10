@@ -39,9 +39,8 @@
                 Centered dropdown
             </button>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">자유게시판</a></li>
-                <li><a class="dropdown-item" href="#">Action two</a></li>
-                <!--<a class="dropdown-item" href="#">Action three</a>-->
+                <li><a class="dropdown-item" href="/board/list">자유게시판</a></li>
+                <li><a class="dropdown-item" href="/user/myPage">내 정보</a></li>
                 <li>
                     <form class="dropdown-item" method="get" action="">
                         <input id="fileInput" hidden type="file">
@@ -77,7 +76,7 @@
                 <span class="text">작업</span>
             </a>
         </li>
-        <li class="item" data-menu-name="feedback">
+        <li class="item" data-menu-name="feedback" th:if="${#authentication.getPrincipal().getUserEntity().getRole() == 'USER'}">
             <a class="link" href="#">
                 <img alt="" class="image" th:src="@{/assets/images/feedback.png}">
                 <span class="text">피드백</span>
@@ -89,13 +88,21 @@
                 <span class="text">급여</span>
             </a>
         </li>
-        <li class="item" data-menu-name="attendance">
+        <li class="item" data-menu-name="attendance" th:if="${#authentication.getPrincipal().getUserEntity().getRole() == 'USER'}">
             <a class="link" href="#">
                 <img alt="" class="image" th:src="@{/assets/images/attendance.png}">
                 <span class="text">출석 현황</span>
             </a>
         </li>
-        <li class="item" data-menu-name="my">
+        <li class="item" data-menu-name="attendance" th:if="${#authentication.getPrincipal().getUserEntity().getRole() == 'ADMIN'}">
+            <a class="link" href="#">
+                <img alt="" class="image" th:src="@{/assets/images/attendance.png}">
+                <span class="text">출석 및 작업량</span>
+            </a>
+        </li>
+
+
+        <li class="item" data-menu-name="my" th:if="${#authentication.getPrincipal().getUserEntity().getRole() == 'USER'}" >
             <a class="link" href="#">
                 <img alt="" class="image" th:src="@{/assets/images/user.png}">
                 <span class="text">내 정보</span>
