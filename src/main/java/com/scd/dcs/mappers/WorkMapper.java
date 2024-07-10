@@ -33,11 +33,6 @@ public interface WorkMapper{
 
     WorkEntity findWorkByDateAndUser(@Param("date") LocalDate date, @Param("userEmail") String userEmail);
 
-//    int countNonMosaicImages(@Param("email") String email, @Param("date") String date);
-//
-//    int mosaicImages(@Param("date") String date);
-//
-//    SubmitImageEntity[] findSubmitImageByWorkIndex(@Param("index") int index);
     int updateImage(SubmitImageEntity submitImageEntity);
 
 

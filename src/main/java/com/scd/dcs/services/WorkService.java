@@ -52,12 +52,10 @@ public class WorkService {
             submitImageEntity.setOriginalName(image.getOriginalFilename());
             workMapper.insertSubmitImage(submitImageEntity);
         }
-        // 이미지 서비스 호출
-//        imageService.processImages(images);
 
-        // 성공 결과 반환
+
         return "{\"result\": \"success\"}";
-    } // 24-05-29 수정
+    }
 
 
     public SubmitImageEntity[] imageList(String email, String date) {
