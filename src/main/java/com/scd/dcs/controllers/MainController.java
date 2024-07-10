@@ -60,12 +60,19 @@ public class MainController {
         String day = currentDate.format(formatter2);
         Progress progress = this.workService.countSubmitImage();
         Progress progressOfYear = this.workService.countSubmitImage(year);
-        int averageSubmitImage = this.workService.averageSubmitImage(day);
+        double averageSubmitImage = this.workService.averageSubmitImage(day);
+        if (averageSubmitImage == 0 || averageSubmitImage % 1 == 0) {
+            System.out.println(averageSubmitImage);
+            modelAndView.addObject("averageSubmitImage", (int)averageSubmitImage);
+        } else {
+            System.out.println(averageSubmitImage);
+            modelAndView.addObject("averageSubmitImage", averageSubmitImage);
+        }
+
         ArticleEntity article = this.articleService.mainNoticeArticle();
         System.out.println(article);
         modelAndView.addObject("progress", progress);
         modelAndView.addObject("progressOfYear", progressOfYear);
-        modelAndView.addObject("averageSubmitImage", averageSubmitImage);
         modelAndView.addObject("article", article);
         modelAndView.setViewName("main");
         return modelAndView;

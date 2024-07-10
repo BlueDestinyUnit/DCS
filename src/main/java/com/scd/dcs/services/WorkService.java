@@ -75,7 +75,7 @@ public class WorkService {
         return this.workMapper.countSubmitImageOfYear(date);
     }
 
-    public int averageSubmitImage(String date) {
+    public double averageSubmitImage(String date) {
         Progress[] progressList = this.workMapper.countSubmitImageOfDayList(date);
         if (progressList.length == 0) {
             return 0;
@@ -85,7 +85,12 @@ public class WorkService {
                 Progress progress = progressList[i];
                 sum += progress.getCount();
             }
-            return sum / progressList.length;
+            System.out.println("sum : " + sum);
+            System.out.println("len : " + progressList.length);
+            System.out.println(sum / progressList.length);
+            double number = Math.round((double)sum / (double)progressList.length * 100) / 100.0;
+            System.out.println(number);
+            return number;
         }
     }
 

@@ -7,11 +7,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class DcsApplicationTests {
 
-
-
     @Test
     void contextLoads() {
-
+        double num = 0;
+        String aa = "11";
+        aa.length();
+        System.out.println("ayaye".substring(3));
 
     }
 

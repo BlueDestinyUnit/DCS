@@ -233,6 +233,7 @@ public class UserController {
         return modelAndView;
     }
 
+
     @RequestMapping(value = "/feedbackList", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getFeedbackList(@RequestParam(value = "date", required = false) String date, Authentication authentication) {
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
