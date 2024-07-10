@@ -22,6 +22,12 @@ menuList.forEach(item => {
                 location.href = `/work?date=${today}`
             })
             break;
+        case 'feedback':
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                location.href = `/user/feedbackList`
+            })
+            break;
         case 'payment':
             item.addEventListener('click', (e) => {
                 e.preventDefault();

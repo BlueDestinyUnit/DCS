@@ -9,7 +9,7 @@
   align-items: center;
   flex-direction: column;
   min-height: 100vh;
-  gap: 3rem;
+  gap: 5rem;
 }
 #demo .board-container {
   height: 10rem;
@@ -19,6 +19,10 @@
   flex-direction: column;
   gap: 1rem;
 }
+#demo .board-container > .dateBoard {
+  position: relative;
+  right: 4rem;
+}
 #demo .board-container > .dateBoard > .dateValue {
   color: rgb(57, 87, 108);
   font-size: 2.8rem;
@@ -26,18 +30,67 @@
   text-shadow: 0 1px 2px rgb(57, 87, 108);
   letter-spacing: 3px;
 }
-#demo .board-container > .userBoard > #userValue {
-  color: rgb(57, 87, 108);
-  font-size: 2.2rem;
-  font-weight: 300;
-  text-shadow: 0 1px 2px rgb(57, 87, 108);
-  letter-spacing: 3px;
-}
 
 .container {
-  width: 90%;
-  margin-left: 10.5rem;
-  margin-right: 10rem;
+  position: relative;
+  right: 2.3rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+.container > .arrow-prev {
+  position: relative;
+  right: 3rem;
+}
+.container > .arrow-next {
+  position: relative;
+  left: 1.3rem;
+}
+.container > .arrow-prev,
+.container .arrow-next {
+  position: relative;
+  cursor: pointer;
+  float: left;
+  border-radius: 999px;
+  width: 100px;
+  height: 100px;
+  margin-right: 5px;
+}
+.container .arrow-prev:hover::after {
+  border-top: 5px solid #a6d0ff; /* 선 두께 */
+  border-right: 5px solid #a6d0ff; /* 선 두께 */
+}
+.container .arrow-next:hover::after {
+  border-top: 5px solid #a6d0ff; /* 선 두께 */
+  border-right: 5px solid #a6d0ff; /* 선 두께 */
+}
+.container > .arrow-next {
+  position: relative;
+  right: 6rem;
+}
+.container > .arrow-prev::after {
+  position: absolute;
+  left: 35px;
+  top: 20px;
+  content: "";
+  width: 50px; /* 사이즈 */
+  height: 50px; /* 사이즈 */
+  border-top: 5px solid #d1d1d1; /* 선 두께 */
+  border-right: 5px solid #d1d1d1; /* 선 두께 */
+  transform: rotate(225deg); /* 각도 */
+}
+.container > .arrow-next::after {
+  position: absolute;
+  left: 10px;
+  top: 20px;
+  content: "";
+  width: 50px; /* 사이즈 */
+  height: 50px; /* 사이즈 */
+  border-top: 5px solid #d1d1d1; /* 선 두께 */
+  border-right: 5px solid #d1d1d1; /* 선 두께 */
+  transform: rotate(45deg); /* 각도 */
 }
 
 .button-container {
@@ -83,11 +136,73 @@ button.blue:active {
   animation: fadeIn 0.5s ease forwards; /* 페이드 인 애니메이션 적용 */
 }
 
+.div-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 3rem;
+}
+.div-container .unWorkDay {
+  position: relative;
+  right: 4.8rem;
+  margin: 0 10rem;
+  padding: 10rem 20rem;
+  border-top: 1px solid #212121;
+  border-bottom: 1px solid #212121;
+}
+.div-container .unWorkDay > .text {
+  text-align: center;
+}
+.div-container > .arrow-prev,
+.div-container .arrow-next {
+  position: relative;
+  cursor: pointer;
+  float: left;
+  border-radius: 999px;
+  width: 100px;
+  height: 100px;
+  margin-right: 5px;
+}
+.div-container .arrow-prev:hover::after {
+  border-top: 5px solid #a6d0ff; /* 선 두께 */
+  border-right: 5px solid #a6d0ff; /* 선 두께 */
+}
+.div-container .arrow-next:hover::after {
+  border-top: 5px solid #a6d0ff; /* 선 두께 */
+  border-right: 5px solid #a6d0ff; /* 선 두께 */
+}
+.div-container > .arrow-next {
+  position: relative;
+  right: 6rem;
+}
+.div-container > .arrow-prev::after {
+  position: absolute;
+  left: 35px;
+  top: 20px;
+  content: "";
+  width: 50px; /* 사이즈 */
+  height: 50px; /* 사이즈 */
+  border-top: 5px solid #d1d1d1; /* 선 두께 */
+  border-right: 5px solid #d1d1d1; /* 선 두께 */
+  transform: rotate(225deg); /* 각도 */
+}
+.div-container > .arrow-next::after {
+  position: absolute;
+  left: 10px;
+  top: 20px;
+  content: "";
+  width: 50px; /* 사이즈 */
+  height: 50px; /* 사이즈 */
+  border-top: 5px solid #d1d1d1; /* 선 두께 */
+  border-right: 5px solid #d1d1d1; /* 선 두께 */
+  transform: rotate(45deg); /* 각도 */
+}
+
 .table {
   position: relative;
   right: 1.35rem;
   text-align: center;
-  width: 1169.39px;
   height: 305px;
   border-collapse: separate;
   border-spacing: 0;
@@ -109,10 +224,10 @@ button.blue:active {
   border: none;
 }
 .table > thead > tr > th:first-child {
-  width: 32%;
+  width: 25%;
 }
 .table > thead > tr > th:nth-child(2) {
-  width: 53%;
+  width: 60%;
 }
 .table > thead > tr > th:last-child {
   width: 15%;
@@ -124,6 +239,7 @@ button.blue:active {
   height: 4.5rem;
 }
 .table > tbody > tr > td {
+  width: 100px;
   border-bottom: 0.075rem solid #515151;
   padding: 2.35rem 0;
   text-align: center;
@@ -161,8 +277,9 @@ button.blue:active {
 }
 .table > tbody > tr > td .checkbox {
   position: relative;
-  width: 1.5rem;
-  height: 20rem;
+  top: 50%;
+  font-size: 1.7rem;
+  font-weight: 900;
 }
 
 .a11y-hidden {
@@ -222,4 +339,4 @@ caption.a11y-hidden {
   cursor: pointer;
 }
 
-/*# sourceMappingURL=workList2.css.map */
+/*# sourceMappingURL=feedback.css.map */

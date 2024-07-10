@@ -23,7 +23,9 @@ public interface WorkMapper{
 
     Progress countSubmitImageOfYear(@Param("year") String year);
 
-    Progress[] countSubmitImageOfDay(@Param("day") String day);
+    Progress[] countSubmitImageOfDayList(@Param("day") String day);
+
+    Progress countSubmitImageOfDay(@Param("day") String day, @Param("email") String email);
 
     SubmitImageEntity selectSubmitImage(@Param("index")int index);
 

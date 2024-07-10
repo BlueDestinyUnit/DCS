@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/styles/feedback.css}">
+    <script defer type="text/javascript" th:src="@{/js/user/feedback.js}"></script>
+</head>
+<body>
+<section layout:fragment="content">
+    <form method="post" id="demo">
+        <div class="board-container">
+            <div class="dateBoard">
+                <input type="hidden" class="date-value" th:value="${date}">
+                <h2 class="dateValue" id="dateValue"
+                    th:text="${#strings.substring(date, 0, 4)} + '년 ' + ${#strings.substring(date, 5, 7)} + '월 ' + ${#strings.substring(date, 8, 10)} + '일'"></h2>
+            </div>
+        </div>
+        <div class="div-container" th:if="${imageList.length == 0}">
+            <span class="arrow-prev"></span>
+            <div class="unWorkDay">
+                <p class="text">
+                    해당 날짜의 작업이 존재하지 않습니다.
+                </p>
+            </div>
+            <span class="arrow-next"></span>
+        </div>
+        <div th:if="${imageList.length > 0}" class="container">
+            <span class="arrow-prev"></span>
+
+            <table id="table" class="table">
+                <caption class="a11y-hidden">Table Caption</caption>
+                <thead>
+                <tr>
+                    <th class="fix" scope="col" data-th="Name">이미지</th>
+                    <th class="fix" scope="col" data-th="Email">피드백</th>
+                    <th class="fix" scope="col" data-th="Status">불용</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="main-list" th:each="image : ${imageList}">
+
+                    <td>
+                        <!--                        <input th:value="${image.index}" type="hidden" rel="index">-->
+                        <img class="image" th:src="@{/subImage(index=${image.index})}" alt="Image"
+                             onclick="openModal(this.src)">
+                    </td>
+                    <td>
+                        <!--                        <label class="label">-->
+                        <textarea th:text="${image.getComment()}" class="comment" rel="comment" readonly></textarea>
+                        <!--                        </label>-->
+                    </td>
+                    <td>
+                        <p th:style="${image.isSign() ? 'color: red;' : ''}" th:text="${image.isSign() ? '√' : '-'}"
+                           class="checkbox"></p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <span class="arrow-next"></span>
+
+        </div>
+        <label class="button-container">
+            <!--            <button type="button" rel="backButton">돌아가기</button>-->
+            <!--            <button type="button" rel="submitButton">제출</button>-->
+            <button type="button" id="backBtn" class="blue" rel="backButton">돌아가기</button>
+        </label>
+
+    </form>
+    <div id="myModal" class="modal">
+        <span class="close" th:onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+</section>
+</body>
+</html>
