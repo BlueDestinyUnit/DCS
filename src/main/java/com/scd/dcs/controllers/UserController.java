@@ -207,6 +207,7 @@ public class UserController {
             sessionUser.setName(user.getName());
             sessionUser.setTel(user.getTel());
             sessionUser.setAddress(user.getAddress());
+            sessionUser.setWorkType(user.getWorkType());
         }
         JSONObject responseObject = new JSONObject();
         responseObject.put("result", result.name().toLowerCase());

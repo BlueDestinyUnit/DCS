@@ -19,6 +19,7 @@ registerForm['emailSend'].onclick = () => {
     formData.append('email', registerForm['email'].value);
     xhr.onreadystatechange = function () {
         if (xhr.readyState !== XMLHttpRequest.DONE) return;
+        loading.hide();
         if (xhr.status < 200 || xhr.status >= 300) {
             DialogObj.createSimpleOk('오류', '요청을 전송하는 도중 오류가 발생하였습니다.').show();
             return;
@@ -40,7 +41,7 @@ registerForm['emailSend'].onclick = () => {
     }
     xhr.open('POST', './registerEmail');
     xhr.send(formData);
-    
+    loading.show();
 };
 
 registerForm['emailVerify'].onclick = () => {
@@ -112,9 +113,10 @@ registerForm.onsubmit = (e) => {
     formData.append('nickname', registerForm['nickname'].value);
     formData.append('tel', registerForm['tel'].value);
     formData.append('address', registerForm['address'].value);
+    formData.append('workType', registerForm['workType'].value);
     xhr.onreadystatechange = function () {
         if (xhr.readyState !== XMLHttpRequest.DONE) return;
-        
+        loading.hide();
         if (xhr.status < 200 || xhr.status >= 300) {
             DialogObj.createSimpleOk('오류', '요청을 전송하는 도중 오류가 발생하였습니다.').show();
             return;
@@ -134,5 +136,5 @@ registerForm.onsubmit = (e) => {
     }
     xhr.open('POST', './'); // UserController :: postRegister
     xhr.send(formData);
-    
+    loading.show();
 };

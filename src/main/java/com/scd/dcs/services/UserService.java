@@ -301,6 +301,8 @@ public class UserService {
         dbUser.setName(user.getName());
         dbUser.setAddress(user.getAddress());
         dbUser.setTel(user.getTel());
+        dbUser.setWorkType(user.getWorkType());
+
         System.out.println(user.getTel());
         System.out.println(dbUser.getTel());
         return this.userMapper.updateUser(dbUser) > 0

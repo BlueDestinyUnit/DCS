@@ -5,9 +5,9 @@ infoForm.myNameLabelObj = new LabelObj(infoForm.querySelector('[rel="myNameLabel
 infoForm.myNicknameLabelObj = new LabelObj(infoForm.querySelector('[rel="myNicknameLabel"]'));
 infoForm.myTelLabelObj = new LabelObj(infoForm.querySelector('[rel="myTelLabel"]'));
 infoForm.myAddressLabelObj = new LabelObj(infoForm.querySelector('[rel="myAddressLabel"]'));
+infoForm.myWorkTypeLabelObj = new LabelObj(infoForm.querySelector('[rel="myWorkTypeLabel"]'));
 
 function modifyInfo() {
-    alert(1);
     const xhr = new XMLHttpRequest();
     const formData = new FormData();
     formData.append('email', infoForm['email'].value);
@@ -15,10 +15,12 @@ function modifyInfo() {
     formData.append('nickname', infoForm['nickname'].value);
     formData.append('tel', infoForm['tel'].value);
     formData.append('address', infoForm['address'].value);
+    formData.append('workType', infoForm['workType'].value);
     xhr.onreadystatechange = function () {
         if (xhr.readyState !== XMLHttpRequest.DONE) {
             return;
         }
+        loading.hide();
         if (xhr.status < 200 || xhr.status >= 300) {
             DialogObj.createSimpleOk('오류', '요청을 전송하는 도중 오류가 발생하였습니다.').show();
             return;
@@ -32,4 +34,5 @@ function modifyInfo() {
     }
     xhr.open('POST', './myPage');
     xhr.send(formData);
+    loading.show();
 }
