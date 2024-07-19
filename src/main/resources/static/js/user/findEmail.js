@@ -12,6 +12,7 @@ findEmailForm.onsubmit = (e) => {
         if (xhr.readyState !== XMLHttpRequest.DONE) {
             return;
         }
+        loading.hide();
         if (xhr.status < 200 || xhr.status >= 300) {
             DialogObj.createSimpleOk('오류', '요청을 전송하는 도중 오류가 발생하였습니다.').show();
             return;
@@ -25,4 +26,5 @@ findEmailForm.onsubmit = (e) => {
     }
     xhr.open('POST', './findEmail');
     xhr.send(formData);
+    loading.show();
 }

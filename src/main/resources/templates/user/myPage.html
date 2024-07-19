@@ -8,13 +8,16 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>내 정보</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/styles/common.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/styles/myPage.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user/common.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user/loading.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user/myPage.css}">
     <script defer type="text/javascript" th:src="@{/js/user/common.js}"></script>
+    <script defer type="text/javascript" th:src="@{/js/user/loading.js}"></script>
     <script defer type="text/javascript" th:src="@{/js/user/myPage.js}"></script>
     <script th:src="@{/js/user/modifyButton.js}" defer type="text/javascript"></script>
 </head>
 <body>
+<th:block th:replace="~{user/loading.html :: loading}"></th:block>
 <section id="myPageSection" layout:fragment="content">
     <h1 class="title">내 정보</h1>
     <form novalidate class="dialog" id="infoForm">
@@ -30,11 +33,6 @@
             <span class="__text">내 닉네임</span>
             <input class="form-control" th:value ="${#authentication.getPrincipal().getUserEntity().getNickname()}" name="nickname">
         </label>
-<!--        <label class="_obj-label label" rel="myPasswordLabel">-->
-<!--            <span class="__text">내 비밀번호</span>-->
-<!--            <input class="myPassword" value="*******" name="password">-->
-<!--            <a class="link" th:href="@{/user/resetPassword}">비밀번호 수정</a>-->
-<!--        </label>-->
         <label class="_obj-label label" rel="myTelLabel">
             <span class="__text">내 연락처</span>
             <input class="form-control" th:value ="${#authentication.getPrincipal().getUserEntity().getTel()}" name="tel">
@@ -42,6 +40,17 @@
         <label class="_obj-label label" rel="myAddressLabel">
             <span class="__text">내 주소</span>
             <input class="form-control" th:value ="${#authentication.getPrincipal().getUserEntity().getAddress()}" name="address">
+        </label>
+        <label class="_obj-label label" rel="myWorkTypeLabel">
+            <span class="__text">내 근로형태</span>
+            <span class="form-check-label">
+            <input id="part" type="radio" name="workType" value="part" th:checked="${#authentication.getPrincipal().getUserEntity().getWorkType() == 'part'}">
+            <label for="part">part</label>
+        </span>
+            <span class="form-check-label">
+            <input id="full" type="radio" name="workType" value="full" th:checked="${#authentication.getPrincipal().getUserEntity().getWorkType() == 'full'}">
+            <label for="full">full</label>
+        </span>
         </label>
         <button class="_obj-button" rel="modifyPasswordButton" type="button">
             <i class="__icon"></i>

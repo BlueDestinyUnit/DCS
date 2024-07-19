@@ -153,17 +153,54 @@ public class UserController {
         return responseObject.toString();
     }
 
-    @RequestMapping(value = "/email", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/modifyPassword", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getModifyPassword() {
+        return new ModelAndView("user/modifyPassword");
+    }
+
+    @RequestMapping(value = "/modifyPassword", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String getEmail(UserEntity user) {
-        Result<?> result = this.userService.recoverEmail(user);
+    public String postModifyPassword(EmailAuthEntity emailAuth,
+                                    UserEntity user) {
+        System.out.println(user);
+        Result<?> result = this.userService.resetPassword(emailAuth, user);
+        JSONObject responseObject = new JSONObject();
+        responseObject.put("result", result.name().toLowerCase());
+        return responseObject.toString();
+    }
+
+    @RequestMapping(value="/modifyPasswordEmail", method=RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String patchModifyPasswordEmail(EmailAuthEntity emailAuth){
+        Result<?> result = this.userService.verifyEmailAuth(emailAuth);
+        JSONObject responseObject = new JSONObject();
+        responseObject.put("result", result.name().toLowerCase());
+        return responseObject.toString();
+    }
+
+    @RequestMapping(value = "/modifyPasswordEmail", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String postModifyPasswordEmail(EmailAuthEntity emailAuth) throws NoSuchAlgorithmException, MessagingException {
+        Result<?> result = this.userService.sendModifyPasswordEmail(emailAuth);
         JSONObject responseObject = new JSONObject();
         responseObject.put("result", result.name().toLowerCase());
         if (result == CommonResult.SUCCESS) {
-            responseObject.put("email", user.getEmail());
+            responseObject.put("salt", emailAuth.getSalt());
         }
         return responseObject.toString();
     }
+
+//    @RequestMapping(value = "/email", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseBody
+//    public String getEmail(UserEntity user) {
+//        Result<?> result = this.userService.recoverEmail(user);
+//        JSONObject responseObject = new JSONObject();
+//        responseObject.put("result", result.name().toLowerCase());
+//        if (result == CommonResult.SUCCESS) {
+//            responseObject.put("email", user.getEmail());
+//        }
+//        return responseObject.toString();
+//    }
 
     @RequestMapping(value = "/attendance", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getAttendance() {
@@ -207,6 +244,7 @@ public class UserController {
             sessionUser.setName(user.getName());
             sessionUser.setTel(user.getTel());
             sessionUser.setAddress(user.getAddress());
+            sessionUser.setWorkType(user.getWorkType());
         }
         JSONObject responseObject = new JSONObject();
         responseObject.put("result", result.name().toLowerCase());

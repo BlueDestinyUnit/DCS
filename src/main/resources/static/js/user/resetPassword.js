@@ -14,6 +14,7 @@ resetPasswordForm['emailSend'].onclick = () => {
     formData.append('email', resetPasswordForm['email'].value);
     xhr.onreadystatechange = function () {
         if (xhr.readyState !== XMLHttpRequest.DONE) return;
+        loading.hide();
         if (xhr.status < 200 || xhr.status >= 300) {
             DialogObj.createSimpleOk('오류', '요청을 전송하는 도중 오류가 발생하였습니다.').show();
             return;
@@ -34,7 +35,7 @@ resetPasswordForm['emailSend'].onclick = () => {
     }
     xhr.open('POST', './resetPasswordEmail');
     xhr.send(formData);
-
+    loading.show();
 };
 
 resetPasswordForm['emailVerify'].onclick = () => {
@@ -49,6 +50,7 @@ resetPasswordForm['emailVerify'].onclick = () => {
         if (xhr.readyState !== XMLHttpRequest.DONE) {
             return;
         }
+        loading.hide();
         if (xhr.status < 200 || xhr.status >= 300) {
             DialogObj.createSimpleOk('오류', '요청을 전송하는 도중 오류가 발생하였습니다.').show();
             return;
@@ -75,6 +77,7 @@ resetPasswordForm['emailVerify'].onclick = () => {
     }
     xhr.open('PATCH', './resetPasswordEmail');
     xhr.send(formData);
+    loading.show();
 };
 
 resetPasswordForm.onsubmit = (e) => {
@@ -105,7 +108,7 @@ resetPasswordForm.onsubmit = (e) => {
     formData.append('salt', resetPasswordForm['emailSalt'].value);
     xhr.onreadystatechange = function () {
         if (xhr.readyState !== XMLHttpRequest.DONE) return;
-
+        loading.hide();
         if (xhr.status < 200 || xhr.status >= 300) {
             DialogObj.createSimpleOk('오류', '요청을 전송하는 도중 오류가 발생하였습니다.').show();
             return;
@@ -119,5 +122,5 @@ resetPasswordForm.onsubmit = (e) => {
     }
     xhr.open('POST', './resetPassword'); // UserController :: postResetPassword
     xhr.send(formData);
-
+    loading.show();
 };

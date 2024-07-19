@@ -198,6 +198,29 @@ public class UserService {
     }
 
     @Transactional
+    public Result<?> sendModifyPasswordEmail(EmailAuthEntity emailAuth) throws NoSuchAlgorithmException, MessagingException {
+        if (emailAuth == null || !EmailAuthRegex.email.tests(emailAuth.getEmail())) {
+            return CommonResult.FAILURE;
+        }
+        if (this.userMapper.selectUserByEmail(emailAuth.getEmail()) == null) {
+            return CommonResult.FAILURE;
+        }
+        prepareEmailAuth(emailAuth);
+        if (this.userMapper.insertEmailAuth(emailAuth) != 1) {
+            return CommonResult.FAILURE;
+        }
+        Context context = new Context();
+        context.setVariable("code", emailAuth.getCode());
+        new MailSender(this.mailSender)
+                .setFrom("gyust941326@gmail.com")
+                .setSubject("[맛집] 비밀번호 재설정 인증번호")
+                .setText(this.templateEngine.process("user/resetPasswordEmail", context), true)
+                .setTo(emailAuth.getEmail())
+                .send();
+        return CommonResult.SUCCESS;
+    }
+
+    @Transactional
     public Result<?> resetPassword(EmailAuthEntity emailAuth,
                                    UserEntity user) {
         System.out.println(emailAuth);
@@ -231,18 +254,18 @@ public class UserService {
         return CommonResult.SUCCESS;
     }
 
-    public Result<?> recoverEmail(UserEntity user) {
-        if (user == null ||
-                !UserRegex.nickname.tests(user.getNickname())) {
-            return CommonResult.FAILURE;
-        }
-        UserEntity dbUser = this.userMapper.selectUserByNickname(user.getNickname());
-        if (dbUser == null) { // 필요 시 isDeleted 구문에 해당하는 엔티티 + 항목 만들기
-            return CommonResult.FAILURE;
-        }
-        user.setEmail(dbUser.getEmail());
-        return CommonResult.SUCCESS;
-    }
+//    public Result<?> recoverEmail(UserEntity user) {
+//        if (user == null ||
+//                !UserRegex.nickname.tests(user.getNickname())) {
+//            return CommonResult.FAILURE;
+//        }
+//        UserEntity dbUser = this.userMapper.selectUserByNickname(user.getNickname());
+//        if (dbUser == null) { // 필요 시 isDeleted 구문에 해당하는 엔티티 + 항목 만들기
+//            return CommonResult.FAILURE;
+//        }
+//        user.setEmail(dbUser.getEmail());
+//        return CommonResult.SUCCESS;
+//    }
 
     public List<UserProperty> getAttendance(String email,
                                             String date) {
@@ -301,6 +324,8 @@ public class UserService {
         dbUser.setName(user.getName());
         dbUser.setAddress(user.getAddress());
         dbUser.setTel(user.getTel());
+        dbUser.setWorkType(user.getWorkType());
+
         System.out.println(user.getTel());
         System.out.println(dbUser.getTel());
         return this.userMapper.updateUser(dbUser) > 0
