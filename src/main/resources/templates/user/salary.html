@@ -40,7 +40,7 @@
                     <p class="text" th:text="'보험: ' + ${user.isInsurance() ? '가입' : '미가입'}"></p>
                     <p class="text" th:text="'구분: ' + ${user.getWorkType() == 'part' ? '비정규직' : '정규직'}"></p>
                     <div class="info-container">
-                        <img  alt="" class="image" th:src="@{/assets/images/info.png}">
+                        <img  alt="" class="image" th:src="@{/images/info.png}">
                         <div class="info-text">
                             <p class="text">비정규직 : 작업일 X 100,000 ₩</p>
                             <p class="text">정규직 : 작업일 X 150,000 ₩</p>

@@ -8,9 +8,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>내 정보</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/styles/common.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/styles/loading.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/styles/myPage.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user/common.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user/loading.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user/myPage.css}">
     <script defer type="text/javascript" th:src="@{/js/user/common.js}"></script>
     <script defer type="text/javascript" th:src="@{/js/user/loading.js}"></script>
     <script defer type="text/javascript" th:src="@{/js/user/myPage.js}"></script>
@@ -33,11 +33,6 @@
             <span class="__text">내 닉네임</span>
             <input class="form-control" th:value ="${#authentication.getPrincipal().getUserEntity().getNickname()}" name="nickname">
         </label>
-<!--        <label class="_obj-label label" rel="myPasswordLabel">-->
-<!--            <span class="__text">내 비밀번호</span>-->
-<!--            <input class="myPassword" value="*******" name="password">-->
-<!--            <a class="link" th:href="@{/user/resetPassword}">비밀번호 수정</a>-->
-<!--        </label>-->
         <label class="_obj-label label" rel="myTelLabel">
             <span class="__text">내 연락처</span>
             <input class="form-control" th:value ="${#authentication.getPrincipal().getUserEntity().getTel()}" name="tel">

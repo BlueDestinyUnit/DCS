@@ -1,14 +1,219 @@
-CREATE SCHEMA `dcs`;
+create schema dcs;
 
-CREATE TABLE `dcs`.`user`(
-    `email` VARCHAR(50) PRIMARY KEY,
-    `password` VARCHAR(100),
-    `role` VARCHAR(10)
+create table boards
+(
+    code          varchar(10)          not null
+        primary key,
+    text          varchar(25)          not null,
+    is_admin_only tinyint(1) default 0 not null
 );
 
-create table `dcs`.`persistent_logins`(
-                                  username varchar(64) not null,
-                                  series varchar(64) primary key,
-                                  token varchar(64) not null,
-                                  last_used timestamp not null
+create table email_auths
+(
+    email       varchar(50)                            not null,
+    code        varchar(6)                             not null,
+    salt        varchar(128)                           not null,
+    created_at  datetime   default current_timestamp() not null,
+    expires_at  datetime                               not null,
+    is_expired  tinyint(1) default 0                   not null,
+    is_verified tinyint(1) default 0                   not null,
+    is_used     tinyint(1) default 0                   not null,
+    primary key (email, code, salt)
 );
+
+create table payment
+(
+    uwork_type varchar(20)     not null
+        primary key,
+    price      double unsigned not null
+);
+
+create table persistent_logins
+(
+    username  varchar(64) not null,
+    series    varchar(64) not null
+        primary key,
+    token     varchar(64) not null,
+    last_used timestamp   not null
+);
+
+create table user
+(
+    email        varchar(50)       not null
+        primary key,
+    password     varchar(100)      null,
+    name         varchar(50)       null,
+    nickname     varchar(50)       null,
+    tel          varchar(11)       null,
+    address      varchar(200)      null,
+    role         varchar(20)       null,
+    is_state     tinyint default 0 not null,
+    is_insurance tinyint default 0 not null,
+    work_type    varchar(20)       not null,
+    constraint user_payment_FK
+        foreign key (work_type) references payment (uwork_type)
+            on update cascade
+);
+
+create table articles
+(
+    `index`    int unsigned auto_increment
+        primary key,
+    board_code varchar(10)                              not null,
+    user_email varchar(50)                              not null,
+    title      varchar(1000)                            not null,
+    content    longtext                                 not null,
+    created_at datetime     default current_timestamp() not null,
+    view       int unsigned default 0                   not null,
+    is_deleted tinyint      default 0                   not null,
+    is_secret  tinyint      default 0                   not null,
+    constraint articles_ibfk_1
+        foreign key (board_code) references boards (code)
+            on update cascade on delete cascade,
+    constraint articles_ibfk_2
+        foreign key (user_email) references user (email)
+            on update cascade on delete cascade
+);
+
+create table article_images
+(
+    `index`       int unsigned auto_increment
+        primary key,
+    article_index int unsigned null,
+    original_name varchar(255) not null,
+    content_type  varchar(50)  not null,
+    data          longblob     not null,
+    constraint article_images_ibfk_1
+        foreign key (article_index) references articles (`index`)
+            on update cascade on delete cascade
+);
+
+create index article_index
+    on article_images (article_index);
+
+create index board_code
+    on articles (board_code);
+
+create index user_email
+    on articles (user_email);
+
+create table attendance
+(
+    `index`    int unsigned auto_increment
+        primary key,
+    user_email varchar(50)                          not null,
+    check_in   datetime default current_timestamp() not null,
+    check_out  datetime                             null,
+    constraint attendance_ibfk_1
+        foreign key (user_email) references user (email)
+            on update cascade on delete cascade
+);
+
+create index user_email
+    on attendance (user_email);
+
+create table chat_room
+(
+    `index`    int auto_increment
+        primary key,
+    room_name  varchar(255)                         not null,
+    is_secret  tinyint  default 0                   null,
+    creator    varchar(50)                          not null,
+    created_at datetime default current_timestamp() not null,
+    constraint chat_room_ibfk_1
+        foreign key (creator) references user (email)
+            on update cascade on delete cascade
+);
+
+create table chat_message
+(
+    `index`         int auto_increment
+        primary key,
+    chat_room_index int                                  not null,
+    sender          varchar(50)                          not null,
+    message         text                                 not null,
+    created_at      datetime default current_timestamp() not null,
+    constraint chat_message_ibfk_1
+        foreign key (chat_room_index) references chat_room (`index`)
+            on update cascade on delete cascade,
+    constraint chat_message_ibfk_2
+        foreign key (sender) references user (email)
+            on update cascade on delete cascade
+);
+
+create index chat_room_index
+    on chat_message (chat_room_index);
+
+create index sender
+    on chat_message (sender);
+
+create index creator
+    on chat_room (creator);
+
+create table comments
+(
+    `index`       int unsigned auto_increment
+        primary key,
+    article_index int unsigned                         not null,
+    user_email    varchar(50)                          not null,
+    content       varchar(1000)                        not null,
+    created_at    datetime default current_timestamp() not null,
+    constraint comments_ibfk_1
+        foreign key (article_index) references articles (`index`)
+            on update cascade on delete cascade,
+    constraint comments_ibfk_2
+        foreign key (user_email) references user (email)
+            on update cascade on delete cascade
+);
+
+create index article_index
+    on comments (article_index);
+
+create index user_email
+    on comments (user_email);
+
+create table user_thumbnail
+(
+    `index`      int auto_increment
+        primary key,
+    user_email   varchar(50)  not null,
+    content_type varchar(50)  not null,
+    image_name   varchar(255) not null,
+    image_data   longblob     not null,
+    constraint user_thumbnail_ibfk_1
+        foreign key (user_email) references user (email)
+            on update cascade on delete cascade
+);
+
+create index user_email
+    on user_thumbnail (user_email);
+
+create table work
+(
+    `index`    int unsigned auto_increment,
+    user_email varchar(50) not null,
+    date       date        not null,
+    primary key (`index`, user_email, date),
+    constraint work_ibfk_1
+        foreign key (user_email) references user (email)
+            on update cascade on delete cascade
+);
+
+create table submit_images
+(
+    `index`       int unsigned auto_increment
+        primary key,
+    work_index    int unsigned      not null,
+    content_type  varchar(50)       not null,
+    original_name varchar(255)      not null,
+    image_data    longblob          not null,
+    is_sign       tinyint default 0 not null,
+    is_mosaic     tinyint default 0 not null,
+    comment       text              null,
+    constraint submit_images_fk
+        foreign key (work_index) references work (`index`)
+            on update cascade on delete cascade
+);
+
+create index user_email
+    on work (user_email);

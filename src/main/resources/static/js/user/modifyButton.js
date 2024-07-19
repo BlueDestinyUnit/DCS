@@ -9,5 +9,6 @@ modifyButton.onclick = (e) => {
 
 modifyPasswordButton.onclick = (e) => {
     e.preventDefault();
-    location.href = './resetPassword'
+    location.href = './modifyPassword'
 }
+
