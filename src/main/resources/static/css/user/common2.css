@@ -17,7 +17,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ._obj-button {
-  background-color: #4C8FFB;
+  background-color: #757575;
   border: none;
   border-radius: 0.25rem;
   color: #ffffff;
@@ -31,10 +31,10 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0.5rem;
 }
 ._obj-button:hover {
-  background-color: #1a70fa;
+  background-color: #5c5c5c;
 }
 ._obj-button:active {
-  background-color: #0557dc;
+  background-color: #424242;
 }
 ._obj-button:focus {
   text-decoration: underline;

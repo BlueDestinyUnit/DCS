@@ -131,7 +131,7 @@ input {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  z-index: 10;
+  z-index: 9;
   transition: left;
   transition-duration: 0.5s;
   transition-timing-function: ease-in;

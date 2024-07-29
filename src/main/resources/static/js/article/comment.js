@@ -61,8 +61,8 @@ function loadComments() {
                             <div class="comment-button">
                         </div>
 
-                            <button class="btn btn-info" rel="modify">수정</button>
-                            <button class="btn btn-info" rel="modifyCancle" style="display: none">취소</button>
+                            <button class="btn btn-primary" rel="modify">수정</button>
+                            <button class="btn btn-primary" rel="modifyCancle" style="display: none">취소</button>
                             <button class="btn btn-danger" rel="delete">삭제</button>
                         </div>
                         <form rel="modifyForm" style="display: none;">
@@ -70,7 +70,7 @@ function loadComments() {
                                 <span>수정할 내용</span>
                                 <input class="form-control" name="newContent" type="text">
                             </label>
-                            <input class="btn btn-info" type="submit" value="수정하기">
+                            <input class="btn btn-primary" type="submit" value="수정하기">
                         </form>
                     </div>
             `,'text/html').querySelector('[rel="comment"]');

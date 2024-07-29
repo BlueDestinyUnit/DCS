@@ -2,6 +2,7 @@ package com.scd.dcs.services;
 
 import com.scd.dcs.domains.entities.SubmitImageEntity;
 import com.scd.dcs.domains.entities.UserEntity;
+import com.scd.dcs.domains.vos.AllWorkVo;
 import com.scd.dcs.domains.vos.UserProperty;
 import com.scd.dcs.domains.vos.PaymentVo;
 import com.scd.dcs.mappers.AdminMapper;
@@ -12,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class AdminService {
@@ -96,5 +94,27 @@ public class AdminService {
         }
 //        System.out.println(date);
         return this.workMapper.selectUserAndWorkDaysByDateAndOption(date, option);
+    }
+
+    public AllWorkVo[] getAllWorkList(){
+        AllWorkVo[] allWorkVos = this.adminMapper.allUserWorkCount();
+        Integer max = Arrays.stream(allWorkVos)
+                .max(Comparator.comparingInt(AllWorkVo::getCount)).orElse(null).getCount();
+
+
+
+
+        if(max > 0){
+            AllWorkVo[] findMaxList = Arrays.stream(allWorkVos)
+                    .filter(v -> v.getCount() == max)
+                    .toArray(AllWorkVo[]::new);
+
+            return findMaxList;
+        }else{
+            return null;
+        }
+
+
+
     }
 }

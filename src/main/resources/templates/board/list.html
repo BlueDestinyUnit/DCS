@@ -51,7 +51,7 @@
             <td colspan="5">
                 <div th:if="${#authentication.getPrincipal().getUserEntity().getRole() == 'ADMIN' ||
                 (#authentication.getPrincipal().getUserEntity().getRole() == 'USER' && board.getCode().equals('free'))}">
-                    <a class="btn btn-primary" th:href="@{/article/write}">글 쓰기</a>
+                    <a class="btn btn-secondary" th:href="@{/article/write}">글 쓰기</a>
                 </div>
 
             </td>
@@ -70,8 +70,8 @@
                     <label>
                         <input class="form-control" name="keyword" placeholder="검색" type="search" th:value="${board.getKeyword()}">
                     </label>
-                    <button type="submit" class="btn btn-primary">검색</button>
-                    <a class="btn btn-primary" th:href="@{/board/list (code=${board.getCode()})}" th:if="${board.getBy() != null}">검색 초기화</a>
+                    <button type="submit" class="btn btn-secondary">검색</button>
+                    <a class="btn btn-secondary" th:href="@{/board/list (code=${board.getCode()})}" th:if="${board.getBy() != null}">검색 초기화</a>
                 </form>
             </td>
         </tr>

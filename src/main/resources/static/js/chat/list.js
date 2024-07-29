@@ -53,7 +53,8 @@ deleteButtons.forEach(el => {
             switch (responseObject.result) {
                 case 'success': {
                     alert('삭제에 성공하였습니다.')
-                    location.reload();
+                    location.reload()
+                    break;
                 }
                 case 'failure': {
                     alert('삭제에 실패하였습니다.')

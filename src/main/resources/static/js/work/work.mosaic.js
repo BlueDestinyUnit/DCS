@@ -270,6 +270,7 @@ input.onchange = function (e) {
 
 completeButton.onclick = function (e) {
     e.preventDefault();
+
     const workList = document.querySelectorAll('.menu-list .item');
 
     let falseList = [];
@@ -282,14 +283,17 @@ completeButton.onclick = function (e) {
         }
     }
 
-    alert(`수정되지 않은 파일: ${falseList.join(', ')}`);
+    if(falseList.length > 0){
+        DialogObj.createSimpleOk('경고', `수정되지 않은 파일: ${falseList.join(', ')}`).show();
+        for (let i = 0; i < workList.length; i++) {
+            const imageName = workList[i].querySelector('.image-name').innerText;
 
-    for (let i = 0; i < workList.length; i++) {
-        const imageName = workList[i].querySelector('.image-name').innerText;
-
-        if (falseList.includes(imageName)) {
-            workList[i].querySelector('.image-name').style.color = "#fd040c";
+            if (falseList.includes(imageName)) {
+                workList[i].querySelector('.image-name').style.color = "#fd040c";
+            }
         }
+    }else{
+        DialogObj.createSimpleOk('성공', '모든 이미지를 모자이크 처리했습니다.').show();
     }
 };
 

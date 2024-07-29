@@ -33,7 +33,15 @@
           AND `work`.`date` = #{date}
           AND BINARY `user`.`role` = 'USER'
         LIMIT 1;
+    </select>
 
+
+    <select id="allUserWorkCount" resultType="AllWorkVo">
+        SELECT `work`.`user_email` AS `userEmail`,COUNT(*) AS `count`
+        FROM `dcs`.`submit_images` AS `images`
+                 LEFT JOIN `dcs`.`work` AS `work` on `work`.`index` = `images`.`work_index`
+        GROUP BY `work`.`user_email`
+        ORDER BY `count` DESC
     </select>
 
 </mapper>

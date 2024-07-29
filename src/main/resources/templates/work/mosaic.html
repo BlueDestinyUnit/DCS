@@ -23,8 +23,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ko.min.js"></script>
 
 
+
     <link rel="stylesheet" th:href="@{/css/work/mosaic.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/work/mosiac.dialog.css}">
     <script src="https://kit.fontawesome.com/c1106c0e90.js" crossorigin="anonymous"></script>
+    <script th:src="@{/js/user/common.js}" defer></script>
     <script th:src="@{/js/work/work.mosaic.js}" defer></script>
 <!--    <script th:src="@{/js/work/work.addImage.js}" defer></script>-->
 
@@ -53,7 +56,7 @@
             </div>
             <div class="text-center">
                 <button id="saveBtn"
-                        class="btn btn-primary btn-sm px-4 rounded-pill text-uppercase font-weight-bold shadow-sm">이동
+                        class="btn btn-secondary btn-sm px-4 rounded-pill text-uppercase font-weight-bold shadow-sm">이동
                 </button>
             </div>
         </div>
@@ -89,9 +92,9 @@
                 <form id="saveForm">
                     <input type="hidden" id="selectImageId" name="index">
                     <span hidden id="selectImageName" style="display: none" ></span>
-                    <button class="btn btn-primary" type="submit" id="saveButton">Save Image</button>
+                    <button class="btn btn-secondary" type="submit" id="saveButton">Save Image</button>
                 </form>
-                <button class="resetButton btn btn-primary" id="resetButton">reset</button>
+                <button class="resetButton btn btn-secondary" id="resetButton">reset</button>
                 <br>
             </div>
 
@@ -138,7 +141,7 @@
         <a id="imageCount"></a>
         <a id="modifiedCount"></a>
         <br>
-        <button class="btn btn-primary" type="submit" id="completeButton">완료</button>
+        <button class="btn btn-secondary" type="submit" id="completeButton">완료</button>
     </div>
 </section>
 </body>
