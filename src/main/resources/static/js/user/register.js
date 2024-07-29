@@ -88,6 +88,7 @@ registerForm.onsubmit = (e) => {
     e.preventDefault();
     registerForm.passwordLabelObj.setValid(registerForm['password'].tests());
     registerForm.nicknameLabelObj.setValid(registerForm['nickname'].tests());
+    registerForm.emailLabelObj.setValid(registerForm['email'].tests());
     if (registerForm['emailSend'].isEnabled() || registerForm['emailVerify'].isEnabled()) {
         DialogObj.createSimpleOk('경고', '이메일 인증을 완료해 주세요.').show();
         return;

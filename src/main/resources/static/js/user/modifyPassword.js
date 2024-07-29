@@ -84,6 +84,7 @@ modifyPasswordForm.onsubmit = (e) => {
     e.preventDefault();
     modifyPasswordForm.newPasswordLabelObj.setValid(modifyPasswordForm['newPassword'].tests());
     modifyPasswordForm.nicknameLabelObj.setValid(modifyPasswordForm['nickname'].tests());
+    modifyPasswordForm.emailLabelObj.setValid(modifyPasswordForm['email'].tests());
     if (modifyPasswordForm['emailSend'].isEnabled() || modifyPasswordForm['emailVerify'].isEnabled()) {
         DialogObj.createSimpleOk('경고', '이메일 인증을 완료해 주세요.').show();
         return;
