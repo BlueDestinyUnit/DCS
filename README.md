@@ -1,4 +1,5 @@
 # DCS (Data Cleaning System)
+## 링크 -> [http:/dcs.jshlab.store](http:/dcs.jshlab.store)
 
 ## 이 프로젝트의 목표
 AI에게 학습하기위한 이미지들을 정제(모자이크)하기 위한 웹 사이트를 개발하는것을 목표로 하고있습니다. 뿐만 아니라 출결, 급여정산, 실시간 채팅까지 포함하고있습니다.
