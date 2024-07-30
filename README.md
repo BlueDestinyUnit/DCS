@@ -1,4 +1,4 @@
-# DCS (Data Cleaning System)   - 90% 완성
+# DCS (Data Cleaning System)
 
 ## 이 프로젝트의 목표
 AI에게 학습하기위한 이미지들을 정제(모자이크)하기 위한 웹 사이트를 개발하는것을 목표로 하고있습니다. 뿐만 아니라 출결, 급여정산, 실시간 채팅까지 포함하고있습니다.
@@ -54,4 +54,7 @@ AI에게 학습하기위한 이미지들을 정제(모자이크)하기 위한 �
 
 ## ERD
 ![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/dcs_erd.png)
+
+## 메인 페이지
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/5.jpg)
 
