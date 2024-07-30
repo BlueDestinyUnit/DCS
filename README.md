@@ -59,3 +59,53 @@ AI에게 학습하기위한 이미지들을 정제(모자이크)하기 위한 �
 ## 메인 페이지
 ![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/5.jpg)
 
+## 로그인
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/1.jpg)
+
+## 회원가입
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/2.jpg)
+
+## 유저 찾기
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/3.jpg)
+
+## 비밀번호 찾기
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/4.jpg)
+
+## 메인 작업 (모자이크 처리)
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/6.jpg)
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/7.jpg)
+
+## 개인 작업자 작업리스트
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/8.jpg)
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/9.jpg)
+
+## 개인 급여
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/10.jpg)
+
+## 개인 출석현황
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/11.jpg)
+
+## 개인정보
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/12.jpg)
+
+## 게시판
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/13.jpg)
+
+## 채팅방
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/14.jpg)
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/15.jpg)
+
+## 총인원 급여(관리자)
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/16.jpg)
+
+## 작업물 피드백 (관리자)
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/17.jpg)
+![이미지](https://github.com/BlueDestinyUnit/BlueDestinyUnit/blob/main/dcs/18.jpg)
+
+
+
+
+
+
+
+
