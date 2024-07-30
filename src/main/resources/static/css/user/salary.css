@@ -121,6 +121,10 @@ th, td {
   justify-content: center;
 }
 
+.btn {
+  width: 7rem;
+}
+
 button.blue {
   width: 7rem;
   height: 2.3rem;

@@ -37,9 +37,13 @@
 
 
     <select id="allUserWorkCount" resultType="AllWorkVo">
-        SELECT `work`.`user_email` AS `userEmail`,COUNT(*) AS `count`
+        SELECT `work`.`user_email` AS `userEmail`,
+               `user`.`name` AS `name`,
+                COUNT(*) AS `count`
+
         FROM `dcs`.`submit_images` AS `images`
                  LEFT JOIN `dcs`.`work` AS `work` on `work`.`index` = `images`.`work_index`
+                 LEFT JOIN `dcs`.`user` AS `user` on `user`.`email` = `work`.`user_email`
         GROUP BY `work`.`user_email`
         ORDER BY `count` DESC
     </select>

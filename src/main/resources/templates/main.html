@@ -68,6 +68,19 @@
                 <p th:text="${averageSubmitImage}" class="text-workload"></p>
             </div>
         </div>
+
+        <div class="best-worker">
+            <div class="title">
+                <span>최우수 작업자</span>
+            </div>
+            <div class="worker-container">
+                <div class="worker-text" th:each="worker : ${bestWorker}">
+                    <div th:text="${worker.getName()}">
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </section>
 
     <section>
