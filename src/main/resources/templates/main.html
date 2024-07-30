@@ -34,7 +34,7 @@
             <div class="progress-box">
                 <div class="text-container">
                     <div class="text-box">
-                        <p class="text-title">확인량/작업량 (월)</p>
+                        <p class="text-title">확인량/작업량 (총)</p>
                         <p th:text="${progress.getCount() == 0 ? '0 / 0' : progress.getSignCount() + ' / ' + progress.getCount()}"
                            class="text-workload"></p>
                     </div>
