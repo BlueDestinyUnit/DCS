@@ -5,6 +5,7 @@ function wsOpen(roomIndex) {
     $("#yourName").hide();
     $("#yourMsg").show();
     ws = new WebSocket("ws://" + location.host + "/chating/" + roomIndex);
+    console.log(location.host)
     wsEvt(roomIndex);
 }
 

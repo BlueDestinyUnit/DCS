@@ -7,7 +7,7 @@ spring:
       max-request-size: 100MB
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/dcs
+    url: jdbc:mariadb://host.docker.internal:3306/dcs
     username: whtjdghks03
     ## username, password 전부 본인 껄로 바꾸기
     password: navy3fleet
